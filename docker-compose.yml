@@ -1,0 +1,42 @@
+version: '3'
+
+services:
+  php:
+    depends_on: 
+      - db
+    build: ./php
+    volumes:
+      - ./php/content:/var/www/html
+    ports:
+      - 8080:80
+
+  db:
+    build: ./mysql
+    command:
+      mysqld --default-authentication-plugin=mysql_native_password
+    environment: 
+      MYSQL_ROOT_PASSWORD: ${ROOT_PASS}
+      MYSQL_DATABASE: time_tracking_db
+      MYSQL_USER: ${USER_ID}
+      MYSQL_PASSWORD: ${USER_PASS}
+      TZ: 'Asia/Tokyo'
+    ports: 
+      - "3306:3306"
+    volumes: 
+      - db:/var/lib/mysql
+      - ./mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+
+  phpmyadmin:
+    depends_on:
+      - db
+    image: phpmyadmin
+    environment:
+      - PMA_ARBITRARY=1
+      - PMA_HOST=db
+      - PMA_USER=root
+      - PMA_PASSWORD=${ROOT_PASS}
+    ports:
+      - 127.0.0.1:4040:80
+
+volumes:
+  db:
