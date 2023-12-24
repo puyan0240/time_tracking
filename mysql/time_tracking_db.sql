@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- ホスト: db
--- 生成日時: 2023 年 12 月 10 日 11:30
+-- 生成日時: 2023 年 12 月 24 日 04:08
 -- サーバのバージョン： 8.2.0
 -- PHP のバージョン: 8.1.18
 
@@ -32,6 +32,20 @@ CREATE TABLE `device_tbl` (
   `code` tinytext COLLATE utf8mb4_bin NOT NULL,
   `sharp` int NOT NULL,
   `name` tinytext COLLATE utf8mb4_bin NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+-- --------------------------------------------------------
+
+--
+-- テーブルの構造 `time_traking_tbl`
+--
+
+CREATE TABLE `time_traking_tbl` (
+  `idx` int NOT NULL,
+  `user_idx` int NOT NULL,
+  `device_idx` int NOT NULL,
+  `work_idx` int NOT NULL,
+  `time` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 -- --------------------------------------------------------
