@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- ホスト: db
--- 生成日時: 2023 年 12 月 29 日 05:56
+-- 生成日時: 2023 年 12 月 29 日 06:16
 -- サーバのバージョン： 8.2.0
 -- PHP のバージョン: 8.1.18
 
@@ -29,6 +29,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `account_tbl` (
   `user_id` int NOT NULL,
+  `passwd` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   `user_name` tinytext COLLATE utf8mb4_bin NOT NULL,
   `auth` int NOT NULL,
   `type` int NOT NULL
