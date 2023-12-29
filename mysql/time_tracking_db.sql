@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- ホスト: db
--- 生成日時: 2023 年 12 月 29 日 02:11
+-- 生成日時: 2023 年 12 月 29 日 03:48
 -- サーバのバージョン： 8.2.0
 -- PHP のバージョン: 8.1.18
 
@@ -81,23 +81,25 @@ CREATE TABLE `work_tbl` (
 -- テーブルのインデックス `device_tbl`
 --
 ALTER TABLE `device_tbl`
-  ADD PRIMARY KEY (`device_id`);
+  ADD UNIQUE KEY `device_id` (`device_id`);
+
+--
+-- テーブルのインデックス `time_traking_tbl`
+--
+ALTER TABLE `time_traking_tbl`
+  ADD UNIQUE KEY `idx` (`idx`);
+
+--
+-- テーブルのインデックス `user_tbl`
+--
+ALTER TABLE `user_tbl`
+  ADD UNIQUE KEY `user_id` (`user_id`);
 
 --
 -- テーブルのインデックス `work_tbl`
 --
 ALTER TABLE `work_tbl`
-  ADD PRIMARY KEY (`work_id`);
-
---
--- ダンプしたテーブルの AUTO_INCREMENT
---
-
---
--- テーブルの AUTO_INCREMENT `device_tbl`
---
-ALTER TABLE `device_tbl`
-  MODIFY `device_id` int NOT NULL AUTO_INCREMENT;
+  ADD UNIQUE KEY `work_id` (`work_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
