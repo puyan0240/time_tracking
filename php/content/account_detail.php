@@ -54,9 +54,11 @@
     </div>
 
     <div class="block ml-6">
-        <a href="branch.php?account_edit_type=edit&account_idx=<?php echo $account_idx;?>">
+<!---
+        <a href="account_edit.php?user_id=<?php echo $user_id;?>">
             <span class="button has-background-grey-lighter">編集</span>
         </a>
+--->
 <!---
         <a href="branch.php?account_edit_type=passwd_clr&account_idx=<?php echo $account_idx;?>">
             <span class="button has-text-light has-background-danger ml-5">パスワード初期化</span>
