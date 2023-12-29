@@ -15,16 +15,17 @@
 
     //権限によって表示を切り替える
     {
-        $strItem = "";
-        $strAuth = "";
+        $strResult = "";
+        $strAuth   = "";
 
         $format = "
-                    <a class=\"navbar-item has-text-link\" href=\"branch.php?menu=%s\">
+                    <a class=\"navbar-item has-text-link\" href=\"%s.php\">
                         <span>%s</span>
-                    </a>";
+                    </a>";        
+
         if ($_SESSION['auth'] == 1) {
-            $strItem = $strItem.sprintf($format, "item_list", "マシン管理");
-            $strAuth = $strAuth.sprintf($format, "account_list", "アカウント管理");
+            $strResult = $strResult.sprintf($format, "result", "結果表示");
+            $strAuth   = $strAuth.sprintf($format, "account_list", "アカウント管理");
         }
     }
 
