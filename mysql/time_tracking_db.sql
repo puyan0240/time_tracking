@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- ホスト: db
--- 生成日時: 2023 年 12 月 29 日 05:00
+-- 生成日時: 2023 年 12 月 29 日 05:56
 -- サーバのバージョン： 8.2.0
 -- PHP のバージョン: 8.1.18
 
@@ -20,6 +20,19 @@ SET time_zone = "+00:00";
 --
 -- データベース: `time_tracking_db`
 --
+
+-- --------------------------------------------------------
+
+--
+-- テーブルの構造 `account_tbl`
+--
+
+CREATE TABLE `account_tbl` (
+  `user_id` int NOT NULL,
+  `user_name` tinytext COLLATE utf8mb4_bin NOT NULL,
+  `auth` int NOT NULL,
+  `type` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 -- --------------------------------------------------------
 
@@ -51,19 +64,6 @@ CREATE TABLE `time_traking_tbl` (
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `user_tbl`
---
-
-CREATE TABLE `user_tbl` (
-  `user_id` int NOT NULL,
-  `user_name` tinytext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
-  `auth` int NOT NULL,
-  `job_type` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
-
--- --------------------------------------------------------
-
---
 -- テーブルの構造 `work_tbl`
 --
 
@@ -79,6 +79,12 @@ CREATE TABLE `work_tbl` (
 --
 
 --
+-- テーブルのインデックス `account_tbl`
+--
+ALTER TABLE `account_tbl`
+  ADD UNIQUE KEY `user_id` (`user_id`);
+
+--
 -- テーブルのインデックス `device_tbl`
 --
 ALTER TABLE `device_tbl`
@@ -89,12 +95,6 @@ ALTER TABLE `device_tbl`
 --
 ALTER TABLE `time_traking_tbl`
   ADD UNIQUE KEY `idx` (`idx`);
-
---
--- テーブルのインデックス `user_tbl`
---
-ALTER TABLE `user_tbl`
-  ADD UNIQUE KEY `user_id` (`user_id`);
 
 --
 -- テーブルのインデックス `work_tbl`
