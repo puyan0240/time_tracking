@@ -21,25 +21,28 @@
         }
     }
 
-/*
     //初期のパスワードはユーザー名とします。
     if ($errFlag == FALSE) {
         //パスワードを暗号化する
-        $passwd_hash = password_hash($user, PASSWORD_DEFAULT);
+        $passwd_hash = password_hash($user_id, PASSWORD_DEFAULT);
     }
-*/
 
     //登録
     if ($errFlag == FALSE) {
 
         //DB TABLEの要素名リスト
-        $keyName = ['user_id','user_name','auth'];
+        $keyName = ['user_id','passwd','user_name','auth','type'];
         $keyValue = [];
     
         //DB TABLEの 要素名:値 になるよう連想配列を作成
         foreach ($keyName as $key) {
-            if ($key == 'auth') {
+            if ($key == 'user_id') {
                 $keyValue[$key] = (int)e($_POST[$key]);
+            } elseif ($key == 'auth') {
+                $keyValue[$key] = (int)e($_POST[$key]);
+            } elseif ($key == 'type') {
+                //$keyValue[$key] = (int)e($_POST[$key]);
+                $keyValue[$key] = 0;
             } elseif ($key == 'passwd') {
                 $keyValue[$key] = $passwd_hash;
             } else {

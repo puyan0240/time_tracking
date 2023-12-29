@@ -3,3 +3,4 @@
     {
         return htmlspecialchars($str, ENT_QUOTES | ENT_HTML5, $charset, false);
     }
+?>
