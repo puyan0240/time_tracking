@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- ホスト: db
--- 生成日時: 2023 年 12 月 24 日 04:08
+-- 生成日時: 2023 年 12 月 29 日 02:11
 -- サーバのバージョン： 8.2.0
 -- PHP のバージョン: 8.1.18
 
@@ -28,10 +28,9 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `device_tbl` (
-  `idx` int NOT NULL,
-  `code` tinytext COLLATE utf8mb4_bin NOT NULL,
-  `sharp` int NOT NULL,
-  `name` tinytext COLLATE utf8mb4_bin NOT NULL
+  `device_id` int NOT NULL,
+  `ver` int NOT NULL,
+  `device_name` tinytext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 -- --------------------------------------------------------
@@ -42,9 +41,9 @@ CREATE TABLE `device_tbl` (
 
 CREATE TABLE `time_traking_tbl` (
   `idx` int NOT NULL,
-  `user_idx` int NOT NULL,
+  `user_id` int NOT NULL,
   `device_idx` int NOT NULL,
-  `work_idx` int NOT NULL,
+  `work_id` int NOT NULL,
   `time` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
@@ -55,9 +54,8 @@ CREATE TABLE `time_traking_tbl` (
 --
 
 CREATE TABLE `user_tbl` (
-  `idx` int UNSIGNED NOT NULL,
-  `employee_number` tinytext COLLATE utf8mb4_bin NOT NULL,
-  `name` tinytext COLLATE utf8mb4_bin NOT NULL,
+  `user_id` int NOT NULL,
+  `user_name` tinytext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   `auth` int NOT NULL,
   `job_type` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
@@ -69,9 +67,8 @@ CREATE TABLE `user_tbl` (
 --
 
 CREATE TABLE `work_tbl` (
-  `idx` int NOT NULL,
-  `code` int UNSIGNED NOT NULL,
-  `name` tinytext COLLATE utf8mb4_bin NOT NULL,
+  `work_id` int NOT NULL,
+  `work_name` tinytext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   `direct` int NOT NULL,
   `job_type` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
@@ -84,19 +81,13 @@ CREATE TABLE `work_tbl` (
 -- テーブルのインデックス `device_tbl`
 --
 ALTER TABLE `device_tbl`
-  ADD PRIMARY KEY (`idx`);
-
---
--- テーブルのインデックス `user_tbl`
---
-ALTER TABLE `user_tbl`
-  ADD PRIMARY KEY (`idx`);
+  ADD PRIMARY KEY (`device_id`);
 
 --
 -- テーブルのインデックス `work_tbl`
 --
 ALTER TABLE `work_tbl`
-  ADD PRIMARY KEY (`idx`);
+  ADD PRIMARY KEY (`work_id`);
 
 --
 -- ダンプしたテーブルの AUTO_INCREMENT
@@ -106,19 +97,7 @@ ALTER TABLE `work_tbl`
 -- テーブルの AUTO_INCREMENT `device_tbl`
 --
 ALTER TABLE `device_tbl`
-  MODIFY `idx` int NOT NULL AUTO_INCREMENT;
-
---
--- テーブルの AUTO_INCREMENT `user_tbl`
---
-ALTER TABLE `user_tbl`
-  MODIFY `idx` int UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- テーブルの AUTO_INCREMENT `work_tbl`
---
-ALTER TABLE `work_tbl`
-  MODIFY `idx` int NOT NULL AUTO_INCREMENT;
+  MODIFY `device_id` int NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
