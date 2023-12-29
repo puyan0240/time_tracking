@@ -64,7 +64,7 @@
         }
 
         function clicked(e) {
-            location = "account_detail.php?account_idx="+e.target.id;
+            location = "account_detail.php?user_id="+e.target.id;
         }
     </script>
 
