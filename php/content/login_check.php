@@ -3,7 +3,7 @@
     require_once(dirname(__FILE__).'/./common/DbManager.php');
   
     $result = "失敗しました。";
-    $tblName = "user_tbl";
+    $tblName = "account_tbl";
 
     $user_id = e($_POST['user_id']);
     //$passwd = e($_POST['passwd']);

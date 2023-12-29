@@ -6,7 +6,7 @@
     //一覧表示
     {
         //DB TABLEから読み出し
-        $tblName = "user_tbl";
+        $tblName = "account_tbl";
         $ret = readTbl($tblName, NULL, NULL, NULL, NULL);
         if ($ret != FALSE) {
 
