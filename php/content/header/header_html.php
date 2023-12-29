@@ -1,7 +1,7 @@
 <header>
     <nav class="navbar">
         <div class="navbar-brand">
-            <span class="navbar-item ml-6 is-size-7"><?php echo $_SESSION['user']; ?> さん</span>
+            <span class="navbar-item ml-6 is-size-7"><?php echo $_SESSION['user_name']; ?> さん</span>
             <a class="navbar-item" href="logout.php">
                     <span class="button is-light is-size-7 ml-4">ログアウト</span>
                 </a>
@@ -11,6 +11,7 @@
                 <span aria-hidden="true"></span>
             </a>
         </div>
+<!---
         <div class="navbar-menu">
             <div class="navbar-end">
                 <a class="navbar-item" href="login_passwd.php">
@@ -19,11 +20,12 @@
 
             </div>
         </div>
+--->
     </nav>
     <section class="hero is-info is-small">
         <div class="hero-body">
             <a href="index.php">
-                <h1 class="title ml-6">time tracking</h1>
+                <h1 class="title ml-6">Time Tracking</h1>
             </a>
         </div>
     </section>

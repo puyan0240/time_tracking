@@ -5,16 +5,23 @@
     $result = "失敗しました。";
     $tblName = "user_tbl";
 
-    $user   = e($_POST['user_id']);
+    $user_id = e($_POST['user_id']);
     //$passwd = e($_POST['passwd']);
 
     //DB検索
-    $where = "user='".$user."'";
+    $where = "user_id='".$user_id."'";
     $ret = readTbl($tblName, $where, NULL, NULL, NULL);
     if ($ret != FALSE) {
 
         //ユーザー認証&記録
         foreach ($ret as $value) {
+            session_start();
+            $_SESSION['login']     = 1;
+            $_SESSION['user_id']   = $user_id;
+            $_SESSION['user_name'] = $value['user_name'];
+            $_SESSION['auth']      = $value['auth'];
+            break; 
+/*
             if (password_verify($passwd, $value['passwd'])) { //パスワードは暗号化しているので
                 session_start();
                 $_SESSION['login']       = 1;
@@ -22,6 +29,7 @@
                 $_SESSION['user']        = $user;
                 $_SESSION['auth']        = $value['auth'];
             }
+*/
             break;
         }
 
