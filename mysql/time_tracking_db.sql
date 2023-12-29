@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- ホスト: db
--- 生成日時: 2023 年 12 月 29 日 03:48
+-- 生成日時: 2023 年 12 月 29 日 05:00
 -- サーバのバージョン： 8.2.0
 -- PHP のバージョン: 8.1.18
 
@@ -41,6 +41,7 @@ CREATE TABLE `device_tbl` (
 
 CREATE TABLE `time_traking_tbl` (
   `idx` int NOT NULL,
+  `date` date NOT NULL,
   `user_id` int NOT NULL,
   `device_idx` int NOT NULL,
   `work_id` int NOT NULL,
