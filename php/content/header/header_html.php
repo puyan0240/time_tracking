@@ -23,7 +23,7 @@
     <section class="hero is-info is-small">
         <div class="hero-body">
             <a href="index.php">
-                <h1 class="title ml-6">ジム履歴</h1>
+                <h1 class="title ml-6">time tracking</h1>
             </a>
         </div>
     </section>

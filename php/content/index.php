@@ -1,4 +1,4 @@
 <?php
-    header('Location:history_list.php');
+    header('Location:time_add.php');
     exit();
 ?>
