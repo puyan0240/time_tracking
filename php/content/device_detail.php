@@ -16,6 +16,17 @@
         }
     }
 
+
+    //機種削除ボタンは管理者権限のみ表示
+    $strDelBtn = "";
+    if ($_SESSION['auth'] == 1) {
+        $strDelBtn =
+        "<a href=\"device_del_confirm.php?device_id=".$device_id."\">
+            <span class=\"button has-text-light has-background-danger ml-5\">機種削除</span>
+        </a>";
+    }
+
+
     //戻り先
     $strBack = $_SERVER['HTTP_REFERER'];
 ?>
@@ -49,9 +60,7 @@
             <span class="button has-background-grey-lighter">編集</span>
         </a>
 --->
-        <a href="device_del_confirm.php?device_id=<?php echo $device_id;?>">
-            <span class="button has-text-light has-background-danger ml-5">機種削除</span>
-        </a> 
+        <?php echo $strDelBtn; ?>
     </div>
 
     <?php include(dirname(__FILE__).'/./header/bulma_burger.js'); ?>
