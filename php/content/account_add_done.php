@@ -8,19 +8,28 @@
 
     $input_ok = false;
 
-    //２重登録の確認
+    //数値確認
     {
-        $user_id = e($_POST['user_id']);
+        if (is_numeric($_POST['user_id']) != true) {
+            $result = "社員番号は数値で入力してください。";
+        } elseif (mb_strlen($_POST['user_id']) != 5) {
+            $result = "社員番号は5桁の範囲で入力してください。";
+        } else {
+            $user_id = e($_POST['user_id']);
+            $input_ok = true;
+        }
+    }
 
+    //２重登録の確認
+    if ($input_ok == true)
+    {
         //DB検索
         $tblName = "account_tbl";
         $where   = "user_id='".$user_id."'";
         $ret = readTbl($tblName, $where, NULL, NULL, NULL);
         if ($ret != FALSE) {
             $result = "社員番号:".$user_id." は、既に登録されています。";
-        }
-        else {
-            $input_ok = true;
+            $input_ok = false;
         }
     }
 

@@ -14,13 +14,13 @@
             <div class="field">
                 <label class="label">社員番号</label>
                 <div class="control">
-                    <input class="input is-sucess" type="text" name="user_id" required>
+                    <input class="input is-sucess" type="text" maxlength="5" name="user_id" required>
                 </div>
             </div>
             <div class="field">
                 <label class="label">名前</label>
                 <div class="control">
-                    <input class="input is-sucess" type="text" name="user_name" required>
+                    <input class="input is-sucess" type="text" maxlength="32" name="user_name" required>
                 </div>
             </div>
             <div class="field">

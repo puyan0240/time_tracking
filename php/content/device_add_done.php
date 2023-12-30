@@ -9,8 +9,7 @@
     $input_ok = false;
 
     //２重登録の確認
-    {
-        $errFlag = FALSE;      
+    {    
         $device_id = e($_POST['device_id']);
 
         //DB検索
