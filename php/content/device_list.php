@@ -14,8 +14,8 @@
 
             $format = "
             <tr>
-                <td>%d</td>
-                <td>%s</td>
+                <td>%04d</td>
+                <td>%02s</td>
                 <td>%s</td>
             </tr>";
 
