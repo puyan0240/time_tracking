@@ -8,21 +8,30 @@
 
     $input_ok = false;
 
-    //２重登録の確認
-    {    
-        $device_id = e($_POST['device_id']);
+    //数値確認
+    {
+        if (is_numeric($_POST['device_id']) != true) {
+            $result = "機種番号は数値で入力してください。";
+        } elseif (mb_strlen($_POST['device_id']) != 4) {
+            $result = "機種番号は4桁の範囲で入力してください。";
+        } else {
+            $device_id = e($_POST['device_id']);
+            $input_ok = true;
+        }
+    }
 
+    //２重登録の確認
+    if ($input_ok == true)
+    {    
         //DB検索
         $tblName = "device_tbl";
         $where   = "device_id='".$device_id."'";
         $ret = readTbl($tblName, $where, NULL, NULL, NULL);
         if ($ret != FALSE) {
             $result = "機種番号:".$device_id." は、既に登録されています。";
-        } else {
-            $input_ok = true;
+            $input_ok = false;
         }
     }
-
 
     //登録
     if ($input_ok == true) {

@@ -14,19 +14,19 @@
             <div class="field">
                 <label class="label">機種番号</label>
                 <div class="control">
-                    <input class="input is-sucess" type="text" name="device_id" required>
+                    <input class="input is-sucess" type="text" maxlength="4" name="device_id" required>
                 </div>
             </div>
             <div class="field">
                 <label class="label">Ver</label>
                 <div class="control">
-                    <input class="input is-sucess" type="text" name="ver" required>
+                    <input class="input is-sucess" type="text" maxlength="2" name="ver" required>
                 </div>
             </div>
             <div class="field">
                 <label class="label">商品名</label>
                 <div class="control">
-                    <input class="input is-sucess" type="text" name="device_name" required>
+                    <input class="input is-sucess" type="text" maxlength="32" name="device_name" required>
                 </div>
             </div>
             <br>
