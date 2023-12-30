@@ -63,7 +63,7 @@
         }
 
         function clicked(e) {
-            location = "device_detail.php?device_id="+e.target.id;
+            location = "work_detail.php?work_id="+e.target.id;
         }
     </script>
 
