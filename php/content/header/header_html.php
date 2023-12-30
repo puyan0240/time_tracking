@@ -38,6 +38,9 @@
                 <a class="navbar-item has-text-link" href="time_list.php">
                     <span>一覧表示</span>
                 </a>
+                <a class="navbar-item has-text-link" href="work_list.php">
+                    <span>作業項目</span>
+                </a>
                 <a class="navbar-item has-text-link" href="device_list.php">
                     <span>機種管理</span>
                 </a>
