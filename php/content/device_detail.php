@@ -55,11 +55,9 @@
     </div>
 
     <div class="block ml-6">
-<!---
-        <a href="account_edit.php?user_id=<?php echo $user_id;?>">
+        <a href="device_edit.php?device_id=<?php echo $device_id;?>">
             <span class="button has-background-grey-lighter">編集</span>
         </a>
---->
         <?php echo $strDelBtn; ?>
     </div>
 
