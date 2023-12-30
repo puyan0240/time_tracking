@@ -12,15 +12,15 @@
     <div class="block ml-6 mr-6">
         <form action="work_add_done.php" method="POST">
             <div class="field">
-                <label class="label">作業番号</label>
+                <label class="label">作業番号 (4桁)</label>
                 <div class="control">
-                    <input class="input is-sucess" type="text" name="work_id" required>
+                    <input class="input is-sucess" type="text" maxlength="4" name="work_id" required>
                 </div>
             </div>
             <div class="field">
                 <label class="label">作業名</label>
                 <div class="control">
-                    <input class="input is-sucess" type="text" name="work_name" required>
+                    <input class="input is-sucess" type="text" maxlength="32" name="work_name" required>
                 </div>
             </div>
             <div class="field">

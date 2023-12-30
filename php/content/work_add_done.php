@@ -12,14 +12,11 @@
     {
         if (is_numeric($_POST['work_id']) != true) {
             $result = "作業番号は数値で入力してください。";
+        } elseif (mb_strlen($_POST['work_id']) != 4) {
+            $result = "作業番号は4桁の範囲で入力してください。";
         } else {
             $work_id = e($_POST['work_id']);
-            if (($work_id < 0) or ($work_id > 9999)) {
-                $result = "作業番号は0～9999の範囲で入力してください。";
-            }
-            else {
-                $input_ok = true;
-            }
+            $input_ok = true;
         }
     }
 
@@ -33,11 +30,10 @@
         $where   = "work_id='".$work_id."'";
         $ret = readTbl($tblName, $where, NULL, NULL, NULL);
         if ($ret != FALSE) {
-            $input_ok = false;
             $result = "作業番号:".$work_id." は、既に登録されています。";
+            $input_ok = false;
         }
     }
-
 
     //登録
     if ($input_ok == true) {
