@@ -6,9 +6,10 @@
     require_once(dirname(__FILE__).'/./common/Encode.php');
 
 
+    $input_ok = false;
+
     //２重登録の確認
     {
-        $errFlag = FALSE;      
         $user_id = e($_POST['user_id']);
 
         //DB検索
@@ -16,19 +17,21 @@
         $where   = "user_id='".$user_id."'";
         $ret = readTbl($tblName, $where, NULL, NULL, NULL);
         if ($ret != FALSE) {
-            $errFlag = TRUE;
             $result = "社員番号:".$user_id." は、既に登録されています。";
+        }
+        else {
+            $input_ok = true;
         }
     }
 
     //初期のパスワードはユーザー名とします。
-    if ($errFlag == FALSE) {
+    if ($input_ok == true) {
         //パスワードを暗号化する
         $passwd_hash = password_hash($user_id, PASSWORD_DEFAULT);
     }
 
     //登録
-    if ($errFlag == FALSE) {
+    if ($input_ok == true) {
 
         //DB TABLEの要素名リスト
         $keyName = ['user_id','passwd','user_name','auth','type'];

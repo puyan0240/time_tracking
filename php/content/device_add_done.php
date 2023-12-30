@@ -6,6 +6,8 @@
     require_once(dirname(__FILE__).'/./common/Encode.php');
 
 
+    $input_ok = false;
+
     //２重登録の確認
     {
         $errFlag = FALSE;      
@@ -16,14 +18,15 @@
         $where   = "device_id='".$device_id."'";
         $ret = readTbl($tblName, $where, NULL, NULL, NULL);
         if ($ret != FALSE) {
-            $errFlag = TRUE;
-            $result = "機種番号:".$user_id." は、既に登録されています。";
+            $result = "機種番号:".$device_id." は、既に登録されています。";
+        } else {
+            $input_ok = true;
         }
     }
 
 
     //登録
-    if ($errFlag == FALSE) {
+    if ($input_ok == true) {
 
         //DB TABLEの要素名リスト
         $keyName = ['device_id','ver','device_name'];
