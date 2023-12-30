@@ -62,7 +62,7 @@
     <div class="block ml-6">
         <table class="table" >
             <tr>
-                <td>機種番号</td>
+                <td>作業番号</td>
                 <td><?php echo $work_id; ?></td>
             </tr>
             <tr>

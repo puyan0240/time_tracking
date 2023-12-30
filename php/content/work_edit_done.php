@@ -8,12 +8,12 @@
 
     //DB更新
     {
-        $device_id = e($_POST['device_id']);
+        $work_id = e($_POST['work_id']);
 
         //DB TABLEの要素名リスト
-        $elementKeyName = ['ver', 'device_name'];
+        $elementKeyName = ['work_name', 'direct'];
         $elementKeyValue = [];
-        $paramKeyName = ['device_id'];
+        $paramKeyName = ['work_id'];
         $paramKeyValue = [];
 
         //DB TABLEの 要素名:値 になるよう連想配列を作成
@@ -25,7 +25,7 @@
         }
 
         //DB TBLを更新
-        $tblName = "device_tbl";
+        $tblName = "work_tbl";
         if (updateTbl($tblName, $elementKeyValue, $paramKeyValue) == TRUE) {
             $result = "更新しました。";
         } else {
@@ -45,11 +45,11 @@
         <p><?php echo $result; ?></p>
     </div>
     <div class="block ml-6">
-        <a href="device_list.php">機種管理へ</a>
+        <a href="work_list.php">作業項目へ</a>
     </div>
     <script>
         setTimeout(function() {
-            window.location.href = "device_list.php";
+            window.location.href = "work_list.php";
         }, 2*1000);
     </script>
 
