@@ -6,9 +6,26 @@
     require_once(dirname(__FILE__).'/./common/Encode.php');
 
 
-    //２重登録の確認
+    $input_ok = false;
+
+    //数値確認
     {
-        $errFlag = FALSE;      
+        if (is_numeric($_POST['work_id']) != true) {
+            $result = "作業番号は数値で入力してください。";
+        } else {
+            $work_id = e($_POST['work_id']);
+            if (($work_id < 0) or ($work_id > 9999)) {
+                $result = "作業番号は0～9999の範囲で入力してください。";
+            }
+            else {
+                $input_ok = true;
+            }
+        }
+    }
+
+    //２重登録の確認
+    if ($input_ok == true)
+    {      
         $work_id = e($_POST['work_id']);
 
         //DB検索
@@ -16,14 +33,14 @@
         $where   = "work_id='".$work_id."'";
         $ret = readTbl($tblName, $where, NULL, NULL, NULL);
         if ($ret != FALSE) {
-            $errFlag = TRUE;
+            $input_ok = false;
             $result = "作業番号:".$work_id." は、既に登録されています。";
         }
     }
 
 
     //登録
-    if ($errFlag == FALSE) {
+    if ($input_ok == true) {
 
         //DB TABLEの要素名リスト
         $keyName = ['work_id','work_name','direct','job_type'];
