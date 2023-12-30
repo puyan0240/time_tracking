@@ -6,24 +6,32 @@
     require_once(dirname(__FILE__).'/./common/Encode.php');
 
 
+    $del_flag = false;
     $result = "削除できませんでした。";
 
-    if ($_POST['key_word'] == "delete") { //削除用キーワード[delete]
+    $user_id = e($_POST['user_id']);
+
+    if ($user_id != $_SESSION['user_id']) { //ログイン中のユーザー以外なら削除できる
+
+        if ($_POST['key_word'] == "delete") { //削除用キーワード[delete]
         
-        //DB TABLEの要素名リスト
-        $paramKeyName = ['user_id'];
-        $paramKeyValue = [];
-
-        //DB TABLEの 要素名:値 になるよう連想配列を作成
-        foreach ($paramKeyName as $key) {
-            $paramKeyValue[$key] = e($_POST[$key]);
+            //DB TABLEの要素名リスト
+            $paramKeyName = ['user_id'];
+            $paramKeyValue = [];
+    
+            //DB TABLEの 要素名:値 になるよう連想配列を作成
+            foreach ($paramKeyName as $key) {
+                $paramKeyValue[$key] = e($_POST[$key]);
+            }
+    
+            //DB TBLを更新
+            $tblName = "account_tbl";
+            if (deleteTbl($tblName, $paramKeyValue) == TRUE) {
+                $result = "削除しました。";
+            }
         }
-
-        //DB TBLを更新
-        $tblName = "account_tbl";
-        if (deleteTbl($tblName, $paramKeyValue) == TRUE) {
-            $result = "削除しました。";
-        }
+    } else {
+        $result = "ログイン中のユーザーと同じアカウントのため削除できません。";
     }
 ?>
 
