@@ -3,13 +3,15 @@
     require_once(dirname(__FILE__).'/./header/header.php');
     
 
-    $user = $passwd = $admin = $manager = "";
+    $user_id = $auth = $type = 0;
+    $passwd = $user_name = "";
+
     $user_id = $_GET['user_id'];
 
-    //DB TABLEから読み出し
+    //DB検索
     $tblName = "account_tbl";
-    $param = 'user_id ='.$user_id;
-    $ret = readTbl($tblName, $param, NULL, NULL, NULL);
+    $where   = "user_id='".$user_id."'";
+    $ret = readTbl($tblName, $where, NULL, NULL, NULL);
     if ($ret != FALSE) {
         foreach ($ret as $value) {
             $user_name = $value['user_name'];
