@@ -8,7 +8,7 @@
 
     $input_ok = false;
 
-    //数値確認
+    //数値確認(機種番号)
     {
         if (is_numeric($_POST['device_id']) != true) {
             $result = "機種番号は数値で入力してください。";
@@ -20,15 +20,29 @@
         }
     }
 
+    //数値確認(Ver)
+    if ($input_ok == true)
+    {
+        if (is_numeric($_POST['ver']) != true) {
+            $result = "Verは数値で入力してください。";
+            $input_ok = false;
+        } elseif (mb_strlen($_POST['ver']) != 2) {
+            $result = "Verは2桁の範囲で入力してください。";
+            $input_ok = false;
+        } else {
+            $ver = e($_POST['ver']);
+        }
+    }
+
     //２重登録の確認
     if ($input_ok == true)
     {    
         //DB検索
         $tblName = "device_tbl";
-        $where   = "device_id='".$device_id."'";
+        $where   = "device_id='".$device_id."'"." and "."ver='".$ver."'";
         $ret = readTbl($tblName, $where, NULL, NULL, NULL);
         if ($ret != FALSE) {
-            $result = "機種番号:".$device_id." は、既に登録されています。";
+            $result = "機種番号:".$device_id." Ver:".$ver."は、既に登録されています。";
             $input_ok = false;
         }
     }
@@ -72,12 +86,13 @@
     <div class="block ml-6">
         <a href="device_list.php">機種管理へ</a>
     </div>
+<!---
     <script>
         setTimeout(function() {
             window.location.href = "device_list.php";
         }, 2*1000);
     </script>
-
+--->
     <?php include(dirname(__FILE__).'/./header/bulma_burger.js'); ?>
 </body>
 </html>
