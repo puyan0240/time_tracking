@@ -58,25 +58,25 @@
         <tr>
             <td><label>機種:</label></td>
             <td>
-                <select name=\"device%s\">
+                <select name=\"device%02s\">
                     %s
                 </select>
             <td>
             <td><label>作業:</label></td>
             <td>
-                <select name=\"work%s\">
+                <select name=\"work%02s\">
                     %s
                 </select>
             <td>
             <td><label>時間:</label></td>
             <td>
-                <select name=\"hour%s\">
+                <select name=\"hour%02s\">
                     %s
                 </select>
             <td>
             <td><label>分:</label></td>
             <td>
-                <select name=\"min%s\">
+                <select name=\"min%02s\">
                     %s
                 </select>
             <td>
