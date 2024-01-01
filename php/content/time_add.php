@@ -4,61 +4,126 @@
 
     //機種一覧
     {
+        $strDevSelOpt = "";
+        $format = "<option value=\"%s\" selected>%s</option>";
+
         //DB TABLEから読み出し
         $tblName = "device_tbl";
-        $device_list = readTbl($tblName, NULL, NULL, NULL, NULL);
+        $ret = readTbl($tblName, NULL, NULL, NULL, NULL);
+        if ($ret != false) {
+            foreach ($ret as $value) {
+                $strDevSelOpt .= sprintf($format, $value['device_id'], $value['device_name']);
+            }    
+        }
+
+        $format = 
+        "<div class=\"field\">
+            <div class=\"control\">
+                <div class=\"select is-success\">
+                    <select name=\"device\">
+                        %s
+                    </select>
+                </div>
+            </div>
+        </div>";
+        $strDevSel = sprintf($format, $strDevSelOpt);
     }
 
     //作業項目一覧
     {
+        $strWrkSelOpt = "";
+        $format = "<option value=\"%s\" selected>%s</option>";
+
+
         //DB TABLEから読み出し
         $tblName = "work_tbl";
-        $work_list = readTbl($tblName, NULL, NULL, NULL, NULL);
+        $ret = readTbl($tblName, NULL, NULL, NULL, NULL);
+        if ($ret != false) {
+            foreach ($ret as $value) {
+                $strWrkSelOpt .= sprintf($format, $value['work_id'], $value['work_name']);
+            }    
+        }
+
+        $format = 
+        "<div class=\"field\">
+            <div class=\"control\">
+                <div class=\"select is-success\">
+                    <select name=\"work\">
+                        %s
+                    </select>
+                </div>
+            </div>
+        </div>";
+        $strWrkSel = sprintf($format, $strWrkSelOpt);
     }
 
 
+    //時間
     {
-        //時間
-        {
-            $strHourSelOpt = "";
-            $format = "<option value=\"%s\" selected>%02s</option>";
-            for ($i = 0; $i <= 12; $i ++) {
-                $strHourSelOpt .= sprintf($format, $i, $i);
-            }
-
-            $format = 
-            "<div class=\"field\">
-                <div class=\"control\">
-                    <div class=\"select is-success\">
-                        <select name=\"hour\">
-                            %s
-                        </select>
-                    </div>
-                </div>
-            </div>";
-            $strHourSel = sprintf($format, $strHourSelOpt);
+        $strHourSelOpt = "";
+        $format = "<option value=\"%s\" selected>%02s</option>";
+        for ($i = 0; $i <= 12; $i ++) {
+            $strHourSelOpt .= sprintf($format, $i, $i);
         }
 
-        //分
-        {
-            $strMinSelOpt = "";
-            $format = "<option value=\"%s\" selected>%02s</option>";
-            for ($i = 0; $i < 60; $i = $i+15) {
-                $strMinSelOpt .= sprintf($format, $i, $i);
-            }
-
-            $format = 
-            "<div class=\"field\">
-                <div class=\"control\">
-                    <div class=\"select is-success\">
-                        <select name=\"min\">
-                            %s
-                        </select>
-                    </div>
+        $format = 
+        "<div class=\"field\">
+            <div class=\"control\">
+                <div class=\"select is-success\">
+                    <select name=\"hour\">
+                        %s
+                    </select>
                 </div>
-            </div>";
-            $strMinSel = sprintf($format, $strMinSelOpt);
+            </div>
+        </div>";
+        $strHourSel = sprintf($format, $strHourSelOpt);
+    }
 
+    //分
+    {
+        $strMinSelOpt = "";
+        $format = "<option value=\"%s\" selected>%02s</option>";
+        for ($i = 0; $i < 60; $i = $i+15) {
+            $strMinSelOpt .= sprintf($format, $i, $i);
+        }
+
+        $format = 
+        "<div class=\"field\">
+            <div class=\"control\">
+                <div class=\"select is-success\">
+                    <select name=\"min\">
+                        %s
+                    </select>
+                </div>
+            </div>
+        </div>";
+        $strMinSel = sprintf($format, $strMinSelOpt);
+    }
+
+    //Table
+    {
+        $strTbl = "";
+        $format = "
+        <tr>
+            <td>
+                <select name=\"hour%s\">
+                    %s
+            </select>
+        <td>
+            <td>
+                <select name=\"hour%s\">
+                    %s
+                </select>
+            <td>
+            <td>
+                <select name=\"min%s\">
+                    %s
+                </select>
+            <td>
+        <tr>
+        ";
+        for ($i = 0; $i < 12; $i ++) {
+            $strTbl .= sprintf($format, $i, $strMinSelOpt);
         }
     }
 
@@ -87,7 +152,7 @@
                         <th>時間</th>
                         <th>分</th>
                     </tr>
-
+                    <?php echo $strTbl; ?>
                     <?php echo $strHourSel; ?>
                     <?php echo $strMinSel; ?>
                 </table>
