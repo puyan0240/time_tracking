@@ -86,13 +86,12 @@
     <div class="block ml-6">
         <a href="device_list.php">機種管理へ</a>
     </div>
-<!---
     <script>
         setTimeout(function() {
             window.location.href = "device_list.php";
         }, 2*1000);
     </script>
---->
+
     <?php include(dirname(__FILE__).'/./header/bulma_burger.js'); ?>
 </body>
 </html>
