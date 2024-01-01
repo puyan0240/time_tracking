@@ -5,35 +5,23 @@
     //機種一覧
     {
         $strDevSelOpt = "";
-        $format = "<option value=\"%s\" selected>%s</option>";
+        $format = "<option value=\"%s\">%s</option>";
 
         //DB TABLEから読み出し
         $tblName = "device_tbl";
-        $ret = readTbl($tblName, NULL, NULL, NULL, NULL);
+        $order = "ORDER BY device_id DESC"; //降順
+        $ret = readTbl($tblName, NULL, $order, NULL, NULL);
         if ($ret != false) {
             foreach ($ret as $value) {
                 $strDevSelOpt .= sprintf($format, $value['device_id'], $value['device_name']);
             }    
         }
-
-        $format = 
-        "<div class=\"field\">
-            <div class=\"control\">
-                <div class=\"select is-success\">
-                    <select name=\"device\">
-                        %s
-                    </select>
-                </div>
-            </div>
-        </div>";
-        $strDevSel = sprintf($format, $strDevSelOpt);
     }
 
     //作業項目一覧
     {
         $strWrkSelOpt = "";
-        $format = "<option value=\"%s\" selected>%s</option>";
-
+        $format = "<option value=\"%s\">%s</option>";
 
         //DB TABLEから読み出し
         $tblName = "work_tbl";
@@ -43,61 +31,24 @@
                 $strWrkSelOpt .= sprintf($format, $value['work_id'], $value['work_name']);
             }    
         }
-
-        $format = 
-        "<div class=\"field\">
-            <div class=\"control\">
-                <div class=\"select is-success\">
-                    <select name=\"work\">
-                        %s
-                    </select>
-                </div>
-            </div>
-        </div>";
-        $strWrkSel = sprintf($format, $strWrkSelOpt);
     }
-
 
     //時間
     {
         $strHourSelOpt = "";
-        $format = "<option value=\"%s\" selected>%02s</option>";
+        $format = "<option value=\"%s\">%02s</option>";
         for ($i = 0; $i <= 12; $i ++) {
             $strHourSelOpt .= sprintf($format, $i, $i);
         }
-
-        $format = 
-        "<div class=\"field\">
-            <div class=\"control\">
-                <div class=\"select is-success\">
-                    <select name=\"hour\">
-                        %s
-                    </select>
-                </div>
-            </div>
-        </div>";
-        $strHourSel = sprintf($format, $strHourSelOpt);
     }
 
     //分
     {
         $strMinSelOpt = "";
-        $format = "<option value=\"%s\" selected>%02s</option>";
+        $format = "<option value=\"%s\">%02s</option>";
         for ($i = 0; $i < 60; $i = $i+15) {
             $strMinSelOpt .= sprintf($format, $i, $i);
         }
-
-        $format = 
-        "<div class=\"field\">
-            <div class=\"control\">
-                <div class=\"select is-success\">
-                    <select name=\"min\">
-                        %s
-                    </select>
-                </div>
-            </div>
-        </div>";
-        $strMinSel = sprintf($format, $strMinSelOpt);
     }
 
     //Table
@@ -105,16 +56,25 @@
         $strTbl = "";
         $format = "
         <tr>
+            <td><label>機種:</label></td>
             <td>
-                <select name=\"hour%s\">
+                <select name=\"device%s\">
                     %s
-            </select>
-        <td>
+                </select>
+            <td>
+            <td><label>作業:</label></td>
+            <td>
+                <select name=\"work%s\">
+                    %s
+                </select>
+            <td>
+            <td><label>時間:</label></td>
             <td>
                 <select name=\"hour%s\">
                     %s
                 </select>
             <td>
+            <td><label>分:</label></td>
             <td>
                 <select name=\"min%s\">
                     %s
@@ -123,15 +83,9 @@
         <tr>
         ";
         for ($i = 0; $i < 12; $i ++) {
-            $strTbl .= sprintf($format, $i, $strMinSelOpt);
+            $strTbl .= sprintf($format, $i, $strDevSelOpt, $i, $strWrkSelOpt, $i, $strHourSelOpt, $i, $strMinSelOpt);
         }
     }
-
-    /*
-    var_dump($device_list);
-    print("\n");
-    var_dump($work_list);
-    */
 ?>
 
 <!DOCTYPE html>
@@ -144,17 +98,9 @@
     <div class="block ml-6 mr-6">
         <form action="time_add_done.php" method="POST">
   
-            <div class="block ml-6">
+            <div class="block">
                 <table class="table" id="list_table">
-                    <tr>
-                        <th>機種</th>
-                        <th>作業内容</th>
-                        <th>時間</th>
-                        <th>分</th>
-                    </tr>
                     <?php echo $strTbl; ?>
-                    <?php echo $strHourSel; ?>
-                    <?php echo $strMinSel; ?>
                 </table>
             </div>
 
