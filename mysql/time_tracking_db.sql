@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- ホスト: db
--- 生成日時: 2023 年 12 月 29 日 06:16
+-- 生成日時: 2024 年 1 月 02 日 14:10
 -- サーバのバージョン： 8.2.0
--- PHP のバージョン: 8.1.18
+-- PHP のバージョン: 8.2.14
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -30,7 +30,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `account_tbl` (
   `user_id` int NOT NULL,
   `passwd` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
-  `user_name` tinytext COLLATE utf8mb4_bin NOT NULL,
+  `user_name` tinytext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   `auth` int NOT NULL,
   `type` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
@@ -57,7 +57,7 @@ CREATE TABLE `time_traking_tbl` (
   `idx` int NOT NULL,
   `date` date NOT NULL,
   `user_id` int NOT NULL,
-  `device_idx` int NOT NULL,
+  `device_id` int NOT NULL,
   `work_id` int NOT NULL,
   `time` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
@@ -84,12 +84,6 @@ CREATE TABLE `work_tbl` (
 --
 ALTER TABLE `account_tbl`
   ADD UNIQUE KEY `user_id` (`user_id`);
-
---
--- テーブルのインデックス `device_tbl`
---
-ALTER TABLE `device_tbl`
-  ADD UNIQUE KEY `device_id` (`device_id`);
 
 --
 -- テーブルのインデックス `time_traking_tbl`
