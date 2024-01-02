@@ -6,63 +6,57 @@
     require_once(dirname(__FILE__).'/./common/Encode.php');
 
 
-    $date = date('y-m-d');
-    var_dump($date);
-
-    $result = "登録が失敗しました。";
-
-    //var_dump($_POST);
-
-
     //登録
     {
-        //Inputキーリスト
-        $InputName = ['device_id','work_id','hour','min']; 
-
-        //DB TABLEの要素名リスト
-        $keyName = ['date','user_id','device_id','work_id','time'];
-        $keyValue = [];
-    
-        //print($keyName[0]);
-        //rint($keyName[2]);
-
-        $format = "%s%02s";
         for ($i = 0; $i < 12; $i ++) {
-            $strDevId = sprintf($format, $InputName[0], $i);
-            $strWrkId = sprintf($format, $InputName[1], $i);
-            $strHour  = sprintf($format, $InputName[2], $i);
-            $strMin   = sprintf($format, $InputName[3], $i);
 
-            print($strTmp);
+            //Inputキーリスト
+            $InputName = ['device_id','work_id','hour','min'];
+            $inputValue = [];
 
-            print($_POST[$strTmp]);
-        
-        }
-    /*
-        //DB TABLEの 要素名:値 になるよう連想配列を作成
-        foreach ($keyName as $key) {
-            if ($key == 'user_id') {
-                $keyValue[$key] = (int)e($_POST[$key]);
-            } elseif ($key == 'auth') {
-                $keyValue[$key] = (int)e($_POST[$key]);
-            } elseif ($key == 'type') {
-                //$keyValue[$key] = (int)e($_POST[$key]);
-                $keyValue[$key] = 0;
-            } elseif ($key == 'passwd') {
-                $keyValue[$key] = $passwd_hash;
-            } else {
-                $keyValue[$key] = e($_POST[$key]);
+            //Input値を取り出す
+            for ($j = 0; $j < 4; $j ++) {
+                $format = "%s%02s";
+                $strTmp = sprintf($format, $InputName[$j], $i);
+
+                $inputValue[] = $_POST[$strTmp];
+            }
+
+            //作業時間が登録されている場合はDBへ登録する
+            if (($inputValue[2] != 0) || ($inputValue[3] != 0)) {
+
+                //DB TABLEの要素名リスト
+                $keyName = ['date','user_id','device_id','work_id','time'];
+                $keyValue = [];
+
+                //DB TABLEの 要素名:値 になるよう連想配列を作成
+                foreach ($keyName as $key) {
+                    if ($key == 'date') {
+                        $keyValue[$key] = date('y-m-d');
+                    } elseif ($key == 'user_id') {
+                        $keyValue[$key] = (int)$_SESSION['user_id'];
+                    } elseif ($key == 'device_id') {
+                        $keyValue[$key] = (int)($inputValue[0]);
+                    } elseif ($key == 'work_id') {
+                        $keyValue[$key] = (int)($inputValue[1]);
+                    } elseif ($key == 'time') { //時間
+                        $time = (int)($inputValue[2]) * 60;
+                        $time += (int)($inputValue[3]);
+
+                        $keyValue[$key] = $time;
+                    } else {
+                    }
+                }
+
+                //DB TABLEへ書き込み
+                $tblName = "time_traking_tbl";
+                if (writeTbl($tblName, $keyValue) == TRUE) {
+                    $result = "登録しました。";
+                } else {
+                    $result = "登録が失敗しました。";
+                }    
             }
         }
-        
-        //DB TABLEへ書き込み
-        $tblName = "account_tbl";
-        if (writeTbl($tblName, $keyValue) == TRUE) {
-            $result = "登録しました。";
-        } else {
-            $result = "登録が失敗しました。";
-        }    
-    */
     }
 ?>
 
@@ -77,7 +71,7 @@
         <p><?php echo $result; ?></p>
     </div>
     <div class="block ml-6">
-        <a href="account_list.php">アカウント管理へ</a>
+        <a href="time_add.php">時間登録へ</a>
     </div>
 <!--
     <script>
