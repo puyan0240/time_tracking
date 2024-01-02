@@ -58,13 +58,13 @@
         <tr>
             <td><label>機種:</label></td>
             <td>
-                <select name=\"device%02s\">
+                <select name=\"device_id%02s\">
                     %s
                 </select>
             <td>
             <td><label>作業:</label></td>
             <td>
-                <select name=\"work%02s\">
+                <select name=\"work_id%02s\">
                     %s
                 </select>
             <td>

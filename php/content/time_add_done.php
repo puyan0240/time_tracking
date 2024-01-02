@@ -11,26 +11,34 @@
 
     $result = "登録が失敗しました。";
 
-    var_dump($_POST);
+    //var_dump($_POST);
 
-/*
-    for ($i = 0; $i < 12; $i ++) {
-        $strTmp = $i."device";
 
-        foreach ($_POST)
-    }
-    foreach ($_POST as $value) {
-        var_dump($value);
-    }
-*/
-/*
     //登録
     {
+        //Inputキーリスト
+        $InputName = ['device_id','work_id','hour','min']; 
 
         //DB TABLEの要素名リスト
-        $keyName = ['user_id','passwd','user_name','auth','type'];
+        $keyName = ['date','user_id','device_id','work_id','time'];
         $keyValue = [];
     
+        //print($keyName[0]);
+        //rint($keyName[2]);
+
+        $format = "%s%02s";
+        for ($i = 0; $i < 12; $i ++) {
+            $strDevId = sprintf($format, $InputName[0], $i);
+            $strWrkId = sprintf($format, $InputName[1], $i);
+            $strHour  = sprintf($format, $InputName[2], $i);
+            $strMin   = sprintf($format, $InputName[3], $i);
+
+            print($strTmp);
+
+            print($_POST[$strTmp]);
+        
+        }
+    /*
         //DB TABLEの 要素名:値 になるよう連想配列を作成
         foreach ($keyName as $key) {
             if ($key == 'user_id') {
@@ -54,8 +62,8 @@
         } else {
             $result = "登録が失敗しました。";
         }    
+    */
     }
-*/
 ?>
 
 <!DOCTYPE html>
