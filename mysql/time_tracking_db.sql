@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- ホスト: db
--- 生成日時: 2024 年 1 月 02 日 14:10
+-- 生成日時: 2024 年 1 月 02 日 15:20
 -- サーバのバージョン： 8.2.0
 -- PHP のバージョン: 8.2.14
 
@@ -96,6 +96,16 @@ ALTER TABLE `time_traking_tbl`
 --
 ALTER TABLE `work_tbl`
   ADD UNIQUE KEY `work_id` (`work_id`);
+
+--
+-- ダンプしたテーブルの AUTO_INCREMENT
+--
+
+--
+-- テーブルの AUTO_INCREMENT `time_traking_tbl`
+--
+ALTER TABLE `time_traking_tbl`
+  MODIFY `idx` int NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
