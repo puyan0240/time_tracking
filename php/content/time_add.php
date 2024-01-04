@@ -37,7 +37,7 @@
     ";
 
 
-    //選択肢作成
+    //select-option:選択肢作成
     {
         //機種
         {
@@ -90,7 +90,7 @@
     }
 
 
-    //本日の登録一覧
+    //既に登録しているデータを表示
     {
         $count = 0;
         $strRetDevSelOpt = $strRetWrkSelOpt = $strRetHourSelOpt = $strRetMinSelOpt = [];
