@@ -51,12 +51,11 @@ function readTbl($tblName, $whereKeyValue, $order, $joinTblName, $on) {
             $count = 0;
             foreach ($whereKeyValue as $key => $value) {
                 if ($count != 0)
-                    $strParam .= " and "; //複数の場合はAND条件で繋ぐ
+                    $strParam .= " AND "; //複数の場合はAND条件で繋ぐ
                 $strParam .= ($key."=:".$key);
 
                 $count ++;
             }
-            $strParam = rtrim($strParam, ",");
         }
         else { //全検索
             $strParam = '1';
@@ -280,10 +279,14 @@ function deleteTbl($tblName, $whereKeyValue) {
 
         if ($whereKeyValue != NULL) { //削除条件あり
             //引数の連想配列は、テーブルの 要素名:値 になっている
+            $count = 0;
             foreach ($whereKeyValue as $key => $value) {
-                $strParam .= ($key."=:".$key.",");
+                if ($count != 0)
+                    $strParam .= " AND "; //複数の場合はAND条件で繋ぐ
+                $strParam .= ($key."=:".$key);
+
+                $count ++;
             }
-            $strParam = rtrim($strParam, ",");
         }
         else { //全削除
             $strParam = '1';

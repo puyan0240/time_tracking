@@ -2,6 +2,8 @@
     // Header部分共通
     require_once(dirname(__FILE__).'/./header/header.php');
 
+    //日付
+    $date = date('y-m-d');
 
     $tableFormat = "
     <tr>
@@ -98,7 +100,7 @@
         //DB TABLEの 要素名:値 になるよう連想配列を作成
         foreach ($whereKeyName as $key) {
             if ($key == 'date') {
-                $whereKeyValue[$key] = date('y-m-d');
+                $whereKeyValue[$key] = $date;
             } elseif ($key == 'user_id') {
                 $whereKeyValue[$key] = (int)($_SESSION['user_id']);
             } else {
@@ -111,9 +113,6 @@
         $retList = readTbl($tblName, $whereKeyValue, NULL, NULL, NULL);
         if ($retList != FALSE) {
             foreach ($retList as $retValue) {
-                if ($count != 0) {
-                    $date = $retValue['date'];
-                }
                 $count ++;
 
                 //機種一覧
@@ -180,12 +179,9 @@
                         }
                         $strRetMinSelOpt[] = $strTmp;
                     }
-
                 }
             }
-        } else {
-            $date = date('y-m-d');
-        }
+        } 
     }
 
 

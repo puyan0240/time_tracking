@@ -6,25 +6,44 @@
     require_once(dirname(__FILE__).'/./common/Encode.php');
 
 
+    $user_id = $_SESSION['user_id'];
+    $date    = e($_POST['date']);
+
+
+    //当日データを一旦削除する
+    {              
+        //DB TABLEの 要素名:値 になるよう連想配列を作成
+        $whereKeyValue = [];
+        $whereKeyValue['date']    = $date;
+        $whereKeyValue['user_id'] = (int)$user_id;
+
+        //DBアクセス
+        $tblName = "time_traking_tbl";
+        deleteTbl($tblName, $whereKeyValue, NULL, NULL, NULL);
+    }
+
     //登録
     {
+        $result = "登録しました。";
+
         for ($i = 0; $i < 12; $i ++) {
 
             //Inputキーリスト
             $InputName = ['device_id','work_id','hour','min'];
-            $inputValue = [];
+            $InputValue = [];
 
             //Input値を取り出す
             for ($j = 0; $j < 4; $j ++) {
                 $format = "%s%02s";
                 $strTmp = sprintf($format, $InputName[$j], $i);
 
-                $inputValue[] = $_POST[$strTmp];
+                $InputValue[] = $_POST[$strTmp];
             }
 
             //作業時間が登録されている場合はDBへ登録する
-            if (($inputValue[2] != 0) || ($inputValue[3] != 0)) {
-
+            if (($InputValue[2] == 0) && ($InputValue[3] == 0)) {
+                continue; //登録なし
+            } else {
                 //DB TABLEの要素名リスト
                 $keyName = ['date','user_id','device_id','work_id','time'];
                 $keyValue = [];
@@ -33,13 +52,15 @@
                 foreach ($keyName as $key) {
                     if ($key == 'user_id') {
                         $keyValue[$key] = (int)$_SESSION['user_id'];
+                    } elseif ($key == 'date') {
+                        $keyValue[$key] = $date;
                     } elseif ($key == 'device_id') {
-                        $keyValue[$key] = (int)($inputValue[0]);
+                        $keyValue[$key] = (int)($InputValue[0]);
                     } elseif ($key == 'work_id') {
-                        $keyValue[$key] = (int)($inputValue[1]);
+                        $keyValue[$key] = (int)($InputValue[1]);
                     } elseif ($key == 'time') { //時間
-                        $time = (int)($inputValue[2]) * 60;
-                        $time += (int)($inputValue[3]);
+                        $time = (int)($InputValue[2]) * 60;
+                        $time += (int)($InputValue[3]);
 
                         $keyValue[$key] = $time;
                     } else {
@@ -50,10 +71,10 @@
                 //DB TABLEへ書き込み
                 $tblName = "time_traking_tbl";
                 if (writeTbl($tblName, $keyValue) == TRUE) {
-                    $result = "登録しました。";
+                    ;
                 } else {
                     $result = "登録が失敗しました。";
-                }    
+                }  
             }
         }
     }
