@@ -5,8 +5,8 @@
 
     //「年」選択肢
     {
-        if (isset($_POST['sel_year']))
-            $selectedMonth = $_POST['sel_year'];
+        if (isset($_POST['sel_month']))
+            $selectedMonth = $_POST['sel_month'];
         else
             $selectedMonth = date('Y-m');
 
@@ -24,8 +24,9 @@
             else
                 $strSelected = "";
 
-            //月:減算
             $strMonth .= sprintf($format, $Month, $strSelected, $Month);
+
+            //月:減算
             $date = strtotime($Month);
             $Month = date('Y-m', strtotime('-1 month', $date));
         }
@@ -34,23 +35,33 @@
     //一覧表示
     {
         $strTbl = "";
+        $dayFormat = "%s-%02d";
+        $tableFormat = "
+        <tr>
+            <td>%02d</td>
+            <td>%d</td>
+        </tr>";
 
-        //DB TABLEから読み出し
-        $tblName = "work_tbl";
-        $ret = readTbl($tblName, NULL, NULL, NULL, NULL);
-        if ($ret != FALSE) {
+        for ($day = 1; $day <= 31; $day ++) {
+            $strDay = sprintf($dayFormat, $selectedMonth, $day);
+            var_dump($strDay);
+            $timeSum = 0;
 
-            $format = "
-            <tr>
-                <td>%04d</td>
-                <td>%s</td>
-                <td>%s</td>
-            </tr>";
+            //DB TABLEの 要素名:値 になるよう連想配列を作成
+            $whereKeyValue = [];
+            $whereKeyValue['date']    = $strDay;
+            $whereKeyValue['user_id'] = $_SESSION['user_id'];
 
-            //HTML作成
-            foreach ($ret as $value) {
-                $strTbl .= sprintf($format, $value['work_id'], $value['work_name'], $value['direct']);
+            //DBアクセス
+            $tblName = "time_traking_tbl";
+            $ret = readTbl($tblName, $whereKeyValue, NULL, NULL, NULL);
+            if ($ret != FALSE) {
+                foreach ($ret as $value) {
+                    $timeSum += (int)$value['time'];
+                }
             }
+
+            $strTbl .= sprintf($tableFormat, $strDay, $timeSum);
         }
     }
 ?>
@@ -66,7 +77,7 @@
         <form action="" method="post">
             <div class="control">
                 <div class="select is-success is-small">
-                    <select name="sel_year">
+                    <select name="sel_month">
                         <?php echo $strMonth; ?>
                     </select>
                 </div>
@@ -78,9 +89,8 @@
     <div class="block ml-6">
         <table class="table" id="list_table">
             <tr>
-                <th>作業番号</th>
-                <th>作業名</th>
-                <th>直接/間接</th>
+                <th>日</th>
+                <th>勤務時間</th>
             </tr>
             <?php echo $strTbl; ?>
 
