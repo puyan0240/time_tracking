@@ -31,9 +31,7 @@
 
                 //DB TABLEの 要素名:値 になるよう連想配列を作成
                 foreach ($keyName as $key) {
-                    if ($key == 'date') {
-                        $keyValue[$key] = date('y-m-d');
-                    } elseif ($key == 'user_id') {
+                    if ($key == 'user_id') {
                         $keyValue[$key] = (int)$_SESSION['user_id'];
                     } elseif ($key == 'device_id') {
                         $keyValue[$key] = (int)($inputValue[0]);
@@ -45,6 +43,7 @@
 
                         $keyValue[$key] = $time;
                     } else {
+                        $keyValue[$key] = e($_POST[$key]);
                     }
                 }
 

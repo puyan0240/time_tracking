@@ -111,6 +111,9 @@
         $retList = readTbl($tblName, $whereKeyValue, NULL, NULL, NULL);
         if ($retList != FALSE) {
             foreach ($retList as $retValue) {
+                if ($count != 0) {
+                    $date = $retValue['date'];
+                }
                 $count ++;
 
                 //機種一覧
@@ -180,6 +183,8 @@
 
                 }
             }
+        } else {
+            $date = date('y-m-d');
         }
     }
 
@@ -208,6 +213,8 @@
     <div class="block ml-6 mr-6">
         <form action="time_add_done.php" method="POST">
   
+            <input type="hidden" name="date" value="<?php echo $date;?>">
+
             <div class="block">
                 <table class="table" id="list_table">
                     <?php echo $strTbl; ?>
