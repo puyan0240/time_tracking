@@ -24,12 +24,26 @@
     if ($input_ok == true)
     {
         //DB検索
-        $tblName = "account_tbl";
-        $where   = "user_id='".$user_id."'";
-        $ret = readTbl($tblName, $where, NULL, NULL, NULL);
-        if ($ret != FALSE) {
-            $result = "社員番号:".$user_id." は、既に登録されています。";
-            $input_ok = false;
+        {
+            //DB TABLEの要素名リスト
+            $whereKeyName = ['user_id'];
+            $whereKeyValue = [];
+        
+            //DB TABLEの 要素名:値 になるよう連想配列を作成
+            foreach ($whereKeyName as $key) {
+                if ($key == 'user_id')
+                    $whereKeyValue[$key] = (int)$user_id;
+                else
+                    $whereKeyValue[$key] = e($_POST[$key]);
+            }
+
+            //DBアクセス
+            $tblName = "account_tbl";
+            $ret = readTbl($tblName, $whereKeyValue, NULL, NULL, NULL);
+            if ($ret != FALSE) {
+                $result = "社員番号:".$user_id." は、既に登録されています。";
+                $input_ok = false;
+            }
         }
     }
 

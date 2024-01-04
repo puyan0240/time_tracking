@@ -2,6 +2,9 @@
     // Header部分共通
     require_once(dirname(__FILE__).'/./header/header.php');
 
+    //e()用
+    require_once(dirname(__FILE__).'/./common/Encode.php');
+
    
     $user_id = $auth = $type = 0;
     $passwd = $user_name = "";
@@ -9,13 +12,27 @@
     $user_id = $_GET['user_id'];
 
     //DB検索
-    $tblName = "account_tbl";
-    $where   = "user_id='".$user_id."'";
-    $ret = readTbl($tblName, $where, NULL, NULL, NULL);
-    if ($ret != FALSE) {
-        foreach ($ret as $value) {
-            $user_name = $value['user_name'];
-            $auth      = $value['auth'];
+    {
+        //DB TABLEの要素名リスト
+        $whereKeyName = ['user_id'];
+        $whereKeyValue = [];
+        
+        //DB TABLEの 要素名:値 になるよう連想配列を作成
+        foreach ($whereKeyName as $key) {
+            if ($key == 'user_id')
+                $whereKeyValue[$key] = (int)$user_id;
+            else
+                $whereKeyValue[$key] = e($_POST[$key]);
+        }
+
+        //DBアクセス
+        $tblName = "account_tbl";
+        $ret = readTbl($tblName, $whereKeyValue, NULL, NULL, NULL);
+        if ($ret != FALSE) {
+            foreach ($ret as $value) {
+                $user_name = $value['user_name'];
+                $auth      = $value['auth'];
+            }
         }
     }
 
