@@ -24,7 +24,8 @@
             else
                 $strSelected = "";
 
-            $strMonth .= sprintf($format, $Month, $strSelected, $Month);
+            $strYYmm = date('Y年m月', strtotime($Month)); //YYYY年mm月 の文字列
+            $strMonth .= sprintf($format, $Month, $strSelected, $strYYmm);
 
             //月:減算
             $date = strtotime($Month);
@@ -38,6 +39,7 @@
         $dayFormat = "%s-%02d";
         $tableFormat = "
         <tr>
+            <td hidden>%s</td>
             <td>%s</td>
             <td>%s</td>
             <td>%s</td>
@@ -80,7 +82,7 @@
                     $strOvertime = sprintf($format, $hour, $min);
                 }  
             }
-            $strTbl .= sprintf($tableFormat, $strmmdd, $strSum, $strOvertime);
+            $strTbl .= sprintf($tableFormat, $strYYYYmmdd, $strmmdd, $strSum, $strOvertime);
         }
     }
 ?>
@@ -108,6 +110,7 @@
     <div class="block ml-6">
         <table class="table" id="list_table">
             <tr>
+                <th hidden></th>
                 <th>年/月/日</th>
                 <th>勤務時間</th>
                 <th>残業時間</th>
