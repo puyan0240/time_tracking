@@ -26,12 +26,26 @@
         $work_id = e($_POST['work_id']);
 
         //DB検索
-        $tblName = "work_tbl";
-        $where   = "work_id='".$work_id."'";
-        $ret = readTbl($tblName, $where, NULL, NULL, NULL);
-        if ($ret != FALSE) {
-            $result = "作業番号:".$work_id." は、既に登録されています。";
-            $input_ok = false;
+        {
+            //DB TABLEの要素名リスト
+            $whereKeyName = ['work_id'];
+            $whereKeyValue = [];
+        
+            //DB TABLEの 要素名:値 になるよう連想配列を作成
+            foreach ($whereKeyName as $key) {
+                if ($key == 'work_id')
+                    $whereKeyValue[$key] = (int)$work_id;
+                else
+                    $whereKeyValue[$key] = e($_POST[$key]);
+            }
+
+            //DBアクセス
+            $tblName = "work_tbl";
+            $ret = readTbl($tblName, $whereKeyValue, NULL, NULL, NULL);
+            if ($ret != FALSE) {
+                $result = "作業番号:".$work_id." は、既に登録されています。";
+                $input_ok = false;
+            }
         }
     }
 
