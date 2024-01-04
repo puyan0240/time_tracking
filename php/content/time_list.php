@@ -38,14 +38,15 @@
         $dayFormat = "%s-%02d";
         $tableFormat = "
         <tr>
-            <td>%02d</td>
-            <td>%d</td>
+            <td>%s</td>
+            <td>%s</td>
+            <td>%s</td>
         </tr>";
 
         for ($day = 1; $day <= 31; $day ++) {
             $strDay = sprintf($dayFormat, $selectedMonth, $day);
-            var_dump($strDay);
-            $timeSum = 0;
+            $timeSum = $overtime = 0;
+            $strSum = $strOvertime = "-----";
 
             //DB TABLEの 要素名:値 になるよう連想配列を作成
             $whereKeyValue = [];
@@ -59,9 +60,26 @@
                 foreach ($ret as $value) {
                     $timeSum += (int)$value['time'];
                 }
-            }
 
-            $strTbl .= sprintf($tableFormat, $strDay, $timeSum);
+                //勤務時間
+                if ($timeSum > 0) {
+                    $hour = (int)($timeSum / 60);
+                    $min  = (int)($timeSum % 60);
+        
+                    $format = "%d時間 %d分";
+                    $strSum = sprintf($format, $hour, $min);
+                }
+
+                //残業時間
+                $overtime = $timeSum - (60*8);
+                if ($overtime > 0) {
+                    $hour = (int)($overtime / 60);
+                    $min  = (int)($overtime % 60);
+    
+                    $strOvertime = sprintf($format, $hour, $min);
+                }  
+            }
+            $strTbl .= sprintf($tableFormat, $strDay, $strSum, $strOvertime);
         }
     }
 ?>
@@ -89,8 +107,9 @@
     <div class="block ml-6">
         <table class="table" id="list_table">
             <tr>
-                <th>日</th>
+                <th>年/月/日</th>
                 <th>勤務時間</th>
+                <th>残業時間</th>
             </tr>
             <?php echo $strTbl; ?>
 

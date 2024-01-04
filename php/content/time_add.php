@@ -208,7 +208,6 @@
             $min  = (int)($overtime % 60);
     
             $strOvertime = sprintf($format, $hour, $min);
-    
         }        
     }
 
