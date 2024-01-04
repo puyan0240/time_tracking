@@ -3,14 +3,24 @@
     require_once(dirname(__FILE__).'/./common/DbManager.php');
   
     $result = "失敗しました。";
-    $tblName = "account_tbl";
-
+    
     $user_id = e($_POST['user_id']);
-    //$passwd = e($_POST['passwd']);
+ 
+    //DB TABLEの要素名リスト
+    $whereKeyName = ['user_id'];
+    $whereKeyValue = [];
+        
+    //DB TABLEの 要素名:値 になるよう連想配列を作成
+    foreach ($whereKeyName as $key) {
+        if ($key == 'user_id')
+            $whereKeyValue[$key] = (int)e($_POST[$key]);
+        else
+            $whereKeyValue[$key] = e($_POST[$key]);
+    }
 
     //DB検索
-    $where = "user_id='".$user_id."'";
-    $ret = readTbl($tblName, $where, NULL, NULL, NULL);
+    $tblName = "account_tbl";
+    $ret = readTbl($tblName, $whereKeyValue, NULL, NULL, NULL);
     if ($ret != FALSE) {
 
         //ユーザー認証&記録
@@ -74,11 +84,13 @@
         <a href="login.php">ログイン画面へ</a>
     </div>
 
+<!--
     <script>
         setTimeout(function() {
             window.location.href = "login.php";
         }, 2*1000);
     </script>
+-->
 
     <?php include('./header/bulma_burger.js'); ?>
 </body>

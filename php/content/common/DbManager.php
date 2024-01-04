@@ -36,31 +36,49 @@ function getDb() : PDO {
 #-----------------------------------------------------------
 # TBLから取得 (SELECT)
 #-----------------------------------------------------------
-function readTbl($tblName, $where, $order, $joinTblName, $on) {
+function readTbl($tblName, $whereKeyValue, $order, $joinTblName, $on) {
 
     $result = FALSE;
     $outValue = [];
+    $strParam = "";
 
     //DB接続
     $db = getDb();
     if ($db != null) {
 
+        if ($whereKeyValue != NULL) { //検索条件あり
+            //引数の連想配列は、テーブルの 要素名:値 になっている
+            foreach ($whereKeyValue as $key => $value) {
+                $strParam .= ($key."=:".$key.",");
+            }
+            $strParam = rtrim($strParam, ",");
+        }
+        else { //全検索
+            $strParam = '1';
+        }
+
         //TBLから取得
         try {
-            if ($where == NULL)
-                $where = '1';
-
             if ($joinTblName == NULL) {
                 $format = 'SELECT * FROM %s WHERE %s %s';
-                $strSql = sprintf($format, $tblName, $where, $order);
+                $strSql = sprintf($format, $tblName, $strParam, $order);
             } else {
                 $format = 'SELECT * FROM %s JOIN %s ON %s WHERE %s %s';
-                $strSql = sprintf($format, $tblName, $joinTblName , $on, $where, $order);
+                $strSql = sprintf($format, $tblName, $joinTblName , $on, $whereKeyValue, $order);
             }            
             //echo $strSql;
             
-            $stmt = $db->prepare($strSql);
-            $stmt->execute();
+            $stt = $db->prepare($strSql);
+
+            //削除条件ありの場合はWHEREのバインド設定
+            if ($whereKeyValue != NULL) {
+                $format = ':%s';
+                foreach ($whereKeyValue as $key => $value) {
+                    $strBindName = sprintf($format, $key);
+                    $stt->bindValue($strBindName, $value);
+                }
+            }
+            $stt->execute();
 
             $result = TRUE;
         }
@@ -75,7 +93,7 @@ function readTbl($tblName, $where, $order, $joinTblName, $on) {
         //取得結果を順番に取り出す
         if ($result == TRUE) {
             while (TRUE) {
-                $rec = $stmt->fetch(PDO::FETCH_ASSOC); //連想配列で
+                $rec = $stt->fetch(PDO::FETCH_ASSOC); //連想配列で
                 if ($rec == FALSE)
                     break; //終了
 

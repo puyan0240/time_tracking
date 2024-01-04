@@ -91,10 +91,21 @@
         $count = 0;
         $strRetDevSelOpt = $strRetWrkSelOpt = $strRetHourSelOpt = $strRetMinSelOpt = [];
 
+        //DB TABLEの要素名リスト
+        $whereKeyName = ['date'];
+        $whereKeyValue = [];
+        
+        //DB TABLEの 要素名:値 になるよう連想配列を作成
+        foreach ($whereKeyName as $key) {
+            if ($key == 'date')
+                $whereKeyValue[$key] = date('y-m-d');
+            else
+                $whereKeyValue[$key] = e($_POST[$key]);
+        }
+
         //DB検索
         $tblName = "time_traking_tbl";
-        $where   = "date='".date('y-m-d')."'";
-        $retList = readTbl($tblName, $where, NULL, NULL, NULL);
+        $retList = readTbl($tblName, $whereKeyValue, NULL, NULL, NULL);
         if ($retList != FALSE) {
             foreach ($retList as $retValue) {
                 $count ++;
