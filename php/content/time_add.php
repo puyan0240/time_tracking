@@ -5,6 +5,8 @@
     //日付
     $date = date('y-m-d');
 
+    $timeSum = 0;
+
     $tableFormat = "
     <tr>
         <td><label>機種:</label></td>
@@ -152,6 +154,8 @@
                 //時間、分
                 {
                     $time = (int)($retValue['time']);
+                    $timeSum += $time; //合計時間計算用
+
                     $hour = (int)($time / 60);
                     $min  = (int)($time % 60);
 
@@ -184,6 +188,30 @@
         } 
     }
 
+    //勤務時間
+    {
+        $strSum = $strOvertime = "-----";
+        $format = "%d時間 %d分";
+
+        //勤務時間
+        {
+            $hour = (int)($timeSum / 60);
+            $min  = (int)($timeSum % 60);
+
+            $strSum = sprintf($format, $hour, $min);
+        }
+
+        //残業時間
+        $overtime = $timeSum - (60*8);
+        if ($overtime > 0) {
+            $hour = (int)($overtime / 60);
+            $min  = (int)($overtime % 60);
+    
+            $strOvertime = sprintf($format, $hour, $min);
+    
+        }        
+    }
+
 
     //Table作成
     {
@@ -214,6 +242,19 @@
             <div class="block">
                 <table class="table" id="list_table">
                     <?php echo $strTbl; ?>
+                </table>
+            </div>
+
+            <div class="block ml-6">
+                <table class="table" id="list_table">
+                    <tr>
+                        <td>勤務時間</td>
+                        <td><?php echo $strSum;?></td>
+                    </tr>
+                    <tr>
+                        <td>残業時間</td>
+                        <td><?php echo $strOvertime;?></td>
+                    </tr>
                 </table>
             </div>
 
