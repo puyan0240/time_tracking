@@ -2,8 +2,13 @@
     // Header部分共通
     require_once(dirname(__FILE__).'/./header/header.php');
 
-    //日付
-    $date = date('y-m-d');
+     //日付
+    {
+        if (isset($_GET['date']))
+            $date = $_GET['date'];
+        else
+            $date = date('y-m-d');
+    }
 
     $timeSum = 0;
 
@@ -234,6 +239,9 @@
     <br>
 
     <div class="block ml-6 mr-6">
+        <label>aaa</label>
+        <br>
+
         <form action="time_add_done.php" method="POST">
   
             <input type="hidden" name="date" value="<?php echo $date;?>">

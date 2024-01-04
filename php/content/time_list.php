@@ -127,7 +127,7 @@
         }
 
         function clicked(e) {
-            location = "work_detail.php?work_id="+e.target.id;
+            location = "time_add.php?date="+e.target.id;
         }
     </script>
 
