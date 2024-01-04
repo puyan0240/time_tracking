@@ -44,13 +44,14 @@
         </tr>";
 
         for ($day = 1; $day <= 31; $day ++) {
-            $strDay = sprintf($dayFormat, $selectedMonth, $day);
+            $strYYYYmmdd = sprintf($dayFormat, $selectedMonth, $day); //YYYY-mm-dd の文字列
+            $strmmdd = date('m月d日', strtotime($strYYYYmmdd));  //mm月dd日 の文字列
             $timeSum = $overtime = 0;
             $strSum = $strOvertime = "-----";
 
             //DB TABLEの 要素名:値 になるよう連想配列を作成
             $whereKeyValue = [];
-            $whereKeyValue['date']    = $strDay;
+            $whereKeyValue['date']    = $strYYYYmmdd;
             $whereKeyValue['user_id'] = $_SESSION['user_id'];
 
             //DBアクセス
@@ -79,7 +80,7 @@
                     $strOvertime = sprintf($format, $hour, $min);
                 }  
             }
-            $strTbl .= sprintf($tableFormat, $strDay, $strSum, $strOvertime);
+            $strTbl .= sprintf($tableFormat, $strmmdd, $strSum, $strOvertime);
         }
     }
 ?>

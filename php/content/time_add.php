@@ -7,7 +7,9 @@
         if (isset($_GET['date']))
             $date = $_GET['date'];
         else
-            $date = date('y-m-d');
+            $date = date('Y-m-d');
+
+        $strDate = date('m月d日', strtotime($date));
     }
 
     $timeSum = 0;
@@ -239,8 +241,8 @@
     <br>
 
     <div class="block ml-6 mr-6">
-        <label>aaa</label>
-        <br>
+        <label> <?php echo $strDate; ?></label>
+        <br><br>
 
         <form action="time_add_done.php" method="POST">
   
