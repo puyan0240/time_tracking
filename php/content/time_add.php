@@ -92,15 +92,18 @@
         $strRetDevSelOpt = $strRetWrkSelOpt = $strRetHourSelOpt = $strRetMinSelOpt = [];
 
         //DB TABLEの要素名リスト
-        $whereKeyName = ['date'];
+        $whereKeyName = ['date','user_id'];
         $whereKeyValue = [];
         
         //DB TABLEの 要素名:値 になるよう連想配列を作成
         foreach ($whereKeyName as $key) {
-            if ($key == 'date')
+            if ($key == 'date') {
                 $whereKeyValue[$key] = date('y-m-d');
-            else
+            } elseif ($key == 'user_id') {
+                $whereKeyValue[$key] = (int)($_SESSION['user_id']);
+            } else {
                 $whereKeyValue[$key] = e($_POST[$key]);
+            }
         }
 
         //DB検索

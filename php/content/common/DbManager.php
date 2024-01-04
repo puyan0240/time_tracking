@@ -48,8 +48,13 @@ function readTbl($tblName, $whereKeyValue, $order, $joinTblName, $on) {
 
         if ($whereKeyValue != NULL) { //検索条件あり
             //引数の連想配列は、テーブルの 要素名:値 になっている
+            $count = 0;
             foreach ($whereKeyValue as $key => $value) {
-                $strParam .= ($key."=:".$key.",");
+                if ($count != 0)
+                    $strParam .= " and "; //複数の場合はAND条件で繋ぐ
+                $strParam .= ($key."=:".$key);
+
+                $count ++;
             }
             $strParam = rtrim($strParam, ",");
         }
