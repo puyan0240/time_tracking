@@ -1,8 +1,9 @@
 <?php
-    require_once(dirname(__FILE__).'/./common/Encode.php');
-
     // Header部分共通
     require_once(dirname(__FILE__).'/./header/header.php');
+
+    //e()用
+    require_once(dirname(__FILE__).'/./common/Encode.php');
 
 
     $work_name = $direct = "";
