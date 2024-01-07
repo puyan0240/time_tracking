@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- ホスト: db
--- 生成日時: 2024 年 1 月 02 日 15:20
+-- 生成日時: 2024 年 1 月 06 日 06:56
 -- サーバのバージョン： 8.2.0
--- PHP のバージョン: 8.2.14
+-- PHP のバージョン: 8.2.13
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -42,6 +42,7 @@ CREATE TABLE `account_tbl` (
 --
 
 CREATE TABLE `device_tbl` (
+  `idx` int NOT NULL,
   `device_id` int NOT NULL,
   `ver` int NOT NULL,
   `device_name` tinytext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL
@@ -86,6 +87,12 @@ ALTER TABLE `account_tbl`
   ADD UNIQUE KEY `user_id` (`user_id`);
 
 --
+-- テーブルのインデックス `device_tbl`
+--
+ALTER TABLE `device_tbl`
+  ADD PRIMARY KEY (`idx`);
+
+--
 -- テーブルのインデックス `time_traking_tbl`
 --
 ALTER TABLE `time_traking_tbl`
@@ -100,6 +107,12 @@ ALTER TABLE `work_tbl`
 --
 -- ダンプしたテーブルの AUTO_INCREMENT
 --
+
+--
+-- テーブルの AUTO_INCREMENT `device_tbl`
+--
+ALTER TABLE `device_tbl`
+  MODIFY `idx` int NOT NULL AUTO_INCREMENT;
 
 --
 -- テーブルの AUTO_INCREMENT `time_traking_tbl`

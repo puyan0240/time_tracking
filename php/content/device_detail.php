@@ -2,17 +2,24 @@
     // Header部分共通
     require_once(dirname(__FILE__).'/./header/header.php');
 
-    $ver = $device_name = "";
-    $device_id = $_GET['device_id'];
+    $device_id = $ver = $device_name = "";
+    $idx = (int)$_GET['idx'];
 
     //DB検索
-    $tblName = "device_tbl";
-    $where   = "device_id='".$device_id."'";
-    $ret = readTbl($tblName, $where, NULL, NULL, NULL);
-    if ($ret != FALSE) {
-        foreach ($ret as $value) {
-            $ver         = $value['ver'];
-            $device_name = $value['device_name'];
+    {       
+        //DB TABLEの 要素名:値 になるよう連想配列を作成
+        $whereKeyValue = [];
+        $whereKeyValue['idx'] = (int)$idx;
+
+        //DBアクセス
+        $tblName = "device_tbl";
+        $ret = readTbl($tblName, $whereKeyValue, NULL, NULL, NULL);
+        if ($ret != FALSE) {
+            foreach ($ret as $value) {
+                $device_id   = $value['device_id'];
+                $ver         = str_pad($value['ver'], 2, 0, STR_PAD_LEFT); //0埋めの2桁表示
+                $device_name = $value['device_name'];
+            }
         }
     }
 
@@ -21,7 +28,7 @@
     $strDelBtn = "";
     if ($_SESSION['auth'] == 1) {
         $strDelBtn =
-        "<a href=\"device_del_confirm.php?device_id=".$device_id."\">
+        "<a href=\"device_del_confirm.php?idx=".$idx."\">
             <span class=\"button has-text-light has-background-danger ml-5\">機種削除</span>
         </a>";
     }
@@ -55,7 +62,7 @@
     </div>
 
     <div class="block ml-6">
-        <a href="device_edit.php?device_id=<?php echo $device_id;?>">
+        <a href="device_edit.php?idx=<?php echo $idx;?>">
             <span class="button has-background-grey-lighter">編集</span>
         </a>
         <?php echo $strDelBtn; ?>

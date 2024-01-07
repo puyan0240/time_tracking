@@ -8,12 +8,12 @@
 
     //DB更新
     {
-        $device_id = e($_POST['device_id']);
+        $idx = (int)e($_POST['idx']);
 
         //DB TABLEの要素名リスト
-        $elementKeyName = ['ver', 'device_name'];
+        $elementKeyName = ['device_id', 'ver', 'device_name'];
         $elementKeyValue = [];
-        $paramKeyName = ['device_id'];
+        $paramKeyName = ['idx'];
         $paramKeyValue = [];
 
         //DB TABLEの 要素名:値 になるよう連想配列を作成

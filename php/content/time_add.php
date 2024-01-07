@@ -9,7 +9,7 @@
         else
             $date = date('Y-m-d');
 
-        $strDate = date('m月d日', strtotime($date));
+        $strDate = date('Y年m月d日', strtotime($date));
     }
 
     $timeSum = 0;
@@ -198,7 +198,7 @@
     //勤務時間
     {
         $strSum = $strOvertime = "-----";
-        $format = "%d時間 %d分";
+        $format = "%02d時間 %02d分";
 
         //勤務時間
         {

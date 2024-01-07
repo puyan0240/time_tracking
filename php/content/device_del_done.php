@@ -9,15 +9,10 @@
     $result = "削除できませんでした。";
 
     if ($_POST['key_word'] == "delete") { //削除用キーワード[delete]
-        
-        //DB TABLEの要素名リスト
-        $paramKeyName = ['device_id'];
-        $paramKeyValue = [];
 
         //DB TABLEの 要素名:値 になるよう連想配列を作成
-        foreach ($paramKeyName as $key) {
-            $paramKeyValue[$key] = e($_POST[$key]);
-        }
+        $paramKeyValue = [];
+        $paramKeyValue['idx'] = (int)$_POST['idx'];
 
         //DB TBLを更新
         $tblName = "device_tbl";

@@ -69,7 +69,7 @@
                     $hour = (int)($timeSum / 60);
                     $min  = (int)($timeSum % 60);
         
-                    $format = "%d時間 %d分";
+                    $format = "%02d時間 %02d分";
                     $strSum = sprintf($format, $hour, $min);
                 }
 

@@ -34,16 +34,22 @@
         }
     }
 
-    //２重登録の確認
+    //２重登録の確認(DB検索)
     if ($input_ok == true)
-    {    
-        //DB検索
+    {        
+        //DB TABLEの 要素名:値 になるよう連想配列を作成
+        $whereKeyValue = [];
+        $whereKeyValue['device_id'] = (int)$device_id;
+        $whereKeyValue['ver']       = (int)$ver;
+
+        //DBアクセス
         $tblName = "device_tbl";
-        $where   = "device_id='".$device_id."'"." and "."ver='".$ver."'";
-        $ret = readTbl($tblName, $where, NULL, NULL, NULL);
+        $ret = readTbl($tblName, $whereKeyValue, NULL, NULL, NULL);
         if ($ret != FALSE) {
-            $result = "機種番号:".$device_id." Ver:".$ver."は、既に登録されています。";
-            $input_ok = false;
+            foreach ($ret as $value) {
+                $result = "機種番号:".$device_id." Ver:".$ver."は、既に登録されています。";
+                $input_ok = false;
+            }
         }
     }
 
@@ -55,13 +61,10 @@
         $keyValue = [];
     
         //DB TABLEの 要素名:値 になるよう連想配列を作成
-        foreach ($keyName as $key) {
-            if ($key == 'ver') {
-                $keyValue[$key] = (int)e($_POST[$key]);
-            } else {
-                $keyValue[$key] = e($_POST[$key]);
-            }
-        }
+        $keyValue = [];
+        $keyValue['device_id']   = (int)$device_id;
+        $keyValue['ver']         = (int)$ver;
+        $keyValue['device_name'] =  e($_POST['device_name']);
         
         //DB TABLEへ書き込み
         $tblName = "device_tbl";

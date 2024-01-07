@@ -2,17 +2,24 @@
     // Header部分共通
     require_once(dirname(__FILE__).'/./header/header.php');
     
-    $ver = $device_name = "";
-    $device_id = $_GET['device_id'];
+    $device_id = $ver = $device_name = "";
+    $idx = (int)$_GET['idx'];
 
     //DB検索
-    $tblName = "device_tbl";
-    $where   = "device_id='".$device_id."'";
-    $ret = readTbl($tblName, $where, NULL, NULL, NULL);
-    if ($ret != FALSE) {
-        foreach ($ret as $value) {
-            $ver         = $value['ver'];
-            $device_name = $value['device_name'];
+    {       
+        //DB TABLEの 要素名:値 になるよう連想配列を作成
+        $whereKeyValue = [];
+        $whereKeyValue['idx'] = (int)$idx;
+
+        //DBアクセス
+        $tblName = "device_tbl";
+        $ret = readTbl($tblName, $whereKeyValue, NULL, NULL, NULL);
+        if ($ret != FALSE) {
+            foreach ($ret as $value) {
+                $device_id   = $value['device_id'];
+                $ver         = str_pad($value['ver'], 2, 0, STR_PAD_LEFT); //0埋めの2桁表示
+                $device_name = $value['device_name'];
+            }
         }
     }
 
@@ -32,7 +39,7 @@
 
     <div class="block ml-6 mr-6">
         <form action="device_del_done.php" method="post">
-            <input type="hidden" name="device_id" value="<?php echo $device_id;?>">
+            <input type="hidden" name="idx" value="<?php echo $idx;?>">
 
             <div class="field">
                 <p>delete と入力してください</p>

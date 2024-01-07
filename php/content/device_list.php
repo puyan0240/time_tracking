@@ -9,11 +9,13 @@
 
         //DB TABLEから読み出し
         $tblName = "device_tbl";
-        $ret = readTbl($tblName, NULL, NULL, NULL, NULL);
+        $order   = "ORDER BY device_id ASC , ver ASC "; //昇順
+        $ret = readTbl($tblName, NULL, $order, NULL, NULL);
         if ($ret != FALSE) {
 
             $format = "
             <tr>
+                <td hidden>%d</d>
                 <td>%04d</td>
                 <td>%02s</td>
                 <td>%s</td>
@@ -21,7 +23,7 @@
 
             //HTML作成
             foreach ($ret as $value) {
-                $strTbl .= sprintf($format, $value['device_id'], $value['ver'], $value['device_name']);
+                $strTbl .= sprintf($format, $value['idx'], $value['device_id'], $value['ver'], $value['device_name']);
             }
         }
     }
@@ -43,6 +45,7 @@
     <div class="block ml-6">
         <table class="table" id="list_table">
             <tr>
+                <th hidden></th>
                 <th>機種番号</th>
                 <th>Ver</th>
                 <th>商品名</th>
@@ -63,7 +66,7 @@
         }
 
         function clicked(e) {
-            location = "device_detail.php?device_id="+e.target.id;
+            location = "device_detail.php?idx="+e.target.id;
         }
     </script>
 
