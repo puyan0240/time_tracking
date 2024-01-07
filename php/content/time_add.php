@@ -18,27 +18,27 @@
     <tr>
         <td><label>機種:</label></td>
         <td>
-            <select name=\"device_id%02s\">
-                %s
-            </select>
+            <div class=\"select is-primary\">
+                <select name=\"device_id%02s\">%s</select>
+            </div>
         <td>
         <td><label>作業:</label></td>
         <td>
-            <select name=\"work_id%02s\">
-                %s
-            </select>
+            <div class=\"select is-primary\">
+                <select name=\"work_id%02s\">%s</select>
+            </div>
         <td>
         <td><label>時間:</label></td>
         <td>
-            <select name=\"hour%02s\">
-                %s
-            </select>
+            <div class=\"select is-primary\">
+                <select name=\"hour%02s\">%s</select>
+            </div>
         <td>
         <td><label>分:</label></td>
         <td>
-            <select name=\"min%02s\">
-                %s
-            </select>
+            <div class=\"select is-primary\">
+                <select name=\"min%02s\">%s</select>
+            </div>
         <td>
     <tr>
     ";
