@@ -16,31 +16,27 @@
 
     $tableFormat = "
     <tr>
-        <td><label>機種:</label></td>
         <td>
             <div class=\"select is-primary\">
                 <select name=\"device_id%02s\">%s</select>
             </div>
-        <td>
-        <td><label>作業:</label></td>
+        </td>
         <td>
             <div class=\"select is-primary\">
                 <select name=\"work_id%02s\">%s</select>
             </div>
-        <td>
-        <td><label>時間:</label></td>
+        </td>
         <td>
             <div class=\"select is-primary\">
                 <select name=\"hour%02s\">%s</select>
             </div>
-        <td>
-        <td><label>分:</label></td>
+        </td>
         <td>
             <div class=\"select is-primary\">
                 <select name=\"min%02s\">%s</select>
             </div>
-        <td>
-    <tr>
+        </td>
+    </tr>
     ";
 
 
@@ -241,8 +237,8 @@
     <br>
 
     <div class="block ml-6 mr-6">
-        <label> <?php echo $strDate; ?></label>
-        <br><br>
+        <label class="label"><?php echo $strDate; ?></label>
+        <br>
 
         <form action="time_add_done.php" method="POST">
   
@@ -250,7 +246,17 @@
 
             <div class="block">
                 <table class="table" id="list_table">
-                    <?php echo $strTbl; ?>
+                    <thead>
+                        <tr>
+                            <td align="center">機種</td>
+                            <td align="center">作業</td>
+                            <td align="center">時間</td>
+                            <td align="center">分</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php echo $strTbl; ?>
+                    </tbody>
                 </table>
             </div>
 
