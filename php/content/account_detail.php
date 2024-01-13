@@ -27,7 +27,7 @@
 
         //DBアクセス
         $tblName = "account_tbl";
-        $ret = readTbl($tblName, $whereKeyValue, NULL, NULL, NULL);
+        $ret = readTbl($tblName, $whereKeyValue, NULL, NULL, NULL, NULL);
         if ($ret != FALSE) {
             foreach ($ret as $value) {
                 $user_name = $value['user_name'];

@@ -39,7 +39,7 @@
 
             //DBアクセス
             $tblName = "account_tbl";
-            $ret = readTbl($tblName, $whereKeyValue, NULL, NULL, NULL);
+            $ret = readTbl($tblName, $whereKeyValue, NULL, NULL, NULL, NULL);
             if ($ret != FALSE) {
                 $result = "社員番号:".$user_id." は、既に登録されています。";
                 $input_ok = false;

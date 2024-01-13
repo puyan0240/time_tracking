@@ -13,7 +13,7 @@
 
         //DBアクセス
         $tblName = "device_tbl";
-        $ret = readTbl($tblName, $whereKeyValue, NULL, NULL, NULL);
+        $ret = readTbl($tblName, $whereKeyValue, NULL, NULL, NULL, NULL);
         if ($ret != FALSE) {
             foreach ($ret as $value) {
                 $device_id   = $value['device_id'];

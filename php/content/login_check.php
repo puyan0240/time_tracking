@@ -20,7 +20,7 @@
 
     //DB検索
     $tblName = "account_tbl";
-    $ret = readTbl($tblName, $whereKeyValue, NULL, NULL, NULL);
+    $ret = readTbl($tblName, $whereKeyValue, NULL, NULL, NULL, NULL);
     if ($ret != FALSE) {
 
         //ユーザー認証&記録

@@ -29,7 +29,7 @@
         for ($i = 0; $i < 12; $i ++) {
 
             //Inputキーリスト
-            $InputName = ['device_id','work_id','hour','min'];
+            $InputName = ['device_tbl_idx','work_id','hour','min'];
             $InputValue = [];
 
             //Input値を取り出す
@@ -44,29 +44,18 @@
             if (($InputValue[2] == 0) && ($InputValue[3] == 0)) {
                 continue; //登録なし
             } else {
-                //DB TABLEの要素名リスト
-                $keyName = ['date','user_id','device_id','work_id','time'];
-                $keyValue = [];
-
                 //DB TABLEの 要素名:値 になるよう連想配列を作成
-                foreach ($keyName as $key) {
-                    if ($key == 'user_id') {
-                        $keyValue[$key] = (int)$_SESSION['user_id'];
-                    } elseif ($key == 'date') {
-                        $keyValue[$key] = $date;
-                    } elseif ($key == 'device_id') {
-                        $keyValue[$key] = (int)($InputValue[0]);
-                    } elseif ($key == 'work_id') {
-                        $keyValue[$key] = (int)($InputValue[1]);
-                    } elseif ($key == 'time') { //時間
-                        $time = (int)($InputValue[2]) * 60;
-                        $time += (int)($InputValue[3]);
+                $keyValue = [];
+                $keyValue['date'] = $date;
+                $keyValue['user_id'] = (int)$_SESSION['user_id'];
+                $keyValue['device_tbl_idx'] = (int)($InputValue[0]);
+                $keyValue['work_id'] = (int)($InputValue[1]);
+                $keyValue['ref_device_tbl_idx'] = 0; //
 
-                        $keyValue[$key] = $time;
-                    } else {
-                        $keyValue[$key] = e($_POST[$key]);
-                    }
-                }
+                $time = (int)($InputValue[2]) * 60;
+                $time += (int)($InputValue[3]);
+                $keyValue['time'] = $time;
+
 
                 //DB TABLEへ書き込み
                 $tblName = "time_traking_tbl";
@@ -93,13 +82,12 @@
     <div class="block ml-6">
         <a href="time_add.php">時間登録へ</a>
     </div>
-<!--
+
     <script>
         setTimeout(function() {
             window.location.href = "time_add.php";
         }, 2*1000);
     </script>
-    -->
     <?php include(dirname(__FILE__).'/./header/bulma_burger.js'); ?>
 </body>
 </html>

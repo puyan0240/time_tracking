@@ -41,7 +41,7 @@
 
             //DBアクセス
             $tblName = "work_tbl";
-            $ret = readTbl($tblName, $whereKeyValue, NULL, NULL, NULL);
+            $ret = readTbl($tblName, $whereKeyValue, NULL, NULL, NULL, NULL);
             if ($ret != FALSE) {
                 $result = "作業番号:".$work_id." は、既に登録されています。";
                 $input_ok = false;

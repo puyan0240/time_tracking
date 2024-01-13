@@ -44,7 +44,7 @@
 
         //DBアクセス
         $tblName = "device_tbl";
-        $ret = readTbl($tblName, $whereKeyValue, NULL, NULL, NULL);
+        $ret = readTbl($tblName, $whereKeyValue, NULL, NULL, NULL, NULL);
         if ($ret != FALSE) {
             foreach ($ret as $value) {
                 $result = "機種番号:".$device_id." Ver:".$ver."は、既に登録されています。";

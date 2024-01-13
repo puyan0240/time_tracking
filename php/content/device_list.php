@@ -10,7 +10,7 @@
         //DB TABLEから読み出し
         $tblName = "device_tbl";
         $order   = "ORDER BY device_id ASC , ver ASC "; //昇順
-        $ret = readTbl($tblName, NULL, $order, NULL, NULL);
+        $ret = readTbl($tblName, NULL, NULL, $order, NULL, NULL);
         if ($ret != FALSE) {
 
             $format = "

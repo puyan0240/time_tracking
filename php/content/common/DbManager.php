@@ -36,7 +36,7 @@ function getDb() : PDO {
 #-----------------------------------------------------------
 # TBLから取得 (SELECT)
 #-----------------------------------------------------------
-function readTbl($tblName, $whereKeyValue, $order, $joinTblName, $on) {
+function readTbl($tblName, $whereKeyValue, $between, $order, $joinTblName, $on) {
 
     $result = FALSE;
     $outValue = [];
@@ -58,23 +58,46 @@ function readTbl($tblName, $whereKeyValue, $order, $joinTblName, $on) {
             }
         }
         else { //全検索
-            $strParam = '1';
+            if ($between == NULL)
+                $strParam = '1';
         }
 
         //TBLから取得
         try {
             if ($joinTblName == NULL) {
-                $format = 'SELECT * FROM %s WHERE %s %s';
-                $strSql = sprintf($format, $tblName, $strParam, $order);
+                $format = 'SELECT * FROM %s';
+                $strSql = sprintf($format, $tblName);
             } else {
-                $format = 'SELECT * FROM %s JOIN %s ON %s WHERE %s %s';
-                $strSql = sprintf($format, $tblName, $joinTblName , $on, $whereKeyValue, $order);
-            }            
+                $format = 'SELECT * FROM %s JOIN %s ON %s';
+                $strSql = sprintf($format, $tblName, $joinTblName , $on);
+            }
+            
+            //WHERE
+            {
+                $format = ' WHERE %s';
+                $strSql .= sprintf($format, $strParam);
+            }
+
+            //BETWEEN
+            if ($between != NULL) {
+                if ($whereKeyValue == NULL) {
+                    $format = '%s';
+                } else {
+                    $format = ' AND %s';
+                }
+                $strSql .= sprintf($format, $between);
+            }
+            
+            //ORDER
+            if ($order != NULL) {
+                $format = ' %s';
+                $strSql .= sprintf($format, $order);
+            }
             //echo $strSql;
             
             $stt = $db->prepare($strSql);
 
-            //削除条件ありの場合はWHEREのバインド設定
+            //条件ありの場合はWHEREのバインド設定
             if ($whereKeyValue != NULL) {
                 $format = ':%s';
                 foreach ($whereKeyValue as $key => $value) {
@@ -117,26 +140,67 @@ function readTbl($tblName, $whereKeyValue, $order, $joinTblName, $on) {
 #-----------------------------------------------------------
 # TBLから条件にあった件数を取得 (SELECT)
 #-----------------------------------------------------------
-function getNumberOfEntryTbl($tblName, $where, $count) {
+function getNumberOfEntryTbl($tblName, $strCount, $whereKeyValue, $between) {
  
+    $strParam = "";
+
     //DB接続
     $db = getDb();
     if ($db != null) {
 
+        if ($whereKeyValue != NULL) { //検索条件あり
+            //引数の連想配列は、テーブルの 要素名:値 になっている
+            $count = 0;
+            foreach ($whereKeyValue as $key => $value) {
+                if ($count != 0)
+                    $strParam .= " AND "; //複数の場合はAND条件で繋ぐ
+                $strParam .= ($key."=:".$key);
+
+                $count ++;
+            }
+        }
+        else { //全検索
+            if ($between == NULL)
+                $strParam = '1';
+        }
+
+
         //TBLから取得
         try {
-            $format = 'SELECT COUNT(%s) FROM %s WHERE %s';
-
-            if ($where == NULL)
-                $strSql = sprintf($format, $count, $tblName, "1");
-            else
-                $strSql = sprintf($format, $count, $tblName, $where);
+            $format = 'SELECT COUNT(%s) FROM %s';
+            $strSql = sprintf($format, $strCount, $tblName);
             
+            //WHERE
+            {
+                $format = ' WHERE %s';
+                $strSql .= sprintf($format, $strParam);
+            }
+
+            //BETWEEN
+            if ($between != NULL) {
+                if ($whereKeyValue == NULL) {
+                    $format = '%s';
+                } else {
+                    $format = ' AND %s';
+                }
+                $strSql .= sprintf($format, $between);
+            }
+           
             //echo $strSql."<br>";
             
-            $stmt = $db->prepare($strSql);
-            $stmt->execute();
-            $result = $stmt->fetchColumn();
+            $stt = $db->prepare($strSql);
+
+            //条件ありの場合はWHEREのバインド設定
+            if ($whereKeyValue != NULL) {
+                $format = ':%s';
+                foreach ($whereKeyValue as $key => $value) {
+                    $strBindName = sprintf($format, $key);
+                    $stt->bindValue($strBindName, $value);
+                }
+            }
+
+            $stt->execute();
+            $result = $stt->fetchColumn();
         }
         catch (PDOException $e) {
 

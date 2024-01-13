@@ -18,7 +18,7 @@
     <tr>
         <td>
             <div class=\"select is-primary\">
-                <select name=\"device_id%02s\">%s</select>
+                <select name=\"device_tbl_idx%02s\">%s</select>
             </div>
         </td>
         <td>
@@ -49,11 +49,11 @@
 
             //DB TABLEから読み出し
             $tblName = "device_tbl";
-            $order = "ORDER BY device_id DESC"; //降順
-            $deviceList = readTbl($tblName, NULL, $order, NULL, NULL);
+            $order = "ORDER BY device_id DESC , ver ASC "; //機種番号は降順、Verは昇順が良い??
+            $deviceList = readTbl($tblName, NULL, NULL, $order, NULL, NULL);
             if ($deviceList != false) {
                 foreach ($deviceList as $value) {
-                    $strDevSelOpt .= sprintf($format, $value['device_id'], $value['device_name']);
+                    $strDevSelOpt .= sprintf($format, $value['idx'], $value['device_name']);
                 }    
             }
         }
@@ -65,7 +65,7 @@
 
             //DB TABLEから読み出し
             $tblName = "work_tbl";
-            $workList = readTbl($tblName, NULL, NULL, NULL, NULL);
+            $workList = readTbl($tblName, NULL, NULL, NULL, NULL, NULL);
             if ($workList != false) {
                 foreach ($workList as $value) {
                     $strWrkSelOpt .= sprintf($format, $value['work_id'], $value['work_name']);
@@ -115,7 +115,7 @@
 
         //DB検索
         $tblName = "time_traking_tbl";
-        $retList = readTbl($tblName, $whereKeyValue, NULL, NULL, NULL);
+        $retList = readTbl($tblName, $whereKeyValue, NULL, NULL, NULL, NULL);
         if ($retList != FALSE) {
             foreach ($retList as $retValue) {
                 $count ++;
@@ -128,10 +128,10 @@
                         $strTmp = "";
                         foreach ($deviceList as $value) {
                             $strSel = "";
-                            if ($retValue['device_id'] == $value['device_id'])
+                            if ($retValue['device_tbl_idx'] == $value['idx'])
                                 $strSel = "selected";
                             
-                            $strTmp .= sprintf($format, $value['device_id'], $strSel, $value['device_name']);
+                            $strTmp .= sprintf($format, $value['idx'], $strSel, $value['device_name']);
                         }
                         $strRetDevSelOpt[] = $strTmp;
                     }
@@ -197,6 +197,7 @@
         $format = "%02d時間 %02d分";
 
         //勤務時間
+        if ($timeSum > 0)
         {
             $hour = (int)($timeSum / 60);
             $min  = (int)($timeSum % 60);
@@ -260,19 +261,6 @@
                 </table>
             </div>
 
-            <div class="block ml-6">
-                <table class="table" id="list_table">
-                    <tr>
-                        <td>勤務時間</td>
-                        <td><?php echo $strSum;?></td>
-                    </tr>
-                    <tr>
-                        <td>残業時間</td>
-                        <td><?php echo $strOvertime;?></td>
-                    </tr>
-                </table>
-            </div>
-
             <div class="field is-grouped">
                 <div class="control">
                     <input class="button has-background-grey-lighter" type="reset" value="取消">
@@ -282,6 +270,20 @@
                 </div>
             </div>
         </form> 
+    </div>
+
+    <br>
+    <div class="block ml-6">
+        <table class="table" id="list_table">
+            <tr>
+                <td>勤務時間</td>
+                <td><?php echo $strSum;?></td>
+            </tr>
+            <tr>
+                <td>残業時間</td>
+                <td><?php echo $strOvertime;?></td>
+            </tr>
+        </table>
     </div>
 
     <?php include(dirname(__FILE__).'/./header/bulma_burger.js'); ?>

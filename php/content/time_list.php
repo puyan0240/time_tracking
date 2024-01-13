@@ -45,6 +45,8 @@
             <td>%s</td>
         </tr>";
 
+        $timeSumTotal = $overtimeTotal = 0;
+
         for ($day = 1; $day <= 31; $day ++) {
             $strYYYYmmdd = sprintf($dayFormat, $selectedMonth, $day); //YYYY-mm-dd の文字列
             $strmmdd = date('m月d日', strtotime($strYYYYmmdd));  //mm月dd日 の文字列
@@ -58,10 +60,11 @@
 
             //DBアクセス
             $tblName = "time_traking_tbl";
-            $ret = readTbl($tblName, $whereKeyValue, NULL, NULL, NULL);
+            $ret = readTbl($tblName, $whereKeyValue, NULL, NULL, NULL, NULL);
             if ($ret != FALSE) {
                 foreach ($ret as $value) {
                     $timeSum += (int)$value['time'];
+                    $timeSumTotal += $timeSum;
                 }
 
                 //勤務時間
@@ -80,9 +83,36 @@
                     $min  = (int)($overtime % 60);
     
                     $strOvertime = sprintf($format, $hour, $min);
+
+                    $overtimeTotal += $overtime;
                 }  
             }
             $strTbl .= sprintf($tableFormat, $strYYYYmmdd, $strmmdd, $strSum, $strOvertime);
+        }
+    }
+
+    //合計
+    {
+        $strSumTotal = $strOvertimeTotal = "-----";
+
+        //勤務時間
+        if ($timeSumTotal > 0)
+        {
+            {
+                $hour = (int)($timeSumTotal / 60);
+                $min  = (int)($timeSumTotal % 60);
+            
+                $format = "%02d時間 %02d分";
+                $strSumTotal = sprintf($format, $hour, $min);
+            }
+    
+            //残業時間
+            if ($overtimeTotal > 0) {
+                $hour = (int)($overtimeTotal / 60);
+                $min  = (int)($overtimeTotal % 60);
+        
+                $strOvertimeTotal = sprintf($format, $hour, $min);
+            }      
         }
     }
 ?>
@@ -111,7 +141,7 @@
         <table class="table" id="list_table">
             <tr>
                 <th hidden></th>
-                <th>年/月/日</th>
+                <th></th>
                 <th>勤務時間</th>
                 <th>残業時間</th>
             </tr>
@@ -120,6 +150,18 @@
         </table>
     </div>
 
+    <div class="block ml-6">
+        <table class="table" id="list_table">
+            <tr>
+                <td>勤務時間合計</td>
+                <td><?php echo $strSumTotal;?></td>
+            </tr>
+            <tr>
+                <td>残業時間合計</td>
+                <td><?php echo $strOvertimeTotal;?></td>
+            </tr>
+        </table>
+    </div>
 
     <script>
         let table = document.getElementById("list_table");

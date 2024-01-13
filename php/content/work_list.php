@@ -9,7 +9,7 @@
 
         //DB TABLEから読み出し
         $tblName = "work_tbl";
-        $ret = readTbl($tblName, NULL, NULL, NULL, NULL);
+        $ret = readTbl($tblName, NULL, NULL, NULL, NULL, NULL);
         if ($ret != FALSE) {
 
             $format = "
