@@ -27,7 +27,7 @@
         $result = "登録しました。";
 
         $inputArray = [];
-        $inputName = ['device_tbl_idx','work_id','hour','min'];
+        $inputName = ['device_tbl_idx', 'ref_device_tbl_idx', 'work_id','hour','min'];
     
         //POST値を取得
         for ($i = 0; $i < 12; $i ++) {
@@ -57,6 +57,9 @@
                         if ($inputArray[$i]['device_tbl_idx'] != $inputArray[$j]['device_tbl_idx']) {
                             continue; //違う
                         }
+                        if ($inputArray[$i]['ref_device_tbl_idx'] != $inputArray[$j]['ref_device_tbl_idx']) {
+                            continue; //違う
+                        }
                         if ($inputArray[$i]['work_id'] != $inputArray[$j]['work_id']) {
                             continue; //違う
                         }
@@ -81,8 +84,8 @@
                 $keyValue['date'] = $date;
                 $keyValue['user_id'] = (int)$_SESSION['user_id'];
                 $keyValue['device_tbl_idx'] = (int)($value['device_tbl_idx']);
+                $keyValue['ref_device_tbl_idx'] = (int)($value['ref_device_tbl_idx']);
                 $keyValue['work_id'] = (int)($value['work_id']);
-                $keyValue['ref_device_tbl_idx'] = 0; //
                 
                 $time = (int)($value['hour']) * 60;
                 $time += (int)($value['min']);

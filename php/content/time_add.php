@@ -23,6 +23,11 @@
         </td>
         <td>
             <div class=\"select is-primary\">
+                <select name=\"ref_device_tbl_idx%02s\">%s</select>
+            </div>
+        </td>
+        <td>
+            <div class=\"select is-primary\">
                 <select name=\"work_id%02s\">%s</select>
             </div>
         </td>
@@ -54,6 +59,18 @@
             if ($deviceList != false) {
                 foreach ($deviceList as $value) {
                     $strDevSelOpt .= sprintf($format, $value['idx'], $value['device_name']);
+                }    
+            }
+        }
+
+        //関連機種
+        {
+            $format = "<option value=\"%s\">%s</option>";
+            $strRefDevSelOpt = sprintf($format, "none", "なし");
+
+            if ($deviceList != false) {
+                foreach ($deviceList as $value) {
+                    $strRefDevSelOpt .= sprintf($format, $value['idx'], $value['device_name']);
                 }    
             }
         }
@@ -96,22 +113,12 @@
     //既に登録しているデータを表示
     {
         $count = 0;
-        $strRetDevSelOpt = $strRetWrkSelOpt = $strRetHourSelOpt = $strRetMinSelOpt = [];
+        $strRetDevSelOpt = $strRetRefDevSelOpt = $strRetWrkSelOpt = $strRetHourSelOpt = $strRetMinSelOpt = [];
 
-        //DB TABLEの要素名リスト
-        $whereKeyName = ['date','user_id'];
-        $whereKeyValue = [];
-        
         //DB TABLEの 要素名:値 になるよう連想配列を作成
-        foreach ($whereKeyName as $key) {
-            if ($key == 'date') {
-                $whereKeyValue[$key] = $date;
-            } elseif ($key == 'user_id') {
-                $whereKeyValue[$key] = (int)($_SESSION['user_id']);
-            } else {
-                $whereKeyValue[$key] = e($_POST[$key]);
-            }
-        }
+        $whereKeyValue = [];
+        $whereKeyValue['date'] = $date;
+        $whereKeyValue['user_id'] = (int)($_SESSION['user_id']);
 
         //DB検索
         $tblName = "time_traking_tbl";
@@ -134,6 +141,23 @@
                             $strTmp .= sprintf($format, $value['idx'], $strSel, $value['device_name']);
                         }
                         $strRetDevSelOpt[] = $strTmp;
+                    }
+                }
+
+                //関連機種一覧
+                {
+                    $format = "<option value=\"%s\" %s>%s</option>";
+                    $strTmp = sprintf($format, "none", "", "なし");
+
+                    if ($deviceList != false) {
+                        foreach ($deviceList as $value) {
+                            $strSel = "";
+                            if ($retValue['ref_device_tbl_idx'] == $value['idx'])
+                                $strSel = "selected";
+                            
+                            $strTmp .= sprintf($format, $value['idx'], $strSel, $value['device_name']);
+                        }
+                        $strRetRefDevSelOpt[] = $strTmp;
                     }
                 }
 
@@ -222,9 +246,19 @@
     
         for ($i = 0; $i < 12; $i ++) {
             if ($i < $count) {
-                $strTbl .= sprintf($tableFormat, $i, $strRetDevSelOpt[$i], $i, $strRetWrkSelOpt[$i], $i, $strRetHourSelOpt[$i], $i, $strRetMinSelOpt[$i]);
+                $strTbl .= sprintf($tableFormat, 
+                                    $i, $strRetDevSelOpt[$i],
+                                    $i, $strRetRefDevSelOpt[$i],
+                                    $i, $strRetWrkSelOpt[$i], 
+                                    $i, $strRetHourSelOpt[$i], 
+                                    $i, $strRetMinSelOpt[$i]);
             } else {
-                $strTbl .= sprintf($tableFormat, $i, $strDevSelOpt, $i, $strWrkSelOpt, $i, $strHourSelOpt, $i, $strMinSelOpt);
+                $strTbl .= sprintf($tableFormat, 
+                                    $i, $strDevSelOpt,
+                                    $i, $strRefDevSelOpt, 
+                                    $i, $strWrkSelOpt, 
+                                    $i, $strHourSelOpt, 
+                                    $i, $strMinSelOpt);
             }
         }
     }
@@ -250,6 +284,7 @@
                     <thead>
                         <tr>
                             <td align="center">機種</td>
+                            <td align="center">※関連機種</td>
                             <td align="center">作業</td>
                             <td align="center">時間</td>
                             <td align="center">分</td>
