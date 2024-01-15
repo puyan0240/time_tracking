@@ -29,31 +29,30 @@
         for ($i = 0; $i < 12; $i ++) {
 
             //Inputキーリスト
-            $InputName = ['device_tbl_idx','work_id','hour','min'];
-            $InputValue = [];
+            $inputName = ['device_tbl_idx','work_id','hour','min'];
+            $inputValue = [];
 
             //Input値を取り出す
-            for ($j = 0; $j < 4; $j ++) {
+            foreach ($inputName as $name) {
                 $format = "%s%02s";
-                $strTmp = sprintf($format, $InputName[$j], $i);
-
-                $InputValue[] = $_POST[$strTmp];
+                $strTmp = sprintf($format, $name, $i);
+                $inputValue[$name] = $_POST[$strTmp];
             }
 
             //作業時間が登録されている場合はDBへ登録する
-            if (($InputValue[2] == 0) && ($InputValue[3] == 0)) {
+            if (($inputValue['hour'] == 0) && ($inputValue['min'] == 0)) {
                 continue; //登録なし
             } else {
                 //DB TABLEの 要素名:値 になるよう連想配列を作成
                 $keyValue = [];
                 $keyValue['date'] = $date;
                 $keyValue['user_id'] = (int)$_SESSION['user_id'];
-                $keyValue['device_tbl_idx'] = (int)($InputValue[0]);
-                $keyValue['work_id'] = (int)($InputValue[1]);
+                $keyValue['device_tbl_idx'] = (int)($inputValue['device_tbl_idx']);
+                $keyValue['work_id'] = (int)($inputValue['work_id']);
                 $keyValue['ref_device_tbl_idx'] = 0; //
 
-                $time = (int)($InputValue[2]) * 60;
-                $time += (int)($InputValue[3]);
+                $time = (int)($inputValue['hour']) * 60;
+                $time += (int)($inputValue['min']);
                 $keyValue['time'] = $time;
 
 
