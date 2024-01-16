@@ -313,16 +313,18 @@
                         if ($ret != FALSE) {
 
                             //結果格納テーブル初期化
-                            $timeSum = [];
+                            $timeSum = $daySum = [];
                             foreach ($deviceList as $device) {
                                 foreach ($workList as $work) {
                                     $timeSum[$device['idx']][$work['work_id']] = 0;
+                                    $daySum[$device['idx']][$work['work_id']] = 0;
                                 }
                             }
 
                             //結果を格納(時間)
                             foreach ($ret as $value) {
-                                $timeSum[$value['device_tbl_idx']][$value['work_id']] += $value['time']; 
+                                $timeSum[$value['device_tbl_idx']][$value['work_id']] += $value['time'];
+                                $daySum[$value['device_tbl_idx']][$value['work_id']] ++;
                             }
 
                             //HTML出力文
@@ -338,9 +340,10 @@
 
                                         $hour = (int)($timeSum[$device['idx']][$work['work_id']] / 60);
                                         $min  = (int)($timeSum[$device['idx']][$work['work_id']] % 60);
+                                        $day  = $daySum[$device['idx']][$work['work_id']];
                                         
                                         $format = "<td> %dh %02dm (%dd)</td>";
-                                        $strTmp .= sprintf($format, $hour, $min, "");
+                                        $strTmp .= sprintf($format, $hour, $min, $day);
                                     } else {
                                         $strTmp .= "<td> ----- </td>";
                                     }
@@ -349,7 +352,6 @@
                                     $strTmp = ""; //全作業項目が未登録の場合はスキップ
                                 } else {
                                     $strTmp .= "</tr>";
-                                    echo $strTmp;
                                     $strResultTbl .= $strTmp;
                                 }
                             }
