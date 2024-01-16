@@ -220,8 +220,6 @@
     {
         //ユーザー名一覧
         {
-            $userName = [];
-
             //DB TABLEから読み出し
             $tblName = "account_tbl";
             $nameList = readTbl($tblName, NULL, NULL, NULL, NULL, NULL);
@@ -229,8 +227,6 @@
 
         //機種一覧表示
         {
-            $deviceName = [];
-
             //DB TABLEから読み出し
             $tblName = "device_tbl";
             $deviceList = readTbl($tblName, NULL, NULL, NULL, NULL, NULL);
@@ -238,8 +234,6 @@
 
         //作業内容一覧
         {
-            $workName = [];
-
             //DB TABLEから読み出し
             $tblName = "work_tbl";
             $workList = readTbl($tblName, NULL, NULL, NULL, NULL, NULL);
@@ -255,19 +249,6 @@
             $strResultTbl .= "</tr>";
         }
 
-
-        //DB TABLEの 要素名:値 になるよう連想配列を作成
-        if (($selRefDeviceId) || ($selUserId)) {
-            if ($selRefDeviceId) {
-                $whereKeyValue['ref_device_tbl_idx'] = $selRefDeviceId;
-            }
-            if ($selUserId) {
-                $whereKeyValue['user_id'] = $selUserId;
-            }
-        } else {
-            $whereKeyValue = null;
-        }
-
         //日程の範囲指定
         {
             $format = "%d-%02d-%02d";
@@ -277,6 +258,9 @@
             $format = "date BETWEEN '%s' AND '%s'";
             $between = sprintf($format, $strStart, $strEnd);
         }
+
+
+        $timeTotal = $dayTotal = 0;
 
         //担当者毎に検索
         foreach ($nameList as $name) {
@@ -324,7 +308,10 @@
                             //結果を格納(時間)
                             foreach ($ret as $value) {
                                 $timeSum[$value['device_tbl_idx']][$value['work_id']] += $value['time'];
+                                $timeTotal += $value['time'];
+
                                 $daySum[$value['device_tbl_idx']][$value['work_id']] ++;
+                                $dayTotal ++;
                             }
 
                             //HTML出力文
@@ -361,26 +348,21 @@
             }
         }
 
-        //検索
-        {
-            $timeSum = $last_date = $last_user = $manhours = 0;
+        //合計
+        if ($timeTotal > 0) {
+            //時間
+            {
+                $hour = (int)($timeTotal / 60);
+                $min  = (int)($timeTotal % 60);
 
-            //分析結果
-            if ($timeSum > 0) {
-                //時間合計
-                {
-                    $hour = (int)($timeSum / 60);
-                    $min  = (int)($timeSum % 60);
-    
-                    $format = "<div class=\"block ml-6\"><p>%02d 時間 %02d 分</p></div>";
-                    $strTimeSum = sprintf($format, $hour, $min);    
-                }
+                $format = "<div class=\"block ml-6\"><p>%02d 時間 %02d 分</p></div>";
+                $strTimeSum = sprintf($format, $hour, $min); 
+            }
 
-                //工数合計
-                {
-                    $format = "<div class=\"block ml-6\"><p>%d 人月</p></div>";
-                    $strManhoursSum = sprintf($format, $manhours);
-                }
+            //工数
+            {
+                $format = "<div class=\"block ml-6\"><p>%d 人月</p></div>";
+                $strManhoursSum = sprintf($format, $dayTotal);
             }
         }
     }
