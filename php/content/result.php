@@ -385,7 +385,7 @@
                 <tr>
                     <td>
                         <div class="is-size-5">
-                            <p>期間</p>
+                            <p>期間（開始）</p>
                         </div>
                     </td>
                     <td>
@@ -403,7 +403,13 @@
                             <select name="start_day"><?php echo $strStartDaySelOpt;?></select>
                         </div>
                     </td>
-                    <td> から </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="is-size-5">
+                            <p>期間（終了）</p>
+                        </div>
+                    </td>
                     <td>
                         <div class="select is-primary">
                             <select name="end_year"><?php echo $strEndYearSelOpt;?></select>
@@ -419,7 +425,6 @@
                             <select name="end_day"><?php echo $strEndDaySelOpt;?></select>
                         </div>
                     </td>
-                    <td> まで</td>
                 </tr>
                 <tr>
                     <td>
