@@ -284,7 +284,7 @@
                     <thead>
                         <tr>
                             <td align="center">機種</td>
-                            <td align="center">※関連機種</td>
+                            <td align="center">※設計予定機種</td>
                             <td align="center">作業</td>
                             <td align="center">時間</td>
                             <td align="center">分</td>
