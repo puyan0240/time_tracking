@@ -15,7 +15,7 @@
 
     $selStartYear = $selStartMonth = $selStartDay = 0;
     $selEndYear = $selEndMonth = $selEndDay = 0;
-    $selDeviceId = $selUserId = 0;
+    $selRefDeviceId = $selUserId = 0;
 
     //指定確認
     if (isset($_POST['btn']))
@@ -41,8 +41,8 @@
         }
 
         //機種
-        if (isset($_POST['device'])) {
-            $selDeviceId = (int)e($_POST['device']);
+        if (isset($_POST['ref_device'])) {
+            $selRefDeviceId = (int)e($_POST['ref_device']);
         }
 
         //担当
@@ -153,7 +153,7 @@
 
             //選択肢:なし
             {
-                if ($selDeviceId == "none")
+                if ($selRefDeviceId == "none")
                     $strSelected = "selected";
                 else
                     $strSelected = "";
@@ -169,8 +169,8 @@
                 foreach ($ret as $value) {
 
                     $strSelected = "";
-                    if ($selDeviceId != "none") {
-                        if ($value['idx'] == $selDeviceId) {
+                    if ($selRefDeviceId != "none") {
+                        if ($value['idx'] == $selRefDeviceId) {
                             $strSelected = "selected";
                         }    
                     } 
@@ -245,11 +245,21 @@
             $workList = readTbl($tblName, NULL, NULL, NULL, NULL, NULL);
         }
 
+        //TABLEヘッダ作成
+        {
+            $strResultTbl = "<tr><td> 担当者 </td><td> 商品名 </td>";
+            $format = "<td> %s </td>";
+            foreach ($workList as $value) {
+                $strResultTbl .= sprintf($format, $value['work_name']);
+            }
+            $strResultTbl .= "</tr>";
+        }
+
 
         //DB TABLEの 要素名:値 になるよう連想配列を作成
-        if (($selDeviceId) || ($selUserId)) {
-            if ($selDeviceId) {
-                $whereKeyValue['device_tbl_idx'] = $selDeviceId;
+        if (($selRefDeviceId) || ($selUserId)) {
+            if ($selRefDeviceId) {
+                $whereKeyValue['ref_device_tbl_idx'] = $selRefDeviceId;
             }
             if ($selUserId) {
                 $whereKeyValue['user_id'] = $selUserId;
@@ -268,16 +278,7 @@
             $between = sprintf($format, $strStart, $strEnd);
         }
 
-        //TABLEヘッダ作成
-        {
-            $strResultTbl = "<tr><td> 担当者 </td><td> 商品名 </td>";
-            $format = "<td> %s </td>";
-            foreach ($workList as $value) {
-                $strResultTbl .= sprintf($format, $value['work_name']);
-            }
-            $strResultTbl .= "</tr>";
-        }
-
+        //担当者毎に検索
         foreach ($nameList as $name) {
 
             if ($selUserId) {
@@ -287,12 +288,13 @@
             }
             $whereKeyValue['user_id'] = $name['user_id'];
 
+            //機種毎に検索
             foreach ($deviceList as $device) {
-                if ($selDeviceId) {
-                    if ($selDeviceId != $device['idx']) {
+                if ($selRefDeviceId) {
+                    if ($selRefDeviceId != $device['idx']) {
                         continue;
                     } else {
-                        $whereKeyValue['device_tbl_idx'] = $device['idx'];
+                        $whereKeyValue['ref_device_tbl_idx'] = $device['idx'];
                     }
                 } else {
                     $whereKeyValue['device_tbl_idx'] = $device['idx'];
@@ -305,42 +307,53 @@
                     $ret = getNumberOfEntryTbl($tblName, $count, $whereKeyValue, $between);
                     if ($ret == 0) { //登録なし
                         continue;
-                    }
-                    else { //登録あり
-
-                        $strResultTbl .= "<tr>";
-                        $format = "<td> %s </td><td> %s </td>";
-                        $strResultTbl .= sprintf($format, $name['user_name'], $device['device_name']);
-
-                        $order   = "ORDER BY date ASC"; //時間で昇順
+                    } else { //登録あり->DB取得
+                        $order = "ORDER BY date ASC"; //時間で昇順
                         $ret = readTbl($tblName, $whereKeyValue, $between, $order, NULL, NULL);
                         if ($ret != FALSE) {
-                            $timeSum = $daySum = [];
-                            foreach ($workList as $value) {
-                                $timeSum[$value['work_id']] = 0;
-                                $daySum[$value['work_id']] = 0;
+
+                            //結果格納テーブル初期化
+                            $timeSum = [];
+                            foreach ($deviceList as $device) {
+                                foreach ($workList as $work) {
+                                    $timeSum[$device['idx']][$work['work_id']] = 0;
+                                }
                             }
+
+                            //結果を格納(時間)
                             foreach ($ret as $value) {
-                                $timeSum[$value['work_id']] += $value['time'];
-                                if ((int)$value['time'] > 0) {
-                                    $daySum[$value['work_id']] += 1;
-                                }
+                                $timeSum[$value['device_tbl_idx']][$value['work_id']] += $value['time']; 
                             }
-                            foreach ($workList as $value) {
-                                if ($timeSum[$value['work_id']]) {
-                                    $hour = (int)($timeSum[$value['work_id']] / 60);
-                                    $min  = (int)($timeSum[$value['work_id']] % 60);
-    
-                                    $format = "<td> %dh %02dm (%dd)</td>";
-                                    $strResultTbl .= sprintf($format, $hour, $min, $daySum[$value['work_id']]);    
+
+                            //HTML出力文
+                            foreach ($deviceList as $device) {
+                                $strTmp = "<tr>";
+                                $strTmp .= "<td>".$name['user_name']."</td>";
+                                $strTmp .= "<td>".$device['device_name']."</td>";
+
+                                $count = 0;
+                                foreach ($workList as $work) {
+                                    if ($timeSum[$device['idx']][$work['work_id']]) {
+                                        $count ++;
+
+                                        $hour = (int)($timeSum[$device['idx']][$work['work_id']] / 60);
+                                        $min  = (int)($timeSum[$device['idx']][$work['work_id']] % 60);
+                                        
+                                        $format = "<td> %dh %02dm (%dd)</td>";
+                                        $strTmp .= sprintf($format, $hour, $min, "");
+                                    } else {
+                                        $strTmp .= "<td> ----- </td>";
+                                    }
+                                }
+                                if ($count == 0) {
+                                    $strTmp = ""; //全作業項目が未登録の場合はスキップ
                                 } else {
-                                    $strResultTbl .= "<td> ----- </td>";
+                                    $strTmp .= "</tr>";
+                                    echo $strTmp;
+                                    $strResultTbl .= $strTmp;
                                 }
                             }
-                            
-                            //var_dump($timeSum);
                         }
-                        $strResultTbl .= "</tr>";
                     }
                 }
             }
@@ -434,7 +447,7 @@
                     </td>
                     <td colspan="8">
                         <div class="select is-primary">
-                            <select name="device"><?php echo $strDeviceSelOpt;?></select>
+                            <select name="ref_device"><?php echo $strDeviceSelOpt;?></select>
                         </div>
                     </td>
                 </tr>
