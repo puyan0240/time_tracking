@@ -3,7 +3,7 @@
     require_once(dirname(__FILE__).'/./header/header.php');
 
 
-    //「年」選択肢
+    //表示する「年月」を選択
     {
         if (isset($_POST['sel_month']))
             $selectedMonth = $_POST['sel_month'];
@@ -33,6 +33,59 @@
         }
     }
 
+
+    //表示する担当者を選択 (※管理者権限のみ)
+    if ($_SESSION['auth'] == 1) 
+    {
+        if (isset($_POST['sel_user'])) {
+            $selUserId = $_POST['sel_user'];
+        } else {
+            $selUserId = $_SESSION['user_id'];
+        }
+
+        //ユーザー名一覧
+        {
+            $format = "<option value=\"%s\" %s>%s</option>";
+            $strUserSelOpt = "";
+
+            //DB TABLEから読み出し
+            $tblName = "account_tbl";
+            $ret = readTbl($tblName, NULL, NULL, NULL, NULL, NULL);
+            if ($ret != FALSE) {
+                foreach ($ret as $value) {
+
+                    $strSelected = "";
+                    if ($selUserId) {
+                        if ($selUserId == $value['user_id']) {
+                            $strSelected = "selected";
+                        }   
+                    }
+
+                    $strUserSelOpt .= sprintf($format, $value['user_id'], $strSelected, $value['user_name']);
+                }
+            }
+        }
+
+        //SELECT文を作成
+        {
+            $format = "
+            <div class=\"control\">
+                <div class=\"select is-success is-small\">
+                    <select name=\"sel_user\">
+                        %s
+                    </select>
+                </div>
+                <button type=\"submit\" class=\"button is-small has-background-grey-lighter\">選択</button>
+            </div>";
+    
+            $strUserSel = sprintf($format, $strUserSelOpt);
+        } 
+    } else {
+        $strUserSel = "";
+        $selUserId = $_SESSION['user_id'];
+    }
+
+
     //一覧表示
     {
         $strTbl = "";
@@ -56,7 +109,7 @@
             //DB TABLEの 要素名:値 になるよう連想配列を作成
             $whereKeyValue = [];
             $whereKeyValue['date']    = $strYYYYmmdd;
-            $whereKeyValue['user_id'] = $_SESSION['user_id'];
+            $whereKeyValue['user_id'] = $selUserId;    
 
             //DBアクセス
             $tblName = "time_traking_tbl";
@@ -126,14 +179,25 @@
 
     <div class="block ml-6">
         <form action="" method="post">
-            <div class="control">
-                <div class="select is-success is-small">
-                    <select name="sel_month">
-                        <?php echo $strMonth; ?>
-                    </select>
-                </div>
-                <button type="submit" class="button is-small has-background-grey-lighter">選択</button>
-            </div>
+            <table>
+                <tr>
+                    <td>
+                        <div class="control">
+                            <div class="select is-success is-small">
+                                <select name="sel_month">
+                                    <?php echo $strMonth; ?>
+                                </select>
+                            </div>
+                            <button type="submit" class="button is-small has-background-grey-lighter">選択</button>
+                        </div>
+                    </td>
+                    <td>&emsp;&emsp;&emsp;</td>
+                    <td>
+                        <?php echo $strUserSel; ?>
+                    </td>
+
+                </tr>
+            </table>
         </form>
     </div>
 
