@@ -2,6 +2,7 @@
     // Header部分共通
     require_once(dirname(__FILE__).'/./header/header.php');
 
+
      //日付
     {
         if (isset($_GET['date']))
@@ -10,6 +11,32 @@
             $date = date('Y-m-d');
 
         $strDate = date('Y年m月d日', strtotime($date));
+    }
+
+    //担当者指定
+    {
+        $strUserName = "";
+
+        if (isset($_GET['user_id'])) {
+            $selUserId = (int)$_GET['user_id'];
+        } else {
+            $selUserId = (int)$_SESSION['user_id'];
+        }
+
+        //名前取得
+        {
+            //DB TABLEから読み出し
+            $tblName = "account_tbl";
+            $ret = readTbl($tblName, NULL, NULL, NULL, NULL, NULL);
+            if ($ret != FALSE) {
+                foreach ($ret as $value) {
+                    if ($value['user_id'] == $selUserId) {
+                        $strUserName = $value['user_name'];
+                        break;
+                    }
+                }
+            }
+        }
     }
 
 
@@ -54,7 +81,7 @@
         //DB TABLEの 要素名:値 になるよう連想配列を作成
         $whereKeyValue = [];
         $whereKeyValue['date'] = $date;
-        $whereKeyValue['user_id'] = (int)($_SESSION['user_id']);
+        $whereKeyValue['user_id'] = $selUserId;
 
         //DB検索
         $tblName = "time_traking_tbl";
@@ -69,7 +96,14 @@
                 $strTmp .= "<td>".$deviceNameList[$value['device_tbl_idx']]."</td>";
 
                 //関連機種
-                $strTmp .= "<td>".$deviceNameList[$value['ref_device_tbl_idx']]."</td>";
+                {
+                    if ($value['ref_device_tbl_idx'] == 0) {
+                        $strRefDevice = " なし ";
+                    } else {
+                        $strRefDevice = $deviceNameList[$value['ref_device_tbl_idx']];
+                    }
+                    $strTmp .= "<td>".$strRefDevice."</td>";    
+                }
 
                 //作業
                 $strTmp .= "<td>".$workNameList[$value['work_id']]."</td>";
@@ -121,12 +155,6 @@
             $strOvertime = sprintf($format, $hour, $min);
         }        
     }
-
-
-    //Table作成
-    {
-
-    }
 ?>
 
 <!DOCTYPE html>
@@ -137,7 +165,17 @@
     <br>
 
     <div class="block ml-6 mr-6">
-        <label class="label"><?php echo $strDate; ?></label>
+        <table>
+            <tr>
+                <td>
+                    <label class="label"><?php echo $strDate; ?></label>
+                </td>
+                <td>&emsp;&emsp;&emsp;</td>
+                <td>
+                    <label class="label"><?php echo $strUserName; ?></label>
+                </td>
+            </tr>
+        </table>
         <br>
 
         <form action="time_add_done.php" method="POST">

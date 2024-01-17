@@ -26,7 +26,8 @@
     //他人の一覧を見る場合は閲覧モードで
     if ($selUserId) {
         if ($selUserId != $_SESSION['user_id']) { //他人
-            header('Location:time_display.php');
+            $strLocation = 'Location:time_display.php'.'?date='.$date.'&user_id='.$selUserId;
+            header($strLocation);
             exit();    
         }
     }
