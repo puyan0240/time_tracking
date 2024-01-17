@@ -39,7 +39,7 @@
             $ret = readTbl($tblName, NULL, NULL, NULL, NULL, NULL);
             if ($ret != FALSE) {
                 foreach ($ret as $value) {
-                    $workNameList[$value['idx']] = $value['work_name'];
+                    $workNameList[$value['work_id']] = $value['work_name'];
                 }
             }
         }
@@ -49,7 +49,7 @@
     //既に登録しているデータを表示
     {
         $strTbl = "";
-        $count = 0;
+        $count = $timeSum = 0;
     
         //DB TABLEの 要素名:値 になるよう連想配列を作成
         $whereKeyValue = [];
@@ -77,14 +77,16 @@
                 //時間
                 {
                     $time = $value['time'];
+                    $timeSum += $time;
 
                     $hour = (int)($time / 60);
                     $min  = (int)($time % 60);
 
+                    $format = "<td>%02s</td>";
                     //時間
-                    $strTmp .= "<td>".$hour."</td>";
+                    $strTmp .= sprintf($format, $hour);
                     //分
-                    $strTmp .= "<td>".$min."</td>";
+                    $strTmp .= sprintf($format, $min);
                 }
 
                 $strTmp .= "</tr>";
@@ -92,7 +94,7 @@
             }
         }
         for ($i = $count; $i < 12; $i ++) {
-            $strTbl .= "<tr><td> ----- </td><td> ----- </td><td> ----- </td><td> ----- </td></tr>";
+            $strTbl .= "<tr><td> ----- </td><td> ----- </td><td> ----- </td><td> ----- </td><td> ----- </td></tr>";
         } 
     }
 
@@ -159,6 +161,7 @@
                 </table>
             </div>
 
+<!---
             <div class="field is-grouped">
                 <div class="control">
                     <input class="button has-background-grey-lighter" type="reset" value="取消">
@@ -167,6 +170,7 @@
                     <input class="button is-success ml-4" type="submit" value="登録">
                 </div>
             </div>
+--->
         </form> 
     </div>
 

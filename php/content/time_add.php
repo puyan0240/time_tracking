@@ -2,6 +2,15 @@
     // Header部分共通
     require_once(dirname(__FILE__).'/./header/header.php');
 
+    /*
+    if (true)
+    {
+        header('Location:time_display.php');
+        exit();
+    }
+    */
+
+
      //日付
     {
         if (isset($_GET['date']))
