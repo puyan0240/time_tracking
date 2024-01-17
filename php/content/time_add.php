@@ -1,25 +1,36 @@
 <?php
     // Header部分共通
     require_once(dirname(__FILE__).'/./header/header.php');
-
-    /*
-    if (true)
-    {
-        header('Location:time_display.php');
-        exit();
-    }
-    */
-
+    
 
      //日付
     {
-        if (isset($_GET['date']))
+        if (isset($_GET['date'])) {
             $date = $_GET['date'];
-        else
+        } else {
             $date = date('Y-m-d');
+        }
 
         $strDate = date('Y年m月d日', strtotime($date));
     }
+
+    //担当者指定
+    {
+        if (isset($_GET['user_id'])) {
+            $selUserId = $_GET['user_id'];
+        } else {
+            $selUserId = 0;
+        }
+    }
+
+    //他人の一覧を見る場合は閲覧モードで
+    if ($selUserId) {
+        if ($selUserId != $_SESSION['user_id']) { //他人
+            header('Location:time_display.php');
+            exit();    
+        }
+    }
+
 
     $timeSum = 0;
 

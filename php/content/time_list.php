@@ -237,7 +237,7 @@
         }
 
         function clicked(e) {
-            location = "time_add.php?date="+e.target.id;
+            location = "time_add.php?date="+e.target.id+"&user_id="+<?php echo $selUserId; ?>;
         }
     </script>
 
