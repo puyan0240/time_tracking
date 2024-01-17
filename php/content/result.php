@@ -311,8 +311,8 @@
                                 }
                                 $daySum[$value['device_tbl_idx']][$value['work_id']] ++;
 
-                                if (isset($dayTotalByName[$value['device_tbl_idx']][$value['date']]) == false) {
-                                    $dayTotalByName[$value['device_tbl_idx']][$value['date']] = 1;
+                                if (isset($dayTotalByName[$value['date']]) == false) {
+                                    $dayTotalByName[$value['date']] = 1;
                                 }
                             }
 
@@ -349,8 +349,9 @@
                 }
             }
 
+            //担当者毎の工数を加算
             {
-                echo count($dayTotalByName);
+                $dayTotal += count($dayTotalByName);
             }
         }
 
