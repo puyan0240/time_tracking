@@ -264,6 +264,7 @@
 
         //担当者毎に検索
         foreach ($nameList as $name) {
+            $dayTotalByName = [];
 
             if ($selUserId) {
                 if ($selUserId != $name['user_id']) {
@@ -296,22 +297,23 @@
                         $ret = readTbl($tblName, $whereKeyValue, $between, $order, NULL, NULL);
                         if ($ret != FALSE) {
 
-                            //結果格納テーブル初期化
-                            $timeSum = $daySum = [];
-                            foreach ($deviceList as $device) {
-                                foreach ($workList as $work) {
-                                    $timeSum[$device['idx']][$work['work_id']] = 0;
-                                    $daySum[$device['idx']][$work['work_id']] = 0;
-                                }
-                            }
-
                             //結果を格納(時間)
+                            $timeSum = $daySum = [];
                             foreach ($ret as $value) {
+                                if (isset($timeSum[$value['device_tbl_idx']][$value['work_id']]) == false) {
+                                    $timeSum[$value['device_tbl_idx']][$value['work_id']] = 0;
+                                }
                                 $timeSum[$value['device_tbl_idx']][$value['work_id']] += $value['time'];
                                 $timeTotal += $value['time'];
 
+                                if (isset($daySum[$value['device_tbl_idx']][$value['work_id']]) == false) {
+                                    $daySum[$value['device_tbl_idx']][$value['work_id']] = 0;
+                                }
                                 $daySum[$value['device_tbl_idx']][$value['work_id']] ++;
-                                $dayTotal ++;
+
+                                if (isset($dayTotalByName[$value['device_tbl_idx']][$value['date']]) == false) {
+                                    $dayTotalByName[$value['device_tbl_idx']][$value['date']] = 1;
+                                }
                             }
 
                             //HTML出力文
@@ -322,7 +324,7 @@
 
                                 $count = 0;
                                 foreach ($workList as $work) {
-                                    if ($timeSum[$device['idx']][$work['work_id']]) {
+                                    if (isset($timeSum[$device['idx']][$work['work_id']])) {
                                         $count ++;
 
                                         $hour = (int)($timeSum[$device['idx']][$work['work_id']] / 60);
@@ -345,6 +347,10 @@
                         }
                     }
                 }
+            }
+
+            {
+                echo count($dayTotalByName);
             }
         }
 
