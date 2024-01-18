@@ -100,7 +100,10 @@
 
         $timeSumTotal = $overtimeTotal = 0;
 
-        for ($day = 1; $day <= 31; $day ++) {
+        //月の日数取得
+        $dayMax = date('t', strtotime($selectedMonth));
+
+        for ($day = 1; $day <= $dayMax; $day ++) {
             $strYYYYmmdd = sprintf($dayFormat, $selectedMonth, $day); //YYYY-mm-dd の文字列
             $strmmdd = date('m月d日', strtotime($strYYYYmmdd));  //mm月dd日 の文字列
             $timeSum = $overtime = 0;
