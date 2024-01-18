@@ -197,9 +197,9 @@
 
             //DB TABLEから読み出し
             $tblName = "account_tbl";
-            $ret = readTbl($tblName, NULL, NULL, NULL, NULL, NULL);
-            if ($ret != FALSE) {
-                foreach ($ret as $value) {
+            $nameList = readTbl($tblName, NULL, NULL, NULL, NULL, NULL);
+            if ($nameList != FALSE) {
+                foreach ($nameList as $value) {
 
                     $strSelected = "";
                     if ($selUserId != "none") {
@@ -218,13 +218,6 @@
     //分析/////////////////////////////////////////////////////////////////////////////////////////////
     if (isset($_POST['btn']))
     {
-        //ユーザー名一覧
-        {
-            //DB TABLEから読み出し
-            $tblName = "account_tbl";
-            $nameList = readTbl($tblName, NULL, NULL, NULL, NULL, NULL);
-        }
-
         //機種一覧表示
         {
             //DB TABLEから読み出し
