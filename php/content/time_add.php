@@ -38,27 +38,27 @@
     $tableFormat = "
     <tr>
         <td>
-            <div class=\"select is-primary\">
+            <div class=\"select is-primary is-small\">
                 <select name=\"device_tbl_idx%02s\">%s</select>
             </div>
         </td>
         <td>
-            <div class=\"select is-primary\">
+            <div class=\"select is-primary is-small\">
                 <select name=\"ref_device_tbl_idx%02s\">%s</select>
             </div>
         </td>
         <td>
-            <div class=\"select is-primary\">
+            <div class=\"select is-primary is-small\">
                 <select name=\"work_id%02s\">%s</select>
             </div>
         </td>
         <td>
-            <div class=\"select is-primary\">
+            <div class=\"select is-primary is-small\">
                 <select name=\"hour%02s\">%s</select>
             </div>
         </td>
         <td>
-            <div class=\"select is-primary\">
+            <div class=\"select is-primary is-small\">
                 <select name=\"min%02s\">%s</select>
             </div>
         </td>
