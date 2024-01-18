@@ -381,68 +381,68 @@
             <table class="table">
                 <tr>
                     <td>
-                        <div class="is-size-5">
+                        <div class="is-size-6">
                             <p>期間（開始）</p>
                         </div>
                     </td>
                     <td>
-                        <div class="select is-primary">
+                        <div class="select is-primary is-small">
                             <select name="start_year"><?php echo $strStartYearSelOpt;?></select>
                         </div>
                     </td>
                     <td>
-                        <div class="select is-primary">
+                        <div class="select is-primary is-small">
                             <select name="start_month"><?php echo $strStartMonthSelOpt;?></select>
                         </div>
                     </td>
                     <td>
-                        <div class="select is-primary">
+                        <div class="select is-primary is-small">
                             <select name="start_day"><?php echo $strStartDaySelOpt;?></select>
                         </div>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <div class="is-size-5">
+                        <div class="is-size-6">
                             <p>期間（終了）</p>
                         </div>
                     </td>
                     <td>
-                        <div class="select is-primary">
+                        <div class="select is-primary is-small">
                             <select name="end_year"><?php echo $strEndYearSelOpt;?></select>
                         </div>
                     </td>
                     <td>
-                        <div class="select is-primary">
+                        <div class="select is-primary is-small">
                             <select name="end_month"><?php echo $strEndMonthSelOpt;?></select>
                         </div>
                     </td>
                     <td>
-                        <div class="select is-primary">
+                        <div class="select is-primary is-small">
                             <select name="end_day"><?php echo $strEndDaySelOpt;?></select>
                         </div>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <div class="is-size-5">
+                        <div class="is-size-6">
                             <p>設計予定機種</p>
                         </div>
                     </td>
                     <td colspan="8">
-                        <div class="select is-primary">
+                        <div class="select is-primary is-small">
                             <select name="ref_device"><?php echo $strDeviceSelOpt;?></select>
                         </div>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <div class="is-size-5">
+                        <div class="is-size-6">
                             <p>担当者</p>
                         </div>
                     </td>
                     <td colspan="8">
-                        <div class="select is-primary">
+                        <div class="select is-primary is-small">
                             <select name="user"><?php echo $strUserSelOpt;?></select>
                         </div>
                     </td>
