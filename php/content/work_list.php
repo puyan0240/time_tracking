@@ -21,7 +21,13 @@
 
             //HTML作成
             foreach ($ret as $value) {
-                $strTbl .= sprintf($format, $value['work_id'], $value['work_name'], $value['direct']);
+                if ($value['result']) {
+                    $strResult = "対象";
+                } else {
+                    $strResult = "-----";
+                }
+
+                $strTbl .= sprintf($format, $value['work_id'], $value['work_name'], $strResult);
             }
         }
     }
@@ -45,7 +51,7 @@
             <tr>
                 <th>作業番号</th>
                 <th>作業名</th>
-                <th>直接/間接</th>
+                <th>結果表示</th>
             </tr>
             <?php echo $strTbl; ?>
 

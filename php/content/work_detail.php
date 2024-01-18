@@ -29,16 +29,16 @@
         if ($ret != FALSE) {
             foreach ($ret as $value) {
                 $work_name = $value['work_name'];
-                $direct    = $value['direct'];
+                $result    = $value['result'];
             }
         }
     }
 
     //直接/間接の表示
-    if ($direct == 0)
-        $direct = "直接";
+    if ($result == 0)
+        $result = "-----";
     else
-        $direct = "間接";
+        $result = "対象";
 
 
     //機種削除ボタンは管理者権限のみ表示
@@ -72,8 +72,8 @@
                 <td><?php echo $work_name; ?></td>
             </tr>
             <tr>
-                <td>直接/間接</td>
-                <td><?php echo $direct;?></td>
+                <td>結果表示</td>
+                <td><?php echo $result;?></td>
             </tr>
         </table>
     </div>

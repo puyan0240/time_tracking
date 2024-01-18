@@ -24,12 +24,12 @@
                 </div>
             </div>
             <div class="field">
-                <label class="label">直接/間接</label>
+                <label class="label">結果表示</label>
                 <div class="control">
                     <div class="select is-success">
-                        <select name="direct">
-                            <option value="0" selected>直接</option>
-                            <option value="1">間接</option>
+                        <select name="result">
+                            <option value="0" selected>-----</option>
+                            <option value="1">対象</option>
                         </select>
                     </div>
                 </div>

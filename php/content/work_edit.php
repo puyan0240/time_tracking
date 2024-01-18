@@ -25,14 +25,14 @@
         if ($ret != FALSE) {
             foreach ($ret as $value) {
                 $work_name = $value['work_name'];
-                $direct    = $value['direct'];
+                $result    = $value['result'];
             }
         }
 
         //select option の初期値
         {
             $selectedTbl = ["",""];
-            $selectedTbl[$direct] = "selected";
+            $selectedTbl[$result] = "selected";
         }
     }         
 
@@ -63,12 +63,12 @@
             </div>
         </div>
         <div class="field ml-6 mr-6">
-            <label class="label">直接/間接</label>
+            <label class="label">結果表示</label>
             <div class="control">
                 <div class="select is-success">
-                    <select name="direct">
-                        <option value="0" <?php echo $selectedTbl[0];?>>直接</option>
-                        <option value="1" <?php echo $selectedTbl[1];?>>間接</option>
+                    <select name="result">
+                        <option value="0" <?php echo $selectedTbl[0];?>> ----- </option>
+                        <option value="1" <?php echo $selectedTbl[1];?>>対象</option>
                     </select>
                 </div>
             </div>

@@ -53,12 +53,12 @@
     if ($input_ok == true) {
 
         //DB TABLEの要素名リスト
-        $keyName = ['work_id','work_name','direct','job_type'];
+        $keyName = ['work_id','work_name','result','job_type'];
         $keyValue = [];
     
         //DB TABLEの 要素名:値 になるよう連想配列を作成
         foreach ($keyName as $key) {
-            if (($key == 'work_id') || ($key == 'direct')) {
+            if (($key == 'work_id') || ($key == 'result')) {
                 $keyValue[$key] = (int)e($_POST[$key]);
             } elseif ($key == 'job_type') {
                 $keyValue[$key] = 0;
