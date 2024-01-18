@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- ホスト: db
--- 生成日時: 2024 年 1 月 13 日 00:46
+-- 生成日時: 2024 年 1 月 18 日 06:49
 -- サーバのバージョン： 8.2.0
--- PHP のバージョン: 8.2.13
+-- PHP のバージョン: 8.1.18
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -34,6 +34,13 @@ CREATE TABLE `account_tbl` (
   `auth` int NOT NULL,
   `type` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+--
+-- テーブルのデータのダンプ `account_tbl`
+--
+
+INSERT INTO `account_tbl` (`user_id`, `passwd`, `user_name`, `auth`, `type`) VALUES
+(11111, '', '管理者', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -73,7 +80,7 @@ CREATE TABLE `time_traking_tbl` (
 CREATE TABLE `work_tbl` (
   `work_id` int UNSIGNED NOT NULL,
   `work_name` tinytext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
-  `direct` int NOT NULL,
+  `result` int NOT NULL,
   `job_type` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
