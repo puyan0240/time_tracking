@@ -5,6 +5,12 @@
 
     //一覧表示
     {
+        if ($_SESSION['auth']) {
+            $strResultTitle = "結果表示";
+        } else {
+            $strResultTitle = "";
+        }
+
         $strTbl = "";
 
         //DB TABLEから読み出し
@@ -21,10 +27,14 @@
 
             //HTML作成
             foreach ($ret as $value) {
-                if ($value['result']) {
-                    $strResult = "対象";
+                if ($_SESSION['auth']) {
+                    if ($value['result']) {
+                        $strResult = "対象";
+                    } else {
+                        $strResult = "-----";
+                    }    
                 } else {
-                    $strResult = "-----";
+                    $strResult = "";
                 }
 
                 $strTbl .= sprintf($format, $value['work_id'], $value['work_name'], $strResult);
@@ -51,7 +61,7 @@
             <tr>
                 <th>作業番号</th>
                 <th>作業名</th>
-                <th>結果表示</th>
+                <th><?php echo $strResultTitle; ?></th>
             </tr>
             <?php echo $strTbl; ?>
 

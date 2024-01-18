@@ -1,6 +1,25 @@
 <?php
     // Header部分共通
     require_once(dirname(__FILE__).'/./header/header.php');
+
+    $format = "
+        <div class=\"field\">
+            <label class=\"label\">結果表示</label>
+            <div class=\"control\">
+                <div class=\"select is-success\">
+                    <select name=\"result\">
+                        <option value=\"0\" selected>-----</option>
+                        <option value=\"1\">対象</option>
+                    </select>
+                </div>
+            </div>
+        </div>";
+
+    if ($_SESSION['auth']) {
+        $strResultSel = $format;
+    } else {
+        $strResultSel = "";
+    }
 ?>
 
 <!DOCTYPE html>
@@ -23,17 +42,7 @@
                     <input class="input is-sucess" type="text" maxlength="32" name="work_name" required>
                 </div>
             </div>
-            <div class="field">
-                <label class="label">結果表示</label>
-                <div class="control">
-                    <div class="select is-success">
-                        <select name="result">
-                            <option value="0" selected>-----</option>
-                            <option value="1">対象</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
+            <?php echo $strResultSel; ?>
             <br>
             <div class="field is-grouped">
                 <div class="control">

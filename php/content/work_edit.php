@@ -34,7 +34,32 @@
             $selectedTbl = ["",""];
             $selectedTbl[$result] = "selected";
         }
-    }         
+    }
+
+    //結果表示は管理者権限のみ表示
+    $strResultSel = "";
+    if ($_SESSION['auth']) {
+
+        $format = "
+            <div class=\"field ml-6 mr-6\">
+                <label class=\"label\">結果表示</label>
+                <div class=\"control\">
+                    <div class=\"select is-success\">
+                        <select name=\"result\">
+                            <option value=\"0\" %s> ----- </option>
+                            <option value=\"1\" %s>対象</option>
+                        </select>
+                    </div>
+                </div>
+            </div>";
+
+        $strResultSel = sprintf($format, $selectedTbl[0], $selectedTbl[1]);
+    } else {
+        $format = "<input type=\"hidden\" name=\"result\" value=\"%s\">";
+
+        $strResultSel = sprintf($format, $result);
+    }
+ 
 
     //戻り先
     $strBack = $_SERVER['HTTP_REFERER'];
@@ -62,17 +87,7 @@
                 <input class="input is-sucess" type="text" maxlength="32"  name="work_name" required value="<?php echo $work_name;?>">
             </div>
         </div>
-        <div class="field ml-6 mr-6">
-            <label class="label">結果表示</label>
-            <div class="control">
-                <div class="select is-success">
-                    <select name="result">
-                        <option value="0" <?php echo $selectedTbl[0];?>> ----- </option>
-                        <option value="1" <?php echo $selectedTbl[1];?>>対象</option>
-                    </select>
-                </div>
-            </div>
-        </div>
+        <?php echo $strResultSel; ?>
         <br>
         <div class="field is-grouped ml-6">
             <div class="control">

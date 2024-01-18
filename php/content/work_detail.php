@@ -41,9 +41,28 @@
         $result = "対象";
 
 
+    //結果表示は管理者権限のみ表示
+    $strResultTbl = "";
+    if ($_SESSION['auth']) {
+        $format = "
+            <tr>
+                <td>結果表示</td>
+                <td>%s</td>
+            </tr>";
+
+        if ($result) {
+            $result = "対象";
+        } else {
+            $result = "-----";
+        }
+
+        $strResultTbl = sprintf($format, $result);
+    }
+
+
     //機種削除ボタンは管理者権限のみ表示
     $strDelBtn = "";
-    if ($_SESSION['auth'] == 1) {
+    if ($_SESSION['auth']) {
         $strDelBtn =
         "<a href=\"work_del_confirm.php?work_id=".$work_id."\">
             <span class=\"button has-text-light has-background-danger ml-5\">作業項目削除</span>
@@ -71,10 +90,7 @@
                 <td>作業名</td>
                 <td><?php echo $work_name; ?></td>
             </tr>
-            <tr>
-                <td>結果表示</td>
-                <td><?php echo $result;?></td>
-            </tr>
+            <?php echo $strResultTbl; ?>
         </table>
     </div>
 
