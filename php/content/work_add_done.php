@@ -55,7 +55,7 @@
         //DB TABLEの 要素名:値 になるよう連想配列を作成
         $keyValue = [];
         $keyValue['work_id'] = (int)e($_POST['work_id']);
-        $keyValue['work_name'] = (int)e($_POST['work_name']);
+        $keyValue['work_name'] = e($_POST['work_name']);
         if (isset($_POST['result'])) {
             $keyValue['result'] = (int)e($_POST['result']);
         } else {
