@@ -100,12 +100,19 @@
 
         $timeSumTotal = $overtimeTotal = 0;
 
+        //曜日表示
+        $week = ['日','月','火','水','木','金','土'];
+
         //月の日数取得
         $dayMax = date('t', strtotime($selectedMonth));
 
+        //一覧
         for ($day = 1; $day <= $dayMax; $day ++) {
+
             $strYYYYmmdd = sprintf($dayFormat, $selectedMonth, $day); //YYYY-mm-dd の文字列
-            $strmmdd = date('m月d日', strtotime($strYYYYmmdd));  //mm月dd日 の文字列
+            $strmmdd = date('m月 d日', strtotime($strYYYYmmdd));  //mm月dd日 の文字列
+            $strmmdd .= " (".$week[date('w', strtotime($strYYYYmmdd))].")"; //(曜日)を追加
+
             $timeSum = $overtime = 0;
             $strSum = $strOvertime = "-----";
 
@@ -146,6 +153,7 @@
             $strTbl .= sprintf($tableFormat, $strYYYYmmdd, $strmmdd, $strSum, $strOvertime);
         }
     }
+
 
     //合計
     {
