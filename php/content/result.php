@@ -237,6 +237,10 @@
             $strResultTbl = "<tr><td> 担当者 </td><td> 商品名 </td>";
             $format = "<td> %s </td>";
             foreach ($workList as $value) {
+                if ($value['result'] == 0) {
+                    continue; //結果表示しない項目
+                }
+
                 $strResultTbl .= sprintf($format, $value['work_name']);
             }
             $strResultTbl .= "</tr>";
@@ -317,6 +321,10 @@
 
                                 $count = 0;
                                 foreach ($workList as $work) {
+                                    if ($work['result'] == 0) {
+                                        continue; //結果表示しない項目
+                                    }
+
                                     if (isset($timeSum[$device['idx']][$work['work_id']])) {
                                         $count ++;
 
