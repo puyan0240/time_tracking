@@ -92,7 +92,7 @@
     <script>
         setTimeout(function() {
             window.location.href = "device_list.php";
-        }, 2*1000);
+        }, 1*1000);
     </script>
 
     <?php include(dirname(__FILE__).'/./header/bulma_burger.js'); ?>

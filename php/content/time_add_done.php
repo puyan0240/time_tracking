@@ -117,13 +117,13 @@
     <div class="block ml-6">
         <a href="time_add.php">時間登録へ</a>
     </div>
-<!--
+
     <script>
         setTimeout(function() {
             window.location.href = "time_add.php";
-        }, 2*1000);
+        }, 1*1000);
     </script>
--->
+
     <?php include(dirname(__FILE__).'/./header/bulma_burger.js'); ?>
 </body>
 </html>
