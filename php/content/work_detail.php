@@ -6,7 +6,8 @@
     require_once(dirname(__FILE__).'/./common/Encode.php');
 
 
-    $work_name = $direct = "";
+    $work_name = "";
+    $result = 0;
     $work_id = $_GET['work_id'];
 
     //DB検索
