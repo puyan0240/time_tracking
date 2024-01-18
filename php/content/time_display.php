@@ -10,7 +10,11 @@
         else
             $date = date('Y-m-d');
 
-        $strDate = date('Y年m月d日', strtotime($date));
+        $strDate = date('Y年 m月 d日', strtotime($date));
+
+        //曜日表示
+        $week = ['日','月','火','水','木','金','土'];
+        $strDate .= " (".$week[date('w', strtotime($date))].")";
     }
 
     //担当者指定
