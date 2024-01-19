@@ -471,7 +471,7 @@
 
         <hr>
 
-        <table class="table" id="list_table">
+        <table class="table">
             <tr>
                 <td>時間合計</td>
                 <td><?php echo $strTimeSum;?></td>
@@ -482,7 +482,7 @@
             </tr>
         </table>
 
-        <table class="table" id="list_table">
+        <table class="table">
             <?php echo $strResultTbl;?>
         </table>
 
