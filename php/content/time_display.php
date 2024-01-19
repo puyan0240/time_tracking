@@ -23,7 +23,7 @@
         }
     
         //HTML
-        $format = '<label %s">%s</label>';
+        $format = '<label %s>%s</label>';
         $strDate = sprintf($format, $strClass, $strTmp);
     }
 
