@@ -304,7 +304,7 @@
                 <tr>
                     <td>勤務時間:</td>
                     <td><?php echo $strSum;?></td>
-                    <td> &ensp;</td>
+                    <td>&ensp;</td>
                     <td>残業時間:</td>
                     <td><?php echo $strOvertime;?></td>
                 </tr>
@@ -319,8 +319,8 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <td align="center">機種</td>
-                            <td align="center">※設計予定機種</td>
+                            <td align="center">機種名</td>
+                            <td align="center">※設計予定機種名</td>
                             <td align="center">作業</td>
                             <td align="center">時間</td>
                             <td align="center">分</td>

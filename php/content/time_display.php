@@ -41,6 +41,10 @@
                 }
             }
         }
+
+        //HTML
+        $strDate .= "&ensp;&ensp;&ensp;"; //スペース挿入
+        $strDate .= $strUserName;
     }
 
 
@@ -169,29 +173,30 @@
     <br>
 
     <div class="block ml-6 mr-6">
-        <table>
-            <tr>
-                <td>
-                    <label class="label"><?php echo $strDate; ?></label>
-                </td>
-                <td>&emsp;&emsp;&emsp;</td>
-                <td>
-                    <label class="label"><?php echo $strUserName; ?></label>
-                </td>
-            </tr>
-        </table>
-        <br>
+        <label class="label"><?php echo $strDate; ?></label>
+
+        <div class="block">
+            <table class="table">
+                <tr>
+                    <td>勤務時間:</td>
+                    <td><?php echo $strSum;?></td>
+                    <td> &ensp;</td>
+                    <td>残業時間:</td>
+                    <td><?php echo $strOvertime;?></td>
+                </tr>
+            </table>
+        </div>
 
         <form action="time_add_done.php" method="POST">
   
             <input type="hidden" name="date" value="<?php echo $date;?>">
 
             <div class="block">
-                <table class="table" id="list_table">
+                <table class="table">
                     <thead>
                         <tr>
-                            <td align="center">機種</td>
-                            <td align="center">※設計予定機種</td>
+                            <td align="center">機種名</td>
+                            <td align="center">※設計予定機種名</td>
                             <td align="center">作業</td>
                             <td align="center">時間</td>
                             <td align="center">分</td>
@@ -214,20 +219,6 @@
             </div>
 --->
         </form> 
-    </div>
-
-    <br>
-    <div class="block ml-6">
-        <table class="table" id="list_table">
-            <tr>
-                <td>勤務時間</td>
-                <td><?php echo $strSum;?></td>
-            </tr>
-            <tr>
-                <td>残業時間</td>
-                <td><?php echo $strOvertime;?></td>
-            </tr>
-        </table>
     </div>
 
     <?php include(dirname(__FILE__).'/./header/bulma_burger.js'); ?>

@@ -434,7 +434,7 @@
                 <tr>
                     <td>
                         <div class="is-size-6">
-                            <p>設計予定機種</p>
+                            <p>設計予定機種名</p>
                         </div>
                     </td>
                     <td colspan="8">
