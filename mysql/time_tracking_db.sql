@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- ホスト: db
--- 生成日時: 2024 年 1 月 18 日 06:49
+-- 生成日時: 2024 年 1 月 19 日 01:54
 -- サーバのバージョン： 8.2.0
 -- PHP のバージョン: 8.1.18
 
@@ -35,13 +35,6 @@ CREATE TABLE `account_tbl` (
   `type` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
---
--- テーブルのデータのダンプ `account_tbl`
---
-
-INSERT INTO `account_tbl` (`user_id`, `passwd`, `user_name`, `auth`, `type`) VALUES
-(11111, '', '管理者', 1, 0);
-
 -- --------------------------------------------------------
 
 --
@@ -52,7 +45,8 @@ CREATE TABLE `device_tbl` (
   `idx` int UNSIGNED NOT NULL,
   `device_id` int UNSIGNED NOT NULL,
   `ver` int UNSIGNED NOT NULL,
-  `device_name` tinytext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL
+  `device_name` tinytext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `comment` text COLLATE utf8mb4_bin NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 -- --------------------------------------------------------
@@ -81,7 +75,7 @@ CREATE TABLE `work_tbl` (
   `work_id` int UNSIGNED NOT NULL,
   `work_name` tinytext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   `result` int NOT NULL,
-  `job_type` int NOT NULL
+  `comment` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 --
