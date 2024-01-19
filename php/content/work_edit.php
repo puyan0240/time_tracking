@@ -84,7 +84,7 @@
         <div class="field ml-6 mr-6">
             <label class="label">コメント</label>
             <div class="control">
-                <input class="input is-sucess" type="text" maxlength="32"  name="comment" value="<?php echo $work_name;?>">
+                <input class="input is-sucess" type="text" maxlength="32"  name="comment" value="<?php echo $comment;?>">
             </div>
         </div>
         <br>

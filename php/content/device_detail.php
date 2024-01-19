@@ -2,7 +2,7 @@
     // Header部分共通
     require_once(dirname(__FILE__).'/./header/header.php');
 
-    $device_id = $ver = $device_name = "";
+    $device_id = $ver = $device_name = $comment = "";
     $idx = (int)$_GET['idx'];
 
     //DB検索
@@ -19,6 +19,7 @@
                 $device_id   = $value['device_id'];
                 $ver         = str_pad($value['ver'], 2, 0, STR_PAD_LEFT); //0埋めの2桁表示
                 $device_name = $value['device_name'];
+                $comment     = $value['comment'];
             }
         }
     }
@@ -55,8 +56,12 @@
                 <td><?php echo $ver; ?></td>
             </tr>
             <tr>
-                <td>商品名:</td>
+                <td>機種名</td>
                 <td><?php echo $device_name;?></td>
+            </tr>
+            <tr>
+                <td>コメント</td>
+                <td><?php echo $comment;?></td>
             </tr>
         </table>
     </div>

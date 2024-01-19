@@ -55,16 +55,13 @@
 
     //登録
     if ($input_ok == true) {
-
-        //DB TABLEの要素名リスト
-        $keyName = ['device_id','ver','device_name'];
-        $keyValue = [];
-    
+   
         //DB TABLEの 要素名:値 になるよう連想配列を作成
         $keyValue = [];
         $keyValue['device_id']   = (int)$device_id;
         $keyValue['ver']         = (int)$ver;
-        $keyValue['device_name'] =  e($_POST['device_name']);
+        $keyValue['device_name'] = e($_POST['device_name']);
+        $keyValue['comment']     = e($_POST['comment']);
         
         //DB TABLEへ書き込み
         $tblName = "device_tbl";

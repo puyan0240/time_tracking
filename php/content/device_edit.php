@@ -2,7 +2,7 @@
     // Header部分共通
     require_once(dirname(__FILE__).'/./header/header.php');
 
-    $device_id = $ver = $device_name = "";
+    $device_id = $ver = $device_name = $comment = "";
     $idx = (int)$_GET['idx'];
 
     //DB検索
@@ -19,6 +19,7 @@
                 $device_id   = $value['device_id'];
                 $ver         = str_pad($value['ver'], 2, 0, STR_PAD_LEFT); //0埋めの2桁表示
                 $device_name = $value['device_name'];
+                $comment     = $value['comment'];
             }
         }
     }
@@ -50,9 +51,15 @@
             </div>
         </div>
         <div class="field ml-6 mr-6">
-            <label class="label">商品名</label>
+            <label class="label">機種名 ※必須</label>
             <div class="control">
                 <input class="input is-sucess" type="text" maxlength="32"  name="device_name" required value="<?php echo $device_name;?>">
+            </div>
+        </div>
+        <div class="field ml-6 mr-6">
+            <label class="label">コメント</label>
+            <div class="control">
+                <input class="input is-sucess" type="text" maxlength="255"  name="comment" value="<?php echo $comment;?>">
             </div>
         </div>
         <br>

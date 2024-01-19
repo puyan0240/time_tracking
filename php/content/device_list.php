@@ -19,11 +19,12 @@
                 <td>%04d</td>
                 <td>%02s</td>
                 <td>%s</td>
+                <td>%s</td>
             </tr>";
 
             //HTML作成
             foreach ($ret as $value) {
-                $strTbl .= sprintf($format, $value['idx'], $value['device_id'], $value['ver'], $value['device_name']);
+                $strTbl .= sprintf($format, $value['idx'], $value['device_id'], $value['ver'], $value['device_name'], $value['comment']);
             }
         }
     }
@@ -48,7 +49,8 @@
                 <th hidden></th>
                 <th>機種番号</th>
                 <th>Ver</th>
-                <th>商品名</th>
+                <th>機種名</th>
+                <th>コメント</th>
             </tr>
             <?php echo $strTbl; ?>
 
