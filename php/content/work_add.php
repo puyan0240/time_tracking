@@ -31,18 +31,24 @@
     <div class="block ml-6 mr-6">
         <form action="work_add_done.php" method="POST">
             <div class="field">
-                <label class="label">作業番号 (4桁)</label>
+                <label class="label">作業番号 (4桁) ※必須</label>
                 <div class="control">
                     <input class="input is-sucess" type="text" maxlength="4" name="work_id" required>
                 </div>
             </div>
             <div class="field">
-                <label class="label">作業名</label>
+                <label class="label">作業名 ※必須</label>
                 <div class="control">
                     <input class="input is-sucess" type="text" maxlength="32" name="work_name" required>
                 </div>
             </div>
             <?php echo $strResultSel; ?>
+            <div class="field">
+                <label class="label">コメント</label>
+                <div class="control">
+                    <input class="input is-sucess" type="text" maxlength="32" name="comment">
+                </div>
+            </div>
             <br>
             <div class="field is-grouped">
                 <div class="control">

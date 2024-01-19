@@ -6,23 +6,15 @@
     require_once(dirname(__FILE__).'/./common/Encode.php');
 
 
-    $work_name = "";
+    $work_name = $comment = "";
     $result = 0;
     $work_id = $_GET['work_id'];
 
     //DB検索
     {
-        //DB TABLEの要素名リスト
-        $whereKeyName = ['work_id'];
-        $whereKeyValue = [];
-        
         //DB TABLEの 要素名:値 になるよう連想配列を作成
-        foreach ($whereKeyName as $key) {
-            if ($key == 'work_id')
-                $whereKeyValue[$key] = (int)$work_id;
-            else
-                $whereKeyValue[$key] = e($_POST[$key]);
-        }
+        $whereKeyValue = [];
+        $whereKeyValue['work_id'] = (int)$work_id;
 
         //DBアクセス
         $tblName = "work_tbl";
@@ -31,6 +23,7 @@
             foreach ($ret as $value) {
                 $work_name = $value['work_name'];
                 $result    = $value['result'];
+                $comment   = $value['comment'];
             }
         }
     }
@@ -92,6 +85,10 @@
                 <td><?php echo $work_name; ?></td>
             </tr>
             <?php echo $strResultTbl; ?>
+            <tr>
+                <td>コメント</td>
+                <td><?php echo $comment; ?></td>
+            </tr>
         </table>
     </div>
 

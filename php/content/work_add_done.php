@@ -27,17 +27,9 @@
 
         //DB検索
         {
-            //DB TABLEの要素名リスト
-            $whereKeyName = ['work_id'];
-            $whereKeyValue = [];
-        
             //DB TABLEの 要素名:値 になるよう連想配列を作成
-            foreach ($whereKeyName as $key) {
-                if ($key == 'work_id')
-                    $whereKeyValue[$key] = (int)$work_id;
-                else
-                    $whereKeyValue[$key] = e($_POST[$key]);
-            }
+            $whereKeyValue = [];
+            $whereKeyValue['work_id'] = (int)$work_id;
 
             //DBアクセス
             $tblName = "work_tbl";
@@ -61,7 +53,7 @@
         } else {
             $keyValue['result'] = 0;
         }
-        $keyValue['job_type'] = 0;
+        $keyValue['comment'] = e($_POST['comment']);
 
         
         //DB TABLEへ書き込み
@@ -87,13 +79,13 @@
     <div class="block ml-6">
         <a href="work_list.php">作業項目へ</a>
     </div>
-
+<!--
     <script>
         setTimeout(function() {
             window.location.href = "work_list.php";
         }, 1*1000);
     </script>
-
+    -->
     <?php include(dirname(__FILE__).'/./header/bulma_burger.js'); ?>
 </body>
 </html>

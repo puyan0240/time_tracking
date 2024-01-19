@@ -23,6 +23,7 @@
                 <td>%04d</td>
                 <td>%s</td>
                 <td>%s</td>
+                <td>%s</td>
             </tr>";
 
             //HTML作成
@@ -37,7 +38,7 @@
                     $strResult = "";
                 }
 
-                $strTbl .= sprintf($format, $value['work_id'], $value['work_name'], $strResult);
+                $strTbl .= sprintf($format, $value['work_id'], $value['work_name'], $strResult, $value['comment']);
             }
         }
     }
@@ -62,6 +63,7 @@
                 <th>作業番号</th>
                 <th>作業名</th>
                 <th><?php echo $strResultTitle; ?></th>
+                <th>コメント</th>
             </tr>
             <?php echo $strTbl; ?>
 
