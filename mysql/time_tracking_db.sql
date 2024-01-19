@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- ホスト: db
--- 生成日時: 2024 年 1 月 19 日 01:54
+-- 生成日時: 2024 年 1 月 19 日 05:42
 -- サーバのバージョン： 8.2.0
 -- PHP のバージョン: 8.1.18
 
@@ -75,7 +75,7 @@ CREATE TABLE `work_tbl` (
   `work_id` int UNSIGNED NOT NULL,
   `work_name` tinytext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   `result` int NOT NULL,
-  `comment` int NOT NULL
+  `comment` text COLLATE utf8mb4_bin NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 --
