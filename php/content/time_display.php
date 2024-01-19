@@ -10,11 +10,21 @@
         else
             $date = date('Y-m-d');
 
-        $strDate = date('Y年 m月 d日', strtotime($date));
+        $strTmp = date('Y年 m月 d日', strtotime($date));
 
         //曜日表示
         $week = ['日','月','火','水','木','金','土'];
-        $strDate .= " (".$week[date('w', strtotime($date))].")";
+        $dayOfWeek = $week[date('w', strtotime($date))];
+        $strTmp .= " (".$dayOfWeek.")";
+        if (($dayOfWeek == '土') || ($dayOfWeek == '日')) { //土日は赤色文字
+            $strClass = 'class="label has-text-danger"';
+        } else {
+            $strClass = 'class="label"';
+        }
+    
+        //HTML
+        $format = '<label %s">%s</label>';
+        $strDate = sprintf($format, $strClass, $strTmp);
     }
 
     //担当者指定
@@ -41,10 +51,6 @@
                 }
             }
         }
-
-        //HTML
-        $strDate .= "&ensp;&ensp;&ensp;"; //スペース挿入
-        $strDate .= $strUserName;
     }
 
 
@@ -173,14 +179,20 @@
     <br>
 
     <div class="block ml-6 mr-6">
-        <label class="label"><?php echo $strDate; ?></label>
-
         <div class="block">
+            <table class="table my-0">
+                <tr>
+                    <td><?php echo $strDate; ?></td>
+                    <td>&ensp;</td>
+                    <td><label class="label"><?php echo $strUserName; ?></label></td>
+                </tr>
+            </table>
             <table class="table">
                 <tr>
+                    <td>&ensp;</td>
                     <td>勤務時間:</td>
                     <td><?php echo $strSum;?></td>
-                    <td> &ensp;</td>
+                    <td>&ensp;</td>
                     <td>残業時間:</td>
                     <td><?php echo $strOvertime;?></td>
                 </tr>

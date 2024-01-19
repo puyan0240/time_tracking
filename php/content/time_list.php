@@ -113,7 +113,7 @@
             $strmmdd = date('m月 d日', strtotime($strYYYYmmdd));  //mm月dd日 の文字列
             $dayOfWeek = $week[date('w', strtotime($strYYYYmmdd))]; //曜日
             $strmmdd .= " (".$dayOfWeek.")"; //(曜日)を追加
-            if (($dayOfWeek == '土') || ($dayOfWeek == '日')) {
+            if (($dayOfWeek == '土') || ($dayOfWeek == '日')) { //土日は赤色文字
                 $strHoliday = 'class="has-text-danger"';
             } else {
                 $strHoliday = "";
