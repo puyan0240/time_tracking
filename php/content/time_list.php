@@ -88,12 +88,12 @@
 
     //一覧表示
     {
-        $strTbl = "";
+        $strTbl = $strHoliday = "";
         $dayFormat = "%s-%02d";
         $tableFormat = "
         <tr>
             <td hidden>%s</td>
-            <td>%s</td>
+            <td %s>%s</td>
             <td>%s</td>
             <td>%s</td>
         </tr>";
@@ -111,7 +111,13 @@
 
             $strYYYYmmdd = sprintf($dayFormat, $selectedMonth, $day); //YYYY-mm-dd の文字列
             $strmmdd = date('m月 d日', strtotime($strYYYYmmdd));  //mm月dd日 の文字列
-            $strmmdd .= " (".$week[date('w', strtotime($strYYYYmmdd))].")"; //(曜日)を追加
+            $dayOfWeek = $week[date('w', strtotime($strYYYYmmdd))]; //曜日
+            $strmmdd .= " (".$dayOfWeek.")"; //(曜日)を追加
+            if (($dayOfWeek == '土') || ($dayOfWeek == '日')) {
+                $strHoliday = 'class="has-text-danger"';
+            } else {
+                $strHoliday = "";
+            }
 
             $timeSum = $overtime = 0;
             $strSum = $strOvertime = "-----";
@@ -150,7 +156,7 @@
                     $overtimeTotal += $overtime;
                 }  
             }
-            $strTbl .= sprintf($tableFormat, $strYYYYmmdd, $strmmdd, $strSum, $strOvertime);
+            $strTbl .= sprintf($tableFormat, $strYYYYmmdd, $strHoliday, $strmmdd, $strSum, $strOvertime);
         }
     }
 
