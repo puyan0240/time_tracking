@@ -298,14 +298,25 @@
 
     <div class="block ml-6 mr-6">
         <label class="label"><?php echo $strDate; ?></label>
-        <br>
+
+        <div class="block">
+            <table class="table">
+                <tr>
+                    <td>勤務時間:</td>
+                    <td><?php echo $strSum;?></td>
+                    <td> &ensp;</td>
+                    <td>残業時間:</td>
+                    <td><?php echo $strOvertime;?></td>
+                </tr>
+            </table>
+        </div>
 
         <form action="time_add_done.php" method="POST">
   
             <input type="hidden" name="date" value="<?php echo $date;?>">
 
             <div class="block">
-                <table class="table" id="list_table">
+                <table class="table">
                     <thead>
                         <tr>
                             <td align="center">機種</td>
@@ -330,20 +341,6 @@
                 </div>
             </div>
         </form> 
-    </div>
-
-    <br>
-    <div class="block ml-6">
-        <table class="table" id="list_table">
-            <tr>
-                <td>勤務時間</td>
-                <td><?php echo $strSum;?></td>
-            </tr>
-            <tr>
-                <td>残業時間</td>
-                <td><?php echo $strOvertime;?></td>
-            </tr>
-        </table>
     </div>
 
     <?php include(dirname(__FILE__).'/./header/bulma_burger.js'); ?>

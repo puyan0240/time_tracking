@@ -79,13 +79,13 @@
     <div class="block ml-6">
         <a href="work_list.php">作業項目へ</a>
     </div>
-
+<!--
     <script>
         setTimeout(function() {
             window.location.href = "work_list.php";
         }, 1*1000);
     </script>
-
+    -->
     <?php include(dirname(__FILE__).'/./header/bulma_burger.js'); ?>
 </body>
 </html>

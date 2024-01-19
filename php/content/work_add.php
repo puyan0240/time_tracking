@@ -46,7 +46,7 @@
             <div class="field">
                 <label class="label">コメント</label>
                 <div class="control">
-                    <input class="input is-sucess" type="text" maxlength="32" name="comment">
+                    <input class="input is-sucess" type="text" maxlength="255" name="comment">
                 </div>
             </div>
             <br>
