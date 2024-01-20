@@ -90,7 +90,7 @@
 
             //DB TABLEから読み出し
             $tblName = "device_tbl";
-            $order = "ORDER BY device_id DESC , ver ASC "; //機種番号は降順、Verは昇順が良い??
+            $order = "ORDER BY device_id DESC , ver ASC "; //ID降順,Ver昇順
             $deviceList = readTbl($tblName, NULL, NULL, $order, NULL, NULL);
             if ($deviceList != false) {
                 foreach ($deviceList as $value) {

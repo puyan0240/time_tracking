@@ -163,7 +163,7 @@
 
             //DB TABLEから読み出し
             $tblName = "device_tbl";
-            $order   = "ORDER BY device_id ASC , ver ASC "; //昇順
+            $order   = "ORDER BY device_id DESC , ver ASC "; //ID降順,Ver昇順
             $ret = readTbl($tblName, NULL, NULL, $order, NULL, NULL);
             if ($ret != FALSE) {
                 foreach ($ret as $value) {
