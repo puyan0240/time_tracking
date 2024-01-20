@@ -285,7 +285,7 @@
                 //DBアクセス
                 {
                     $tblName = "time_traking_tbl";
-                    $count   = "idx"; //時間で昇順
+                    $count   = "date"; //時間で昇順
                     $ret = getNumberOfEntryTbl($tblName, $count, $whereKeyValue, $between);
                     if ($ret == 0) { //登録なし
                         continue;

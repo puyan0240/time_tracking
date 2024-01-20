@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- ホスト: db
--- 生成日時: 2024 年 1 月 19 日 05:42
+-- 生成日時: 2024 年 1 月 20 日 02:03
 -- サーバのバージョン： 8.2.0
 -- PHP のバージョン: 8.1.18
 
@@ -56,7 +56,6 @@ CREATE TABLE `device_tbl` (
 --
 
 CREATE TABLE `time_traking_tbl` (
-  `idx` int UNSIGNED NOT NULL,
   `date` date NOT NULL,
   `user_id` int UNSIGNED NOT NULL,
   `device_tbl_idx` int UNSIGNED NOT NULL,
@@ -95,12 +94,6 @@ ALTER TABLE `device_tbl`
   ADD PRIMARY KEY (`idx`);
 
 --
--- テーブルのインデックス `time_traking_tbl`
---
-ALTER TABLE `time_traking_tbl`
-  ADD UNIQUE KEY `idx` (`idx`);
-
---
 -- テーブルのインデックス `work_tbl`
 --
 ALTER TABLE `work_tbl`
@@ -114,12 +107,6 @@ ALTER TABLE `work_tbl`
 -- テーブルの AUTO_INCREMENT `device_tbl`
 --
 ALTER TABLE `device_tbl`
-  MODIFY `idx` int UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- テーブルの AUTO_INCREMENT `time_traking_tbl`
---
-ALTER TABLE `time_traking_tbl`
   MODIFY `idx` int UNSIGNED NOT NULL AUTO_INCREMENT;
 COMMIT;
 
