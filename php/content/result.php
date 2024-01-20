@@ -263,7 +263,7 @@
         foreach ($nameList as $name) {
             $dayTotalByName = [];
 
-            if ($selUserId) {
+            if ($selUserId) { //担当者指定あり
                 if ($selUserId != $name['user_id']) {
                     continue;
                 }
@@ -272,7 +272,7 @@
 
             //機種毎に検索
             foreach ($deviceList as $device) {
-                if ($selRefDeviceId) {
+                if ($selRefDeviceId) { //機種指定あり
                     if ($selRefDeviceId != $device['idx']) {
                         continue;
                     } else {
