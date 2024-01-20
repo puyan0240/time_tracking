@@ -369,7 +369,7 @@
 
             //工数
             {
-                $format = "<div class=\"block ml-6\"><p>%d 人月</p></div>";
+                $format = "<div class=\"block ml-6\"><p>%d 人日</p></div>";
                 $strManhoursSum = sprintf($format, $dayTotal);
             }
         }
