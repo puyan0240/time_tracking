@@ -319,9 +319,13 @@
                         $min  = (int)($timeTotalDevice % 60);
                         $day  = (int)(count($dayDeviceTbl[$name['user_id']][$device['idx']]));
                         
-                        $format = "<td> %dh %02dm (%dd)</td>";
-                        $strTmp .= sprintf($format, $hour, $min, $day);
-
+                        if ($min) {
+                            $format = "<td> %dh %02dm (%dd)</td>";
+                            $strTmp .= sprintf($format, $hour, $min, $day);    
+                        } else {
+                            $format = "<td> %dh (%dd)</td>";
+                            $strTmp .= sprintf($format, $hour, $day);
+                        }
 
                         //指定範囲内の全体の時間
                         $timeTotal += $timeTotalDevice;
