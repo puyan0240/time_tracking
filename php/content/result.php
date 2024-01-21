@@ -7,7 +7,7 @@
 
 
     //分析結果
-    $strTimeSum = $strManhoursSum = "-----";
+    $strTimeSum = $strManhoursSum = "";
     $strResultTbl = "";
 
     //管理開始年
@@ -232,20 +232,6 @@
             $workList = readTbl($tblName, NULL, NULL, NULL, NULL, NULL);
         }
 
-        //TABLEヘッダ作成
-        {
-            $strResultTbl = "<tr><td> 担当者 </td><td> 商品名 </td><td> 時間 </td>";
-            $format = "<td> %s </td>";
-            foreach ($workList as $value) {
-                if ($value['result'] == 0) {
-                    continue; //結果表示しない項目
-                }
-
-                $strResultTbl .= sprintf($format, $value['work_name']);
-            }
-            $strResultTbl .= "</tr>";
-        }
-
         //日程の範囲指定
         {
             $format = "%d-%02d-%02d";
@@ -296,7 +282,22 @@
                 }
             }
 
-            //HTML作成
+
+            //TABLEヘッダ作成
+            {
+                $strResultTbl = "<tr><thead><td> 担当者 </td><td> 商品名 </td><td> 時間 </td>";
+                $format = "<td> %s </td>";
+                foreach ($workList as $value) {
+                    if ($value['result'] == 0) {
+                        continue; //結果表示しない項目
+                    }
+
+                    $strResultTbl .= sprintf($format, $value['work_name']);
+                }
+                $strResultTbl .= "</thead></tr>";
+            }
+
+            //TABLE BODY作成
             foreach ($nameList as $name) {               
                 foreach ($deviceList as $device) {
 
