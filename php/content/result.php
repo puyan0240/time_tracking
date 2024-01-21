@@ -234,7 +234,7 @@
 
         //TABLEヘッダ作成
         {
-            $strResultTbl = "<tr><td> 担当者 </td><td> 商品名 </td>";
+            $strResultTbl = "<tr><td> 担当者 </td><td> 商品名 </td><td> 時間 </td>";
             $format = "<td> %s </td>";
             foreach ($workList as $value) {
                 if ($value['result'] == 0) {
@@ -258,101 +258,103 @@
 
 
         $timeTotal = $dayTotal = 0;
+        $timeTbl = $timeDeviceTbl = [];
+        $dayTbl = $dayDeviceTbl = [];
 
-        //担当者毎に検索
-        foreach ($nameList as $name) {
-            $dayTotalByName = [];
+        $whereKeyValue = null;
+        if ($selUserId) {
+            $whereKeyValue['user_id'] = $selUserId;
+        }
+        if ($selRefDeviceId) {
+            $whereKeyValue['ref_device_tbl_idx'] = $selRefDeviceId;
+        }
 
-            if ($selUserId) { //担当者指定あり
-                if ($selUserId != $name['user_id']) {
-                    continue;
+        $tblName = "time_traking_tbl";
+        $order = "ORDER BY date ASC"; //時間で昇順
+        $ret = readTbl($tblName, $whereKeyValue, $between, $order, NULL, NULL);
+        if ($ret != FALSE) {
+
+            //結果を仕分け
+            foreach ($ret as $value) {
+                //担当者/機種/作業ごとの時間
+                if (isset($timeTbl[$value['user_id']][$value['device_tbl_idx']][$value['work_id']]) == false) {
+                    $timeTbl[$value['user_id']][$value['device_tbl_idx']][$value['work_id']] = 0;
+                }
+                $timeTbl[$value['user_id']][$value['device_tbl_idx']][$value['work_id']] += $value['time'];
+                
+                //担当者/機種ごとの時間
+                if (isset($timeDeviceTbl[$value['user_id']][$value['device_tbl_idx']]) == false) {
+                    $timeDeviceTbl[$value['user_id']][$value['device_tbl_idx']] = 0;
+                }
+                $timeDeviceTbl[$value['user_id']][$value['device_tbl_idx']] += $value['time'];
+
+                //担当者/機種/作業ごとの日数
+                $dayTbl[$value['user_id']][$value['device_tbl_idx']][$value['work_id']][$value['date']] = 1;
+
+                //担当者/機種ごとの日数
+                if (isset($dayDeviceTbl[$value['user_id']][$value['device_tbl_idx']][$value['date']]) == false) {
+                    $dayDeviceTbl[$value['user_id']][$value['device_tbl_idx']][$value['date']] = 1;
                 }
             }
-            $whereKeyValue['user_id'] = $name['user_id'];
 
-            //機種毎に検索
-            foreach ($deviceList as $device) {
-                if ($selRefDeviceId) { //機種指定あり
-                    if ($selRefDeviceId != $device['idx']) {
-                        continue;
-                    } else {
-                        $whereKeyValue['ref_device_tbl_idx'] = $device['idx'];
+            //HTML作成
+            foreach ($nameList as $name) {               
+                foreach ($deviceList as $device) {
+
+                    if (isset($dayDeviceTbl[$name['user_id']][$device['idx']]) == false) {
+                        continue; //作業なし
                     }
-                } else {
-                    $whereKeyValue['device_tbl_idx'] = $device['idx'];
-                }
 
-                //DBアクセス
-                {
-                    $tblName = "time_traking_tbl";
-                    $count   = "date"; //時間で昇順
-                    $ret = getNumberOfEntryTbl($tblName, $count, $whereKeyValue, $between);
-                    if ($ret == 0) { //登録なし
-                        continue;
-                    } else { //登録あり->DB取得
-                        $order = "ORDER BY date ASC"; //時間で昇順
-                        $ret = readTbl($tblName, $whereKeyValue, $between, $order, NULL, NULL);
-                        if ($ret != FALSE) {
+                    $strTmp = "<tr>";
+                    $strTmp .= "<td>".$name['user_name']."</td>";
+                    $strTmp .= "<td>".$device['device_name']."</td>";
 
-                            //結果を格納(時間)
-                            $timeSum = $daySum = [];
-                            foreach ($ret as $value) {
-                                if (isset($timeSum[$value['device_tbl_idx']][$value['work_id']]) == false) {
-                                    $timeSum[$value['device_tbl_idx']][$value['work_id']] = 0;
-                                }
-                                $timeSum[$value['device_tbl_idx']][$value['work_id']] += $value['time'];
-                                $timeTotal += $value['time'];
+                    //担当者/機種毎のトータル時間
+                    {
+                        $timeTotalDevice = 0;
+                        if (isset($timeDeviceTbl[$name['user_id']][$device['idx']])) {
+                            $timeTotalDevice += $timeDeviceTbl[$name['user_id']][$device['idx']];
+                        }
+    
+                        $hour = (int)($timeTotalDevice / 60);
+                        $min  = (int)($timeTotalDevice % 60);
+                        $day  = (int)(count($dayDeviceTbl[$name['user_id']][$device['idx']]));
+                        
+                        $format = "<td> %dh %02dm (%dd)</td>";
+                        $strTmp .= sprintf($format, $hour, $min, $day);
 
-                                if (isset($daySum[$value['device_tbl_idx']][$value['work_id']]) == false) {
-                                    $daySum[$value['device_tbl_idx']][$value['work_id']] = 0;
-                                }
-                                $daySum[$value['device_tbl_idx']][$value['work_id']] ++;
 
-                                if (isset($dayTotalByName[$value['date']]) == false) {
-                                    $dayTotalByName[$value['date']] = 1;
-                                }
-                            }
+                        //指定範囲内の全体の時間
+                        $timeTotal += $timeTotalDevice;
+                        $dayTotal  += $day;
+                    }
 
-                            //HTML出力文
-                            foreach ($deviceList as $device) {
-                                $strTmp = "<tr>";
-                                $strTmp .= "<td>".$name['user_name']."</td>";
-                                $strTmp .= "<td>".$device['device_name']."</td>";
+                    //担当者/機種/作業毎の時間
+                    foreach ($workList as $work) {
+                        if ($work['result'] == 0) {
+                            continue; //結果表示しない
+                        }
 
-                                $count = 0;
-                                foreach ($workList as $work) {
-                                    if ($work['result'] == 0) {
-                                        continue; //結果表示しない項目
-                                    }
-
-                                    if (isset($timeSum[$device['idx']][$work['work_id']])) {
-                                        $count ++;
-
-                                        $hour = (int)($timeSum[$device['idx']][$work['work_id']] / 60);
-                                        $min  = (int)($timeSum[$device['idx']][$work['work_id']] % 60);
-                                        $day  = $daySum[$device['idx']][$work['work_id']];
-                                        
-                                        $format = "<td> %dh %02dm (%dd)</td>";
-                                        $strTmp .= sprintf($format, $hour, $min, $day);
-                                    } else {
-                                        $strTmp .= "<td> ----- </td>";
-                                    }
-                                }
-                                if ($count == 0) {
-                                    $strTmp = ""; //全作業項目が未登録の場合はスキップ
-                                } else {
-                                    $strTmp .= "</tr>";
-                                    $strResultTbl .= $strTmp;
-                                }
+                        if (isset($timeTbl[$name['user_id']][$device['idx']][$work['work_id']]) == false) {
+                            $strTmp .="<td> ----- </td>";
+                        } else {
+                            $time = $timeTbl[$name['user_id']][$device['idx']][$work['work_id']];
+                            $hour = (int)($time / 60);
+                            $min  = (int)($time % 60);
+                            $day  = (int)(count($dayTbl[$name['user_id']][$device['idx']][$work['work_id']]));
+    
+                            if ($min) {
+                                $format = "<td> %dh %02dm (%dd)</td>";
+                                $strTmp .= sprintf($format, $hour, $min, $day);   
+                            } else {
+                                $format = "<td> %dh (%dd)</td>";
+                                $strTmp .= sprintf($format, $hour, $day);
                             }
                         }
                     }
+                    $strTmp .= "</tr>";
+                    $strResultTbl .= $strTmp;
                 }
-            }
-
-            //担当者毎の工数を加算
-            {
-                $dayTotal += count($dayTotalByName);
             }
         }
 
@@ -363,8 +365,13 @@
                 $hour = (int)($timeTotal / 60);
                 $min  = (int)($timeTotal % 60);
 
-                $format = "<div class=\"block ml-6\"><p>%02d 時間 %02d 分</p></div>";
-                $strTimeSum = sprintf($format, $hour, $min); 
+                if ($min) {
+                    $format = "<div class=\"block ml-6\"><p>%02d 時間 %02d 分</p></div>";
+                    $strTimeSum = sprintf($format, $hour, $min);   
+                } else {
+                    $format = "<div class=\"block ml-6\"><p>%02d 時間</p></div>";
+                    $strTimeSum = sprintf($format, $hour);
+                }
             }
 
             //工数
@@ -374,7 +381,6 @@
             }
         }
     }
-
 ?>
 
 <!DOCTYPE html>
