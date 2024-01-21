@@ -256,11 +256,6 @@
             $between = sprintf($format, $strStart, $strEnd);
         }
 
-
-        $timeTotal = $dayTotal = 0;
-        $timeTbl = $timeDeviceTbl = [];
-        $dayTbl = $dayDeviceTbl = [];
-
         $whereKeyValue = null;
         if ($selUserId) {
             $whereKeyValue['user_id'] = $selUserId;
@@ -273,6 +268,10 @@
         $order = "ORDER BY date ASC"; //時間で昇順
         $ret = readTbl($tblName, $whereKeyValue, $between, $order, NULL, NULL);
         if ($ret != FALSE) {
+
+            $timeTotal = $dayTotal = 0;
+            $timeTbl = $timeDeviceTbl = [];
+            $dayTbl = $dayDeviceTbl = [];
 
             //結果を仕分け
             foreach ($ret as $value) {
@@ -356,30 +355,31 @@
                     $strResultTbl .= $strTmp;
                 }
             }
-        }
 
-        //合計
-        if ($timeTotal > 0) {
-            //時間
-            {
-                $hour = (int)($timeTotal / 60);
-                $min  = (int)($timeTotal % 60);
+            //合計
+            if ($timeTotal > 0) {
+                //時間
+                {
+                    $hour = (int)($timeTotal / 60);
+                    $min  = (int)($timeTotal % 60);
 
-                if ($min) {
-                    $format = "<div class=\"block ml-6\"><p>%02d 時間 %02d 分</p></div>";
-                    $strTimeSum = sprintf($format, $hour, $min);   
-                } else {
-                    $format = "<div class=\"block ml-6\"><p>%02d 時間</p></div>";
-                    $strTimeSum = sprintf($format, $hour);
+                    if ($min) {
+                        $format = "<div class=\"block ml-6\"><p>%02d 時間 %02d 分</p></div>";
+                        $strTimeSum = sprintf($format, $hour, $min);   
+                    } else {
+                        $format = "<div class=\"block ml-6\"><p>%02d 時間</p></div>";
+                        $strTimeSum = sprintf($format, $hour);
+                    }
+                }
+
+                //工数
+                {
+                    $format = "<div class=\"block ml-6\"><p>%d 人日</p></div>";
+                    $strManhoursSum = sprintf($format, $dayTotal);
                 }
             }
-
-            //工数
-            {
-                $format = "<div class=\"block ml-6\"><p>%d 人日</p></div>";
-                $strManhoursSum = sprintf($format, $dayTotal);
-            }
         }
+
     }
 ?>
 
