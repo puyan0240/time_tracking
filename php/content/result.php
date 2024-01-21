@@ -483,9 +483,9 @@
 
         <table class="table">
             <tr>
-                <td><?php echo $strTimeSum;?></td>
+                <td><label class="label"><?php echo $strTimeSum;?></label></td>
                 <td>&ensp;</td>
-                <td><?php echo $strManhoursSum;?></td>
+                <td><label class="label"><?php echo $strManhoursSum;?></label></td>
             </tr>
         </table>
 
