@@ -364,17 +364,17 @@
                     $min  = (int)($timeTotal % 60);
 
                     if ($min) {
-                        $format = "<div class=\"block ml-6\"><p>%02d 時間 %02d 分</p></div>";
+                        $format = "時間合計:  %d 時間 %02d 分";
                         $strTimeSum = sprintf($format, $hour, $min);   
                     } else {
-                        $format = "<div class=\"block ml-6\"><p>%02d 時間</p></div>";
+                        $format = "時間合計:  %d 時間";
                         $strTimeSum = sprintf($format, $hour);
                     }
                 }
 
                 //工数
                 {
-                    $format = "<div class=\"block ml-6\"><p>%d 人日</p></div>";
+                    $format = "工数合計: %d 人日";
                     $strManhoursSum = sprintf($format, $dayTotal);
                 }
             }
@@ -479,11 +479,8 @@
 
         <table class="table">
             <tr>
-                <td>時間合計</td>
                 <td><?php echo $strTimeSum;?></td>
-            </tr>
-            <tr>
-                <td>工数合計</td>
+                <td>&ensp;</td>
                 <td><?php echo $strManhoursSum;?></td>
             </tr>
         </table>
