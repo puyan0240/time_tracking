@@ -43,13 +43,16 @@
 
     <div class="block ml-6">
         <table class="table" id="list_table">
-            <tr>
-                <th>社員番号</th>
-                <th>名前</th>
-                <th>権限</th>
-            </tr>
-            <?php echo $strTbl; ?>
-
+            <thead>
+                <tr>
+                    <td>社員番号</td>
+                    <td>名前</td>
+                    <td>権限</td>
+                </tr>
+            </thead>
+            <tbody>
+                <?php echo $strTbl; ?>
+            </tbody>
         </table>
     </div>
 

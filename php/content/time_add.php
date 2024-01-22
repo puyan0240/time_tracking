@@ -317,11 +317,9 @@
             <table class="table">
                 <tr>
                     <td>&ensp;</td>
-                    <td>勤務時間:</td>
-                    <td><?php echo $strSum;?></td>
+                    <td>勤務時間:&ensp;<?php echo $strSum;?></td>
                     <td>&ensp;</td>
-                    <td>残業時間:</td>
-                    <td><?php echo $strOvertime;?></td>
+                    <td>残業時間:&ensp;<?php echo $strOvertime;?></td>
                 </tr>
             </table>
         </div>

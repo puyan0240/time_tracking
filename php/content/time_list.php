@@ -221,25 +221,26 @@
     <div class="block ml-6">
         <table class="table">
             <tr>
-                <td>勤務時間合計:</td>
-                <td><?php echo $strSumTotal;?></td>
+                <td>勤務時間(合計):&ensp;<?php echo $strSumTotal;?></td>
                 <td>&ensp;</td>
-                <td>残業時間合計:</td>
-                <td><?php echo $strOvertimeTotal;?></td>
+                <td>残業時間(合計):&ensp;<?php echo $strOvertimeTotal;?></td>
             </tr>
         </table>
     </div>
 
     <div class="block ml-6">
         <table class="table" id="list_table">
-            <tr>
-                <th hidden></th>
-                <th></th>
-                <th>勤務時間</th>
-                <th>残業時間</th>
-            </tr>
-            <?php echo $strTbl; ?>
-
+            <thead>
+                <tr>
+                    <td hidden></td>
+                    <td></td>
+                    <td>勤務時間</td>
+                    <td>残業時間</td>
+                </tr>
+            </thead>
+            <tbody>
+                <?php echo $strTbl; ?>
+            </tbody>
         </table>
     </div>
 

@@ -45,15 +45,18 @@
 
     <div class="block ml-6">
         <table class="table" id="list_table">
-            <tr>
-                <th hidden></th>
-                <th>機種番号</th>
-                <th>Ver</th>
-                <th>機種名</th>
-                <th>コメント</th>
-            </tr>
-            <?php echo $strTbl; ?>
-
+            <thead>
+                <tr>
+                    <td hidden></td>
+                    <td>機種番号</td>
+                    <td>Ver</td>
+                    <td>機種名</td>
+                    <td>コメント</td>
+                </tr>
+            </thead>
+            <tbody>
+                <?php echo $strTbl; ?>
+            </tbody>
         </table>
     </div>
 

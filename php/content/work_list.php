@@ -59,14 +59,17 @@
 
     <div class="block ml-6">
         <table class="table" id="list_table">
-            <tr>
-                <th>作業番号</th>
-                <th>作業名</th>
-                <th><?php echo $strResultTitle; ?></th>
-                <th>コメント</th>
-            </tr>
-            <?php echo $strTbl; ?>
-
+            <thead>
+                <tr>
+                    <td>作業番号</td>
+                    <td>作業名</td>
+                    <td><?php echo $strResultTitle; ?></td>
+                    <td>コメント</td>
+                </tr>
+            </thead>
+            <tbody>
+                <?php echo $strTbl; ?>
+            </tbody>
         </table>
     </div>
 
