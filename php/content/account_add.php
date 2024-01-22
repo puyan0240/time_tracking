@@ -12,19 +12,19 @@
     <div class="block ml-6 mr-6">
         <form action="account_add_done.php" method="POST">
             <div class="field">
-                <label class="label">社員番号</label>
+                <label class="label is-small">社員番号</label>
                 <div class="control">
                     <input class="input is-sucess" type="text" maxlength="5" name="user_id" required>
                 </div>
             </div>
             <div class="field">
-                <label class="label">名前</label>
+                <label class="label is-small">名前</label>
                 <div class="control">
                     <input class="input is-sucess" type="text" maxlength="32" name="user_name" required>
                 </div>
             </div>
             <div class="field">
-                <label class="label">権限</label>
+                <label class="label is-small">権限</label>
                 <div class="control">
                     <div class="select is-success">
                         <select name="auth">

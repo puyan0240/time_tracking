@@ -35,7 +35,7 @@
 
         $format = "
             <div class=\"field ml-6 mr-6\">
-                <label class=\"label\">結果表示</label>
+                <label class=\"label is-small\">結果表示</label>
                 <div class=\"control\">
                     <div class=\"select is-success\">
                         <select name=\"result\">
@@ -69,20 +69,20 @@
         <input type="hidden" name="device_id" value="<?php echo $device_id; ?>">
 
         <div class="field ml-6 mr-6">
-            <label class="label">作業番号 (※編集不可)</label>
+            <label class="label is-small">作業番号 (※編集不可)</label>
             <div class="control">
                 <input class="input is-sucess" type="text" maxlength="4" name="work_id" required value="<?php echo $work_id;?>" readonly>
             </div>
         </div>
         <div class="field ml-6 mr-6">
-            <label class="label">作業名 ※必須</label>
+            <label class="label is-small">作業名 ※必須</label>
             <div class="control">
                 <input class="input is-sucess" type="text" maxlength="32"  name="work_name" required value="<?php echo $work_name;?>">
             </div>
         </div>
         <?php echo $strResultSel; ?>
         <div class="field ml-6 mr-6">
-            <label class="label">コメント</label>
+            <label class="label is-small">コメント</label>
             <div class="control">
                 <input class="input is-sucess" type="text" maxlength="32"  name="comment" value="<?php echo $comment;?>">
             </div>

@@ -39,25 +39,25 @@
         <input type="hidden" name="idx" value="<?php echo $idx; ?>">
 
         <div class="field ml-6 mr-6">
-            <label class="label">機種番号 (※編集不可)</label>
+            <label class="label is-small">機種番号 (※編集不可)</label>
             <div class="control">
                 <input class="input is-sucess" type="text" maxlength="4" name="device_id" required value="<?php echo $device_id;?>" readonly>
             </div>
         </div>
         <div class="field ml-6 mr-6">
-            <label class="label">Ver (※編集不可)</label>
+            <label class="label is-small">Ver (※編集不可)</label>
             <div class="control">
                 <input class="input is-sucess" type="text" maxlength="2" name="ver" required value="<?php echo $ver;?>" readonly>
             </div>
         </div>
         <div class="field ml-6 mr-6">
-            <label class="label">機種名 ※必須</label>
+            <label class="label is-small">機種名 ※必須</label>
             <div class="control">
                 <input class="input is-sucess" type="text" maxlength="32"  name="device_name" required value="<?php echo $device_name;?>">
             </div>
         </div>
         <div class="field ml-6 mr-6">
-            <label class="label">コメント</label>
+            <label class="label is-small">コメント</label>
             <div class="control">
                 <input class="input is-sucess" type="text" maxlength="255"  name="comment" value="<?php echo $comment;?>">
             </div>

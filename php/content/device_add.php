@@ -12,25 +12,25 @@
     <div class="block ml-6 mr-6">
         <form action="device_add_done.php" method="POST">
             <div class="field">
-                <label class="label">機種番号 ※必須</label>
+                <label class="label is-small">機種番号 ※必須</label>
                 <div class="control">
                     <input class="input is-sucess" type="text" maxlength="4" name="device_id" required>
                 </div>
             </div>
             <div class="field">
-                <label class="label">Ver ※必須</label>
+                <label class="label is-small">Ver ※必須</label>
                 <div class="control">
                     <input class="input is-sucess" type="text" maxlength="2" name="ver" required>
                 </div>
             </div>
             <div class="field">
-                <label class="label">機種名 ※必須</label>
+                <label class="label is-small">機種名 ※必須</label>
                 <div class="control">
                     <input class="input is-sucess" type="text" maxlength="32" name="device_name" required>
                 </div>
             </div>
             <div class="field">
-                <label class="label">コメント</label>
+                <label class="label is-small">コメント</label>
                 <div class="control">
                     <input class="input is-sucess" type="text" maxlength="255" name="comment">
                 </div>

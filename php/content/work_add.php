@@ -4,7 +4,7 @@
 
     $format = "
         <div class=\"field\">
-            <label class=\"label\">結果表示</label>
+            <label class=\"label is-small\">結果表示</label>
             <div class=\"control\">
                 <div class=\"select is-success\">
                     <select name=\"result\">
@@ -31,20 +31,20 @@
     <div class="block ml-6 mr-6">
         <form action="work_add_done.php" method="POST">
             <div class="field">
-                <label class="label">作業番号 (4桁) ※必須</label>
+                <label class="label is-small">作業番号 (4桁) ※必須</label>
                 <div class="control">
                     <input class="input is-sucess" type="text" maxlength="4" name="work_id" required>
                 </div>
             </div>
             <div class="field">
-                <label class="label">作業名 ※必須</label>
+                <label class="label is-small">作業名 ※必須</label>
                 <div class="control">
                     <input class="input is-sucess" type="text" maxlength="32" name="work_name" required>
                 </div>
             </div>
             <?php echo $strResultSel; ?>
             <div class="field">
-                <label class="label">コメント</label>
+                <label class="label is-small">コメント</label>
                 <div class="control">
                     <input class="input is-sucess" type="text" maxlength="255" name="comment">
                 </div>
