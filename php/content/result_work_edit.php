@@ -74,31 +74,14 @@
 <html lang="ja">
 <?php include(dirname(__FILE__).'/./header/head_html.php'); ?>
 <body>
-    <header>
-        <nav class="navbar">
-            <div class="navbar-brand">
-                <span class="navbar-item ml-6 is-size-7">ようこそ</span>
-            </div>
-            <div class="navbar-menu">
-        </div>
-        </nav>
-        <section class="hero is-info is-small">
-            <div class="hero-body">
-                <h1 class="title ml-6">Time Tracking</h1>
-            </div>
-        </section>
-        <nav class="navbar has-background-info-light">
-            <div class="navbar-menu ml-4" id="targetMenu"></div>
-        </nav>
-    </header>
+    <?php echo $strHeader; ?>
     <br>
  
-    <div class="ml-6">
+    <div class="block ml-6">
         <a href="result.php"><p>戻る</p></a>
     </div>
-    <br>
 
-    <div class="block ml-6 mr-6">
+    <div class="block ml-6">
         <form action="result_work_edit.php" method="POST">
             <table class="table">
                 <?php echo $strCheckBoxTbl; ?>
