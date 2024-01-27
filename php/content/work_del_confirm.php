@@ -19,21 +19,10 @@
         if ($ret != FALSE) {
             foreach ($ret as $value) {
                 $work_name = $value['work_name'];
-                $result    = $value['result'];
                 $comment   = $value['comment'];
             }
         }
     }
-
-    //直接/間接の表示
-    if ($result == 0)
-        $result = "-----";
-    else
-        $result = "対象";
-
-
-    //戻り先
-    $strBack = $_SERVER['HTTP_REFERER'];
 ?>
 
 <!DOCTYPE html>
@@ -77,10 +66,6 @@
             <tr>
                 <td>作業名</td>
                 <td><?php echo $work_name; ?></td>
-            </tr>
-            <tr>
-                <td>結果表示</td>
-                <td><?php echo $result;?></td>
             </tr>
             <tr>
                 <td>コメント</td>

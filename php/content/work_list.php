@@ -23,22 +23,11 @@
                 <td>%04d</td>
                 <td>%s</td>
                 <td>%s</td>
-                <td>%s</td>
             </tr>";
 
             //HTML作成
             foreach ($ret as $value) {
-                if ($_SESSION['auth']) {
-                    if ($value['result']) {
-                        $strResult = "対象";
-                    } else {
-                        $strResult = "-----";
-                    }    
-                } else {
-                    $strResult = "";
-                }
-
-                $strTbl .= sprintf($format, $value['work_id'], $value['work_name'], $strResult, $value['comment']);
+                $strTbl .= sprintf($format, $value['work_id'], $value['work_name'], $value['comment']);
             }
         }
     }
@@ -63,7 +52,6 @@
                 <tr>
                     <td>作業番号</td>
                     <td>作業名</td>
-                    <td><?php echo $strResultTitle; ?></td>
                     <td>コメント</td>
                 </tr>
             </thead>

@@ -11,7 +11,7 @@
         $work_id = e($_POST['work_id']);
 
         //DB TABLEの要素名リスト
-        $elementKeyName = ['work_name', 'result', 'comment'];
+        $elementKeyName = ['work_name', 'comment'];
         $elementKeyValue = [];
         $paramKeyName = ['work_id'];
         $paramKeyValue = [];

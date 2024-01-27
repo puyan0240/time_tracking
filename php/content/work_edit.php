@@ -17,7 +17,6 @@
         if ($ret != FALSE) {
             foreach ($ret as $value) {
                 $work_name = $value['work_name'];
-                $result    = $value['result'];
                 $comment   = $value['comment'];
             }
         }
@@ -28,34 +27,6 @@
             $selectedTbl[$result] = "selected";
         }
     }
-
-    //結果表示は管理者権限のみ表示
-    $strResultSel = "";
-    if ($_SESSION['auth']) {
-
-        $format = "
-            <div class=\"field ml-6 mr-6\">
-                <label class=\"label is-small\">結果表示</label>
-                <div class=\"control\">
-                    <div class=\"select is-success\">
-                        <select name=\"result\">
-                            <option value=\"0\" %s> ----- </option>
-                            <option value=\"1\" %s>対象</option>
-                        </select>
-                    </div>
-                </div>
-            </div>";
-
-        $strResultSel = sprintf($format, $selectedTbl[0], $selectedTbl[1]);
-    } else {
-        $format = "<input type=\"hidden\" name=\"result\" value=\"%s\">";
-
-        $strResultSel = sprintf($format, $result);
-    }
- 
-
-    //戻り先
-    $strBack = $_SERVER['HTTP_REFERER'];
 ?>
 
 <!DOCTYPE html>
@@ -80,7 +51,6 @@
                 <input class="input is-sucess" type="text" maxlength="32"  name="work_name" required value="<?php echo $work_name;?>">
             </div>
         </div>
-        <?php echo $strResultSel; ?>
         <div class="field ml-6 mr-6">
             <label class="label is-small">コメント</label>
             <div class="control">

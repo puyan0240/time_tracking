@@ -2,6 +2,7 @@
     // Header部分共通
     require_once(dirname(__FILE__).'/./header/header.php');
 
+/*
     $format = "
         <div class=\"field\">
             <label class=\"label is-small\">結果表示</label>
@@ -20,6 +21,8 @@
     } else {
         $strResultSel = "";
     }
+*/
+    $strResultSel = "";
 ?>
 
 <!DOCTYPE html>

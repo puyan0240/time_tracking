@@ -22,37 +22,10 @@
         if ($ret != FALSE) {
             foreach ($ret as $value) {
                 $work_name = $value['work_name'];
-                $result    = $value['result'];
                 $comment   = $value['comment'];
             }
         }
     }
-
-    //直接/間接の表示
-    if ($result == 0)
-        $result = "-----";
-    else
-        $result = "対象";
-
-
-    //結果表示は管理者権限のみ表示
-    $strResultTbl = "";
-    if ($_SESSION['auth']) {
-        $format = "
-            <tr>
-                <td>結果表示</td>
-                <td>%s</td>
-            </tr>";
-
-        if ($result) {
-            $result = "対象";
-        } else {
-            $result = "-----";
-        }
-
-        $strResultTbl = sprintf($format, $result);
-    }
-
 
     //機種削除ボタンは管理者権限のみ表示
     $strDelBtn = "";
@@ -84,7 +57,6 @@
                 <td>作業名</td>
                 <td><?php echo $work_name; ?></td>
             </tr>
-            <?php echo $strResultTbl; ?>
             <tr>
                 <td>コメント</td>
                 <td><?php echo $comment; ?></td>
