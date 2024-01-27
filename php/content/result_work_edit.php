@@ -45,7 +45,7 @@
             <div class=\"control\">
                 <label class=\"is-checkbox is-rounded\">
                     <input type=\"checkbox\" name=\"work_list[]\" value=\"%s\" %s>
-                <span>%s</span>
+                    <span>%s</span>
                 </label>
             </div>";
 
@@ -55,7 +55,23 @@
         $tblName = "work_tbl";
         $workList = readTbl($tblName, NULL, NULL, NULL, NULL, NULL);
         if ($workList != FALSE) {
+
+            $group = -1;
             foreach ($workList as $work) {
+                if ($group == -1) { //初回
+                    $group = (int)($work['work_id'] / 1000);
+
+                    $strCheckBoxTbl .= "<tr><td>";
+                } else {
+                    if ($group != (int)($work['work_id'] / 1000)) {
+                        $group = (int)($work['work_id'] / 1000);
+
+                        $strCheckBoxTbl .= "</td></tr><tr><td>"; //別の行に
+                    } else {
+                        $strCheckBoxTbl .= "</td><td>"; //他のセルに
+                    }
+                }
+
                 if ($work['result'] == 1) {
                     $strChecked = "checked";
                 } else {
@@ -63,6 +79,7 @@
                 }
                 $strCheckBoxTbl .= sprintf($format, $work['work_id'], $strChecked, $work['work_name']);
             }
+            $strCheckBoxTbl .= "</td></tr>";
         }
     }
 
