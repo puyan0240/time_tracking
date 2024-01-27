@@ -477,6 +477,9 @@
                 <div class="control">
                     <input class="button is-success ml-4" type="submit" name="btn" value="表示">
                 </div>
+                <div class="ml-5 mt-2 is-size-6">
+                    <a href="result_work_edit.php"><p>作業項目を編集</p></a>
+                </div>
             </div>
         </form>
 
