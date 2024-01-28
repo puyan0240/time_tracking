@@ -16,6 +16,7 @@
     $selStartYear = $selStartMonth = $selStartDay = 0;
     $selEndYear = $selEndMonth = $selEndDay = 0;
     $selRefDeviceId = $selUserId = 0;
+    $timeTotal = 0;
 
     //指定確認
     if (isset($_POST['btn']))
@@ -255,7 +256,7 @@
         $ret = readTbl($tblName, $whereKeyValue, $between, $order, NULL, NULL);
         if ($ret != FALSE) {
 
-            $timeTotal = $dayTotal = 0;
+            $dayTotal = 0;
             $timeTbl = $timeDeviceTbl = [];
             $dayTbl = $dayDeviceTbl = [];
 
@@ -360,31 +361,34 @@
                     $strResultTbl .= $strTmp;
                 }
             }
-
-            //合計
-            if ($timeTotal > 0) {
-                //時間
-                {
-                    $hour = (int)($timeTotal / 60);
-                    $min  = (int)($timeTotal % 60);
-
-                    if ($min) {
-                        $format = "時間合計:  %d 時間 %02d 分";
-                        $strTimeSum = sprintf($format, $hour, $min);   
-                    } else {
-                        $format = "時間合計:  %d 時間";
-                        $strTimeSum = sprintf($format, $hour);
-                    }
-                }
-
-                //工数
-                {
-                    $format = "工数合計: %d 人日";
-                    $strManhoursSum = sprintf($format, $dayTotal);
-                }
-            }
         }
 
+
+        //合計
+        if ($timeTotal > 0) {
+            //時間
+            {
+                $hour = (int)($timeTotal / 60);
+                $min  = (int)($timeTotal % 60);
+        
+                if ($min) {
+                    $format = "時間合計:  %d 時間 %02d 分";
+                    $strTimeSum = sprintf($format, $hour, $min);   
+                } else {
+                    $format = "時間合計:  %d 時間";
+                    $strTimeSum = sprintf($format, $hour);
+                }
+            }
+        
+            //工数
+            {
+                $format = "工数合計: %d 人日";
+                $strManhoursSum = sprintf($format, $dayTotal);
+            }
+        } else {
+            $strTimeSum = "時間合計: 0 時間";
+            $strManhoursSum = "工数合計: 0 人日";
+        }
     }
 ?>
 
