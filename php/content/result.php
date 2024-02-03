@@ -15,7 +15,7 @@
 
     $selStartYear = $selStartMonth = $selStartDay = 0;
     $selEndYear = $selEndMonth = $selEndDay = 0;
-    $selRefDeviceId = $selUserId = 0;
+    $selRefDeviceId = $selUserId = $selCategory = 0;
     $timeTotal = 0;
 
     //指定確認
@@ -49,6 +49,14 @@
         //担当
         if (isset($_POST['user'])) {
             $selUserId = (int)e($_POST['user']);
+        }
+
+        //区分
+        if (isset($_POST['category'])) {
+            $selCategory = (int)e($_POST['category']);
+
+            //区分指定の場合は担当指定は外す
+            $selUserId = 0;
         }
     }
 
@@ -213,6 +221,23 @@
                 }
             }
         }
+
+        //区分
+        {
+            $categoryTbl = ["指定しない","ハード","ソフト","検証"];
+
+            $strCategorySelOpt = "";
+            $format = "<option value=\"%s\" %s>%s</option>";
+
+            for ($i = 0; $i < count($categoryTbl); $i ++) {
+                $strSelected = "";
+                if ($i == $selCategory) {
+                    $strSelected = "selected";
+                }
+
+                $strCategorySelOpt .= sprintf($format, $i, $strSelected, $categoryTbl[$i]);
+            }
+        }
     }
 
 
@@ -250,6 +275,9 @@
         if ($selRefDeviceId) {
             $whereKeyValue['ref_device_tbl_idx'] = $selRefDeviceId;
         }
+        if ($selCategory) {
+            
+        }
 
         $tblName = "time_traking_tbl";
         $order = "ORDER BY date ASC"; //時間で昇順
@@ -262,6 +290,7 @@
 
             //結果を仕分け
             foreach ($ret as $value) {
+
                 //担当者/機種/作業ごとの時間
                 if (isset($timeTbl[$value['user_id']][$value['device_tbl_idx']][$value['work_id']]) == false) {
                     $timeTbl[$value['user_id']][$value['device_tbl_idx']][$value['work_id']] = 0;
@@ -467,6 +496,18 @@
                     <td colspan="8">
                         <div class="select is-primary is-small">
                             <select name="user"><?php echo $strUserSelOpt;?></select>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="is-size-6">
+                            <p>区分</p>
+                        </div>
+                    </td>
+                    <td colspan="8">
+                        <div class="select is-primary is-small">
+                            <select name="category"><?php echo $strCategorySelOpt;?></select>
                         </div>
                     </td>
                 </tr>
