@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- ホスト: db
--- 生成日時: 2024 年 1 月 20 日 02:03
+-- 生成日時: 2024 年 2 月 03 日 03:11
 -- サーバのバージョン： 8.2.0
 -- PHP のバージョン: 8.1.18
 
@@ -32,7 +32,7 @@ CREATE TABLE `account_tbl` (
   `passwd` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   `user_name` tinytext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   `auth` int NOT NULL,
-  `type` int NOT NULL
+  `category` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 -- --------------------------------------------------------
@@ -92,6 +92,12 @@ ALTER TABLE `account_tbl`
 --
 ALTER TABLE `device_tbl`
   ADD PRIMARY KEY (`idx`);
+
+--
+-- テーブルのインデックス `time_traking_tbl`
+--
+ALTER TABLE `time_traking_tbl`
+  ADD KEY `date` (`date`,`user_id`) USING BTREE;
 
 --
 -- テーブルのインデックス `work_tbl`
