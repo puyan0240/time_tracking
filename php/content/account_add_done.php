@@ -57,7 +57,7 @@
     if ($input_ok == true) {
 
         //DB TABLEの要素名リスト
-        $keyName = ['user_id','passwd','user_name','auth','type'];
+        $keyName = ['user_id','passwd','user_name','auth','category'];
         $keyValue = [];
     
         //DB TABLEの 要素名:値 になるよう連想配列を作成
@@ -66,7 +66,7 @@
                 $keyValue[$key] = (int)e($_POST[$key]);
             } elseif ($key == 'auth') {
                 $keyValue[$key] = (int)e($_POST[$key]);
-            } elseif ($key == 'type') {
+            } elseif ($key == 'category') {
                 //$keyValue[$key] = (int)e($_POST[$key]);
                 $keyValue[$key] = 0;
             } elseif ($key == 'passwd') {
