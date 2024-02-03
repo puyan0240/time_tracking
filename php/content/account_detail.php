@@ -31,16 +31,29 @@
         if ($ret != FALSE) {
             foreach ($ret as $value) {
                 $user_name = $value['user_name'];
+                $category  = $value['category'];
                 $auth      = $value['auth'];
             }
         }
     }
 
-    //アカウント権限の表示
-    if ($auth == 0)
-        $auth = "一般";
-    else
-        $auth = "管理者";
+    //区分表示
+    if ($category == 1) {
+        $strCategory = "ハード";
+    } elseif ($category == 2) {
+        $strCategory = "ソフト";
+    } elseif ($category == 3) {
+        $strCategory = "検証";
+    } else {
+        $strCategory = "その他";
+    }
+
+    //権限表示
+    if ($auth == 1) {
+        $strAuth = "管理者";
+    } else {
+        $strAuth = "一般";
+    }
 
 
     //戻り先
@@ -64,8 +77,12 @@
                 <td><?php echo $user_name; ?></td>
             </tr>
             <tr>
-                <td>権限:</td>
-                <td><?php echo $auth;?></td>
+                <td>区分</td>
+                <td><?php echo $strCategory;?></td>
+            </tr>
+            <tr>
+                <td>権限</td>
+                <td><?php echo $strAuth;?></td>
             </tr>
         </table>
     </div>

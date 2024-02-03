@@ -15,14 +15,32 @@
                 <td>%05d</td>
                 <td>%s</td>
                 <td>%s</td>
+                <td>%s</td>
             </tr>";
             $strTbl = "";
 
 
             //HTML作成
             foreach ($ret as $value) {
-                $strTbl .= sprintf($format, $value['user_id'], $value['user_name'], 
-                                            $value['auth']==0 ? "一般":"管理者");
+                //区分
+                if ($value['category'] == 1) {
+                    $strCategory = "ハード";
+                } elseif ($value['category'] == 2) {
+                    $strCategory = "ソフト";
+                } elseif ($value['category'] == 3) {
+                    $strCategory = "検証";
+                } else {
+                    $strCategory = "その他";
+                }
+
+                //権限
+                if ($value['auth'] == 1) {
+                    $strAuth = "管理者";
+                } else {
+                    $strAuth = "一般";
+                }
+
+                $strTbl .= sprintf($format, $value['user_id'], $value['user_name'], $strCategory, $strAuth);
             }
         }
     }
@@ -47,6 +65,7 @@
                 <tr>
                     <td>社員番号</td>
                     <td>名前</td>
+                    <td>区分</td>
                     <td>権限</td>
                 </tr>
             </thead>

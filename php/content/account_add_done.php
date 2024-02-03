@@ -55,27 +55,15 @@
 
     //登録
     if ($input_ok == true) {
-
-        //DB TABLEの要素名リスト
-        $keyName = ['user_id','passwd','user_name','auth','category'];
-        $keyValue = [];
-    
-        //DB TABLEの 要素名:値 になるよう連想配列を作成
-        foreach ($keyName as $key) {
-            if ($key == 'user_id') {
-                $keyValue[$key] = (int)e($_POST[$key]);
-            } elseif ($key == 'auth') {
-                $keyValue[$key] = (int)e($_POST[$key]);
-            } elseif ($key == 'category') {
-                //$keyValue[$key] = (int)e($_POST[$key]);
-                $keyValue[$key] = 0;
-            } elseif ($key == 'passwd') {
-                $keyValue[$key] = $passwd_hash;
-            } else {
-                $keyValue[$key] = e($_POST[$key]);
-            }
-        }
         
+        //DB TABLEの 要素名:値 になるよう連想配列を作成
+        $keyValue = [];
+        $keyValue['user_id']   = (int)e($_POST['user_id']);
+        $keyValue['passwd']    = $passwd_hash;
+        $keyValue['user_name'] = e($_POST['user_name']);
+        $keyValue['auth']      = (int)e($_POST['auth']);
+        $keyValue['category']  = (int)e($_POST['category']);
+
         //DB TABLEへ書き込み
         $tblName = "account_tbl";
         if (writeTbl($tblName, $keyValue) == TRUE) {

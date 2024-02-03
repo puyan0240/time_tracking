@@ -24,6 +24,19 @@
                 </div>
             </div>
             <div class="field">
+                <label class="label is-small">区分</label>
+                <div class="control">
+                    <div class="select is-success">
+                        <select name="category">
+                            <option value="0" selected>その他</option>
+                            <option value="1">ハード</option>
+                            <option value="2">ソフト</option>
+                            <option value="3">検証</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="field">
                 <label class="label is-small">権限</label>
                 <div class="control">
                     <div class="select is-success">
