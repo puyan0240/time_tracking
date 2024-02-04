@@ -56,7 +56,9 @@
             $selCategory = (int)e($_POST['category']);
 
             //区分指定の場合は担当指定は外す
-            $selUserId = 0;
+            if ($selCategory) {
+                $selUserId = 0;
+            }
         }
     }
 
