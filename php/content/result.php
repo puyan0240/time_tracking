@@ -193,6 +193,7 @@
 
         //担当者一覧
         {
+            $userIdCategoryTbl = [];
             $strUserSelOpt = "";
             $format = "<option value=\"%d\" %s>%s</option>";
 
@@ -217,9 +218,12 @@
                         if ($value['user_id'] == $selUserId) {
                             $strSelected = "selected";
                         }    
-                    } 
-    
+                    }
+                     
                     $strUserSelOpt .= sprintf($format, $value['user_id'], $strSelected, $value['user_name']);
+
+                    //区分テーブル作成
+                    $userIdCategoryTbl[$value['user_id']] = $value['category'];
                 }
             }
         }
@@ -277,9 +281,6 @@
         if ($selRefDeviceId) {
             $whereKeyValue['ref_device_tbl_idx'] = $selRefDeviceId;
         }
-        if ($selCategory) {
-            
-        }
 
         $tblName = "time_traking_tbl";
         $order = "ORDER BY date ASC"; //時間で昇順
@@ -292,6 +293,13 @@
 
             //結果を仕分け
             foreach ($ret as $value) {
+
+                //区分指定の場合、該当以外はスキップする
+                if ($selCategory) {
+                    if ($userIdCategoryTbl[$value['user_id']] != $selCategory) { //一致しない
+                        continue;
+                    }
+                }
 
                 //担当者/機種/作業ごとの時間
                 if (isset($timeTbl[$value['user_id']][$value['device_tbl_idx']][$value['work_id']]) == false) {
