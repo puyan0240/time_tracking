@@ -6,7 +6,7 @@ services:
     volumes:
       - ./php/content:/var/www/html
     ports:
-      - 80:80
+      - 8080:80
 
   db:
     build: ./mysql
@@ -34,7 +34,8 @@ services:
       - PMA_USER=root
       - PMA_PASSWORD=${ROOT_PASS}
     ports:
-      - 127.0.0.1:4040:80
+      - 12345:80
+      #- 127.0.0.1:4040:80
 
 volumes:
   db:
