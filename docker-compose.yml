@@ -7,6 +7,7 @@ services:
       - ./php/content:/var/www/html
     ports:
       - 8080:80
+    restart: always
 
   db:
     build: ./mysql
@@ -23,6 +24,7 @@ services:
     volumes: 
       - db:/var/lib/mysql
       - ./mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+    restart: always
 
   phpmyadmin:
     depends_on:
@@ -36,6 +38,7 @@ services:
     ports:
       - 12345:80
       #- 127.0.0.1:4040:80
+    restart: always
 
 volumes:
   db:
