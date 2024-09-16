@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- ホスト: db
--- 生成日時: 2024 年 2 月 03 日 03:11
+-- 生成日時: 2024 年 9 月 16 日 05:07
 -- サーバのバージョン： 8.2.0
--- PHP のバージョン: 8.1.18
+-- PHP のバージョン: 8.2.22
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -46,7 +46,8 @@ CREATE TABLE `device_tbl` (
   `device_id` int UNSIGNED NOT NULL,
   `ver` int UNSIGNED NOT NULL,
   `device_name` tinytext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
-  `comment` text COLLATE utf8mb4_bin NOT NULL
+  `display` int NOT NULL,
+  `comment` text CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 -- --------------------------------------------------------
@@ -74,7 +75,7 @@ CREATE TABLE `work_tbl` (
   `work_id` int UNSIGNED NOT NULL,
   `work_name` tinytext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   `result` int NOT NULL,
-  `comment` text COLLATE utf8mb4_bin NOT NULL
+  `comment` text CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 --

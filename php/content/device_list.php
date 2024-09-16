@@ -20,11 +20,16 @@
                 <td>%02s</td>
                 <td>%s</td>
                 <td>%s</td>
+                <td>%s</td>
             </tr>";
 
             //HTML作成
             foreach ($ret as $value) {
-                $strTbl .= sprintf($format, $value['idx'], $value['device_id'], $value['ver'], $value['device_name'], $value['comment']);
+                $strDisplay = "---";
+                if ($value['display'] == 1) {
+                    $strDisplay = "表示";
+                }
+                $strTbl .= sprintf($format, $value['idx'], $value['device_id'], $value['ver'], $value['device_name'], $strDisplay, $value['comment']);
             }
         }
     }
@@ -51,6 +56,7 @@
                     <td>機種番号</td>
                     <td>Ver</td>
                     <td>機種名</td>
+                    <td>表示</td>
                     <td>コメント</td>
                 </tr>
             </thead>

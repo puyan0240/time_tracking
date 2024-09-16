@@ -178,6 +178,9 @@
             $ret = readTbl($tblName, NULL, NULL, $order, NULL, NULL);
             if ($ret != FALSE) {
                 foreach ($ret as $value) {
+                    if ($value['display'] == 0) {
+                        continue; //非表示
+                    }
 
                     $strSelected = "";
                     if ($selRefDeviceId != "none") {

@@ -11,7 +11,7 @@
         $idx = (int)e($_POST['idx']);
 
         //DB TABLEの要素名リスト
-        $elementKeyName = ['device_id', 'ver', 'device_name', 'comment'];
+        $elementKeyName = ['device_id', 'ver', 'device_name', 'display', 'comment'];
         $elementKeyValue = [];
         $paramKeyName = ['idx'];
         $paramKeyValue = [];

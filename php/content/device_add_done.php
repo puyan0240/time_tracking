@@ -61,6 +61,7 @@
         $keyValue['device_id']   = (int)$device_id;
         $keyValue['ver']         = (int)$ver;
         $keyValue['device_name'] = e($_POST['device_name']);
+        $keyValue['display']     = 1;
         $keyValue['comment']     = e($_POST['comment']);
         
         //DB TABLEへ書き込み

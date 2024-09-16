@@ -2,7 +2,7 @@
     // Header部分共通
     require_once(dirname(__FILE__).'/./header/header.php');
 
-    $device_id = $ver = $device_name = $comment = "";
+    $device_id = $ver = $device_name = $display = $comment = "";
     $idx = (int)$_GET['idx'];
 
     //DB検索
@@ -19,6 +19,16 @@
                 $device_id   = $value['device_id'];
                 $ver         = str_pad($value['ver'], 2, 0, STR_PAD_LEFT); //0埋めの2桁表示
                 $device_name = $value['device_name'];
+                {
+                    $strSel0 = $strSel1 = "";
+                    if ($value['display'] == 1) {
+                        $display = "表示";
+                        $strSel1 = "selected";
+                    } else {
+                        $display = "---";
+                        $strSel0 = "selected";
+                    }
+                }
                 $comment     = $value['comment'];
             }
         }
@@ -54,6 +64,17 @@
             <label class="label is-small">機種名 ※必須</label>
             <div class="control">
                 <input class="input is-sucess" type="text" maxlength="32"  name="device_name" required value="<?php echo $device_name;?>">
+            </div>
+        </div>
+        <div class="field ml-6 mr-6">
+            <label class="label is-small">表示</label>
+            <div class="control">
+                <div class="select is-success">
+                    <select name="display">
+                        <option value="0" <?php echo $strSel0;?>>---</option>
+                        <option value="1" <?php echo $strSel1;?>>表示</option>
+                    </select>
+                </div>
             </div>
         </div>
         <div class="field ml-6 mr-6">

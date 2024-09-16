@@ -94,6 +94,9 @@
             $deviceList = readTbl($tblName, NULL, NULL, $order, NULL, NULL);
             if ($deviceList != false) {
                 foreach ($deviceList as $value) {
+                    if ($value['display'] == 0) {
+                        continue; //非表示
+                    }
                     $strDevSelOpt .= sprintf($format, $value['idx'], $value['device_name']);
                 }    
             }
@@ -106,6 +109,9 @@
 
             if ($deviceList != false) {
                 foreach ($deviceList as $value) {
+                    if ($value['display'] == 0) {
+                        continue; //非表示
+                    }
                     $strRefDevSelOpt .= sprintf($format, $value['idx'], $value['device_name']);
                 }    
             }

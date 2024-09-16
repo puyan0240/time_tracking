@@ -2,7 +2,7 @@
     // Header部分共通
     require_once(dirname(__FILE__).'/./header/header.php');
 
-    $device_id = $ver = $device_name = $comment = "";
+    $device_id = $ver = $device_name = $display = $comment = "";
     $idx = (int)$_GET['idx'];
 
     //DB検索
@@ -19,6 +19,10 @@
                 $device_id   = $value['device_id'];
                 $ver         = str_pad($value['ver'], 2, 0, STR_PAD_LEFT); //0埋めの2桁表示
                 $device_name = $value['device_name'];
+                $display     = "---";
+                if ($value['display'] == 1) {
+                    $display = "表示";
+                }
                 $comment     = $value['comment'];
             }
         }
@@ -46,7 +50,7 @@
     <?php echo $strHeader; ?>
     <br>
     <div class="block ml-6">
-        <table class="table" >
+        <table class="table">
             <tr>
                 <td>機種番号</td>
                 <td><?php echo $device_id; ?></td>
@@ -58,6 +62,10 @@
             <tr>
                 <td>機種名</td>
                 <td><?php echo $device_name;?></td>
+            </tr>
+            <tr>
+                <td>表示</td>
+                <td><?php echo $display;?></td>
             </tr>
             <tr>
                 <td>コメント</td>
