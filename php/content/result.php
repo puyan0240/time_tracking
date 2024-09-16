@@ -60,6 +60,16 @@
                 $selUserId = 0;
             }
         }
+    } else {
+        //開始日(=本日)
+        $selStartYear = date('Y');
+        $selStartMonth = date('m');
+        $selStartDay = date('d');
+
+        //終了日(=本日)
+        $selEndYear = date('y');
+        $selEndMonth = date('m');
+        $selEndDay = date('d');
     }
 
 
