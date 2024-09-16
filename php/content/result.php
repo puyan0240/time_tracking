@@ -328,7 +328,7 @@
 
             //TABLEヘッダ作成
             {
-                $strResultTbl = "<tr><thead><td> 担当者 </td><td> 商品名 </td><td> 時間 </td>";
+                $strResultTbl = "<tr><thead><td> 担当者 </td><td> 機種名 </td><td> 時間 </td>";
                 $format = "<td> %s </td>";
                 foreach ($workList as $value) {
                     if ($value['result'] == 0) {
