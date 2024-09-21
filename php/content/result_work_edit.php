@@ -6,25 +6,26 @@
     require_once(dirname(__FILE__).'/./common/Encode.php');
 
 
-    //書き込み
+    //DBを一旦すべて無効にしてから、指定したものを有効にする
     if (isset($_POST['bt_submit'])) {
-        if (isset($_POST['work_list'])) {
-            //DB TABLEから読み出し
-            $tblName = "work_tbl";
-            $workList = readTbl($tblName, NULL, NULL, NULL, NULL, NULL);
-            if ($workList != FALSE) {
-                //一旦すべて無効化
-                foreach ($workList as $work) {
-                    $paramKeyValue = $elementKeyValue = [];
-                    $paramKeyValue['work_id'] = $work['work_id'];
-                    $elementKeyValue['result'] = 0;
+        //DB TABLEから読み出し
+        $tblName = "work_tbl";
+        $workList = readTbl($tblName, NULL, NULL, NULL, NULL, NULL);
+        if ($workList != FALSE) {
 
-                    //DB更新
-                    $tblName = "work_tbl";
-                    updateTbl($tblName, $elementKeyValue, $paramKeyValue);
-                }
+            //一旦すべて無効化
+            foreach ($workList as $work) {
+                $paramKeyValue = $elementKeyValue = [];
+                $paramKeyValue['work_id'] = $work['work_id'];
+                $elementKeyValue['result'] = 0;
 
-                //指定したものを有効化
+                //DB更新
+                $tblName = "work_tbl";
+                updateTbl($tblName, $elementKeyValue, $paramKeyValue);
+            }
+
+            //指定したものを有効化
+            if (isset($_POST['work_list'])) {
                 foreach ($_POST['work_list'] as $value) {
                     $paramKeyValue = $elementKeyValue = [];
                     $paramKeyValue['work_id'] = $value;
@@ -35,7 +36,7 @@
                     updateTbl($tblName, $elementKeyValue, $paramKeyValue);
                 }
             }
-        }
+        }      
     }
 
      
