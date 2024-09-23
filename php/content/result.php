@@ -15,7 +15,8 @@
 
     $selStartYear = $selStartMonth = $selStartDay = 0;
     $selEndYear = $selEndMonth = $selEndDay = 0;
-    $selRefDeviceId = $selUserId = $selCategory = 0;
+    $selRefDeviceId = $selCategory = 0;
+    $selUserId = "";
     $timeTotal = 0;
 
     //指定確認
@@ -57,7 +58,7 @@
 
             //区分指定の場合は担当指定は外す
             if ($selCategory) {
-                $selUserId = 0;
+                $selUserId = "";
             }
         }
     } else {
